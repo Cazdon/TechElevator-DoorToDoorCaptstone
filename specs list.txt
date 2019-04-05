@@ -13,26 +13,32 @@ Users:
 	sales
 		1) Registering users come in as Admins
 		2) Required:
-			a) First Name
-			b) Last Name
-			c) Username (must be unique)
-			d) Email Address (must be unique)
+			a) First Name ( <= 50 characters)
+			b) Last Name ( <= 50 characters)
+			c) Username (must be unique) ( <= 50 characters)
+			d) Email Address (must be unique) ( <= 100 characters)
 			e) Password
 * Add House Information:
 	As an Admin, I can add or import new House information. House information will
 	include an address, names of residents and administrative notes pertaining to that
 	house (current customer, already contacted via phone, etc.)
 		1) Required Fields:
-			a) Street
-			b) City
-			c) State (District)
-			d) Zip Code
-			e) Country
+			a) Street ( <= 50 characters)
+			b) City ( <= 50 characters)
+			c) State (District) ( <= 50 characters)
+			d) Zip Code ( <= 10 characters)
+			e) Country ( <= 50 characters)
 			f) Assigned Salesperson
 				i) Dropdown of registered salespeople?
 * Add Sales People:
 	As an Admin, I can add register new sales people into my account so that I can track
 	their work.
+		1) Required:
+			a) First Name ( <= 50 characters)
+			b) Last Name ( <= 50 characters)
+			c) Username (must be unique) ( <= 50 characters)
+			d) Email Address (must be unique) ( <= 100 characters)
+			e) Password
 * See House List:
 	As a Sales Person, I can see what houses are assigned to me, their status, and any
 	notes or information about them.
