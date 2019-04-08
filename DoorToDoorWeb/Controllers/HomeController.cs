@@ -5,33 +5,64 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DoorToDoorWeb.Models;
+using DoorToDoorLibrary.DAL;
+using Microsoft.AspNetCore.Http;
 
 namespace DoorToDoorWeb.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : AuthController
     {
-        public IActionResult Index()
+        public HomeController(IDoorToDoorDAL db, IHttpContextAccessor httpContext) : base(db, httpContext)
         {
-            return View();
+
         }
 
-        public IActionResult About()
+        [HttpGet]
+        public ActionResult Login()
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
+            if (IsAuthenticated)
+            {
+                LogoutUser();
+            }
 
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public ActionResult Login(LoginViewModel model)
         {
-            return View();
+            ActionResult result = null;
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new Exception();
+                }
+
+                LoginUser(model.EmailAddress, model.Password);
+
+                if (Role.IsAdministrator)
+                {
+                    result = RedirectToAction("Index", "Administrator");
+                }
+                else if (Role.IsManager)
+                {
+                    result = RedirectToAction("Index", "Manager");
+                }
+                else if (Role.IsSalesperson)
+                {
+                    result = RedirectToAction("Index", "Salesperson");
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("invalid", ex.Message);
+
+                result = View("Login");
+            }
+
+            return result;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

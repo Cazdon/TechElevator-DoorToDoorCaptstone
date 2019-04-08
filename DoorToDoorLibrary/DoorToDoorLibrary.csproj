@@ -13,7 +13,6 @@
   <ItemGroup>
     <Compile Include="DAL\DoorToDoorDAL.cs" />
     <Compile Include="DAL\IDoorToDoorDAL.cs" />
-    <Compile Include="DAL\SqlDataReader.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -35,7 +35,7 @@ namespace DoorToDoorWeb.Controllers
         }
 
         /// <summary>
-        /// The current logged in user of the vending machine
+        /// The current logged in user of the Door to Door sales tracker
         /// </summary>
         public UserItem CurrentUser
         {
@@ -71,54 +71,54 @@ namespace DoorToDoorWeb.Controllers
         /// Adds a new user to the Door to Door sales system
         /// </summary>
         /// <param name="userModel">Model that contains all the user information</param>
-        public void RegisterUser(User userModel)
-        {
-            UserItem userItem = null;
-            try
-            {
-                userItem = _db.GetUserItem(userModel.Username);
-            }
-            catch (Exception)
-            {
-            }
+        //public void RegisterUser(User userModel)
+        //{
+        //    UserItem userItem = null;
+        //    try
+        //    {
+        //        userItem = _db.GetUserItem(userModel.Username);
+        //    }
+        //    catch (Exception)
+        //    {
+        //    }
 
-            if (userItem != null)
-            {
-                throw new UserExistsException("The username is already taken.");
-            }
+        //    if (userItem != null)
+        //    {
+        //        throw new UserExistsException("The username is already taken.");
+        //    }
 
-            if (userModel.Password != userModel.ConfirmPassword)
-            {
-                throw new PasswordMatchException("The password and confirm password do not match.");
-            }
+        //    if (userModel.Password != userModel.ConfirmPassword)
+        //    {
+        //        throw new PasswordMatchException("The password and confirm password do not match.");
+        //    }
 
-            PasswordManager passHelper = new PasswordManager(userModel.Password);
-            UserItem newUser = new UserItem()
-            {
-                FirstName = userModel.FirstName,
-                LastName = userModel.LastName,
-                EmailAddress = userModel.Email,
-                Salt = passHelper.Salt,
-                Hash = passHelper.Hash,
-                RoleId = (int)RoleManager.eRole.Customer
-            };
+        //    PasswordManager passHelper = new PasswordManager(userModel.Password);
+        //    UserItem newUser = new UserItem()
+        //    {
+        //        FirstName = userModel.FirstName,
+        //        LastName = userModel.LastName,
+        //        EmailAddress = userModel.Email,
+        //        Salt = passHelper.Salt,
+        //        Hash = passHelper.Hash,
+        //        RoleId = (int)RoleManager.eRole.Customer
+        //    };
 
-            _db.AddUserItem(newUser);
-            LoginUser(newUser.Username, userModel.Password);
-        }
+        //    _db.AddUserItem(newUser);
+        //    LoginUser(newUser.Username, userModel.Password);
+        //}
 
         /// <summary>
-        /// Logs a user into the vending machine system and throws exceptions on any failures
+        /// Logs a user into the Door to Door sales tracker system and throws exceptions on any failures
         /// </summary>
         /// <param name="username">The username of the user to authenicate</param>
         /// <param name="password">The password of the user to authenicate</param>
-        public void LoginUser(string username, string password)
+        public void LoginUser(string emailAddress, string password)
         {
             UserItem user = null;
 
             try
             {
-                user = _db.GetUserItem(username);
+                user = _db.GetUserItem(emailAddress);
             }
             catch (Exception)
             {
@@ -156,7 +156,7 @@ namespace DoorToDoorWeb.Controllers
             }
             else
             {
-                result = RedirectToAction("Login", "User");
+                result = RedirectToAction("Login", "Home");
             }
             return result;
         }
