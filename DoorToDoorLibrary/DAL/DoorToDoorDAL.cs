@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace DoorToDoorLibrary
+namespace DoorToDoorLibrary.DAL
 {
-    public class DoorToDoorDAL
+    public class DoorToDoorDAL : IDoorToDoorDAL
     {
       
     }

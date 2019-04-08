@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DoorToDoorLibrary.DAL
 {
-    class IDoorToDoorDAL
+    public interface IDoorToDoorDAL
     {
     }
 }

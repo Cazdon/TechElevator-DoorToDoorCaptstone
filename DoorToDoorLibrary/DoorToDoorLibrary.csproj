@@ -15,4 +15,9 @@
     <Compile Include="DAL\IDoorToDoorDAL.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BusinessLogic\" />
+    <Folder Include="DatabaseObjects\" />
+  </ItemGroup>
+
 </Project>

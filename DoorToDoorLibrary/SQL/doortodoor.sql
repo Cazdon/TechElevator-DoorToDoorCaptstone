@@ -13,13 +13,13 @@ BEGIN TRANSACTION
 	BEGIN TRY
 		
 		CREATE TABLE Roles (
-			id			int				IDENTITY(1,1) NOT NULL,
+			id			int				IDENTITY(0,1) NOT NULL,
 			[name]		varchar(50)		NOT NULL,
 			CONSTRAINT PK_Roles PRIMARY KEY ([id])
 		);
 
 		INSERT INTO Roles ([name])
-		VALUES ('Admin'), ('Manager'), ('Salesperson');
+		VALUES ('Uknown'), ('Administrator'), ('Manager'), ('Salesperson');
 
 		CREATE TABLE Users (
 			id					int				IDENTITY(1,1) NOT NULL,
