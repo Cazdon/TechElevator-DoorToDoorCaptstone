@@ -1,13 +1,13 @@
-﻿@model Salesperson
+﻿@model RegisterViewModel
 @*@using DoorToDoorLibary.DAL*@
 @{
-    ViewData["Title"] = "Add Salesperson";
+    ViewData["Title"] = "Add User";
 }
 
-<form asp-controller="Home" asp-action="AddSalesperson" method="post">
+<form asp-controller="Home" asp-action="AddUser" method="post">
 
     <section class="centeredPanel">
-        <h2><strong>Add Salesperson</strong></h2>
+        <h2><strong>Add User</strong></h2>
 
         <div class="firstname">
             <label asp-for="FirstName">First Name</label>

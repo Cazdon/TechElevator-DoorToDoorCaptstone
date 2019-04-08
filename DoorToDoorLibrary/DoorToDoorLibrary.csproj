@@ -13,11 +13,18 @@
   <ItemGroup>
     <Compile Include="DAL\DoorToDoorDAL.cs" />
     <Compile Include="DAL\IDoorToDoorDAL.cs" />
+    <Compile Include="DAL\SqlDataReader.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="BusinessLogic\" />
     <Folder Include="DatabaseObjects\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Data.SqlClient">
+      <HintPath>..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\system.data.sqlclient\4.5.1\ref\netcoreapp2.1\System.Data.SqlClient.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
