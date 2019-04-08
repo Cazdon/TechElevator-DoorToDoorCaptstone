@@ -114,6 +114,9 @@ BEGIN TRANSACTION
 			CONSTRAINT FK_Salesperson_Sales_Transaction FOREIGN KEY (salespersonID) REFERENCES Users(id)
 		);
 
+		INSERT INTO Users (firstName, lastName, emailAddress, [hash], salt, roleID, updatePassword)
+		VALUES ('Admin', 'Admin', 'd2dadmin@mailinator.com', 'lDLmjuHZW6BRfCnga2T9QmsHYU4=', 'uIyPEFee3dHgDjqqESbcrw==', 1, 0);
+
 		COMMIT TRANSACTION
 	END TRY
 	BEGIN CATCH
