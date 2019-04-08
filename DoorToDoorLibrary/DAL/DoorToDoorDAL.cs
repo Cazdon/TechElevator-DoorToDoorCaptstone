@@ -11,7 +11,7 @@ namespace DoorToDoorLibrary.DAL
         #endregion
 
         #region Constructor
-        public NPGeekDAL(string connString)
+        public DoorToDoorDAL(string connString)
         {
             connectionString = connString;
         }
@@ -24,10 +24,10 @@ namespace DoorToDoorLibrary.DAL
         {
             return new RegisterViewModel()
             {
-                FirstName = Convert.ToString(reader["parkCode"]),
-                LastName = Convert.ToString(reader["parkName"]),
-                EmailAddress = Convert.ToString(reader["state"]),
-                Password = Convert.ToInt32(reader["acreage"]),
+                FirstName = Convert.ToString(reader["firstName"]),
+                LastName = Convert.ToString(reader["lastName"]),
+                EmailAddress = Convert.ToString(reader["emailAddress"]),
+                //Password = Convert.ToString(reader["password"]),
             };
 
         }
@@ -39,15 +39,15 @@ namespace DoorToDoorLibrary.DAL
             {
                 // Open the connection
                 conn.Open();
-                string saveSurvey = "INSERT into survey_result (parkCode,emailAddress,state,activityLevel)" +
-                    "VALUES (@parCode,@emailAddress,@state,@activityLevel)";
+                string saveSurvey = "INSERT into Users (firstName,lastName,emailAddress)" +
+                    "VALUES (@,@FirstName,@LastName,@EmailAddress)";
 
                 SqlCommand cmd = new SqlCommand(saveSurvey, conn);
 
                 cmd.Parameters.AddWithValue("@firstName", newuser.FirstName);
                 cmd.Parameters.AddWithValue("@lastName", newuser.LastName);
                 cmd.Parameters.AddWithValue("@emailAddress", newuser.EmailAddress);
-                cmd.Parameters.AddWithValue("@password", newuser.Password);
+                //cmd.Parameters.AddWithValue("@password", newuser.Password);
 
                 cmd.ExecuteScalar();
             }

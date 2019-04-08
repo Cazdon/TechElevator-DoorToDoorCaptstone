@@ -6,5 +6,6 @@ namespace DoorToDoorLibrary.DAL
 {
     public interface IDoorToDoorDAL
     {
+
     }
 }
