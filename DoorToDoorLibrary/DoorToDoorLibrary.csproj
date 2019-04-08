@@ -4,4 +4,15 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="DAL\**" />
+    <EmbeddedResource Remove="DAL\**" />
+    <None Remove="DAL\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="DAL\DoorToDoorDAL.cs" />
+    <Compile Include="DAL\IDoorToDoorDAL.cs" />
+  </ItemGroup>
+
 </Project>
