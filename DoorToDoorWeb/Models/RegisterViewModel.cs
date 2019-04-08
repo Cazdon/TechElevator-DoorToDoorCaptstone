@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DoorToDoorWeb.Models
 {
-    public class Salesperson
+    public class RegisterViewModel
     {
-        public int SalespersonID { get; set; }
+        public int UserID { get; set; }
 
         [Required(ErrorMessage = "*")]
         public string FirstName { get; set; }
