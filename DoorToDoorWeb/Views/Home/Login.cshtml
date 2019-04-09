@@ -1,4 +1,7 @@
 ﻿@section Title{Login}
+@section NavBar{
+    <partial name="~/Views/Home/NavBarPartial/HomeNavBar.cshtml" />
+}
 @model LoginViewModel
 
 <form asp-controller="Home" asp-action="Login" method="post" id="user-login-form">
