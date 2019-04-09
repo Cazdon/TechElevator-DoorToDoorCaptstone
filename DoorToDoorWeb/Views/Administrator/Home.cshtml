@@ -1,0 +1,23 @@
+﻿@section Title {Home - Admin}
+@model ManagerListViewModel
+@using DoorToDoorLibrary.Models
+
+<h2>Registered Managers:</h2>
+<ul id="admin-manager-list">
+    <li class="manager-list-item">
+        <div class="manager-list-first-name">First Name</div>
+        <div class="manager-list-last-name">Last Name</div>
+        <div class="manager-list-email">Email Addresss</div>
+    </li>
+    @{
+        foreach (UserItem user in Model.Managers)
+        {
+            <li class="manager-list-item">
+                <div class="manager-list-first-name">@(user.FirstName)</div>
+                <div class="manager-list-last-name">@(user.LastName)</div>
+                <div class="manager-list-email">@(user.EmailAddress)</div>
+            </li>
+        }
+    }
+</ul>
+

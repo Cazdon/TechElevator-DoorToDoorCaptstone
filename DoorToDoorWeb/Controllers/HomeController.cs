@@ -37,7 +37,7 @@ namespace DoorToDoorWeb.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    throw new Exception();
+                    throw new Exception(" ");
                 }
 
                 LoginUser(model.EmailAddress, model.Password);

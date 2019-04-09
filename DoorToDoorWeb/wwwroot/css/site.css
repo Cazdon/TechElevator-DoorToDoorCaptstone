@@ -35,3 +35,35 @@ body {
         display: none;
     }
 }
+
+#admin-manager-list {
+    padding: 0;
+    list-style: none;
+}
+
+#admin-manager-list > :first-child {
+    font-weight: bold;
+}
+
+#admin-manager-list > :nth-child(even) {
+    background-color: lightsteelblue;
+}
+
+.manager-list-item {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 2fr 1fr 2fr 1fr;
+    grid-template-areas: ". first . last . email .";
+}
+
+.manager-list-first-name{
+    grid-area: first;
+}
+
+.manager-list-last-name{
+    grid-area: last;
+}
+
+.manager-list-email {
+    grid-area: email
+}
