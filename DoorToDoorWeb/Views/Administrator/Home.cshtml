@@ -6,6 +6,13 @@
 @using DoorToDoorLibrary.Models
 
 <h2>Registered Managers:</h2>
+<span>
+    @Html.ValidationMessage("resetFailed", new { @class = "field-validation-error" })
+</span>
+@if ((bool)TempData["resetSuccess"])
+{
+    <span id="reset-success">Reset Password flag successfully set!</span>
+}
 <ul id="admin-manager-list">
     <li class="manager-list-item">
         <div class="manager-list-first-name">First Name</div>
@@ -19,6 +26,13 @@
                 <div class="manager-list-first-name">@(user.FirstName)</div>
                 <div class="manager-list-last-name">@(user.LastName)</div>
                 <div class="manager-list-email">@(user.EmailAddress)</div>
+                <form asp-controller="Administrator" asp-action="ResetPassword" method="post" id="admin-update-password-form">
+                    <input type="hidden" value="@(user.Id)" name="UserID" />
+                    <button>Login</button>
+                    <span>
+                        @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
+                    </span>
+                </form>
             </li>
         }
     }

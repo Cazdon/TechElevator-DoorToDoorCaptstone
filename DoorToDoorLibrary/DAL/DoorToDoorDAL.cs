@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using DoorToDoorLibrary.Exceptions;
 
 namespace DoorToDoorLibrary.DAL
 {
@@ -10,6 +11,8 @@ namespace DoorToDoorLibrary.DAL
         #region Properties and Variables
 
         private string _connectionString;
+
+        private const string _getLastIdSql = "SELECT CAST(SCOPE_IDENTITY() AS int);";
 
         #endregion
 
@@ -154,6 +157,32 @@ namespace DoorToDoorLibrary.DAL
             }
 
             return output;
+        }
+
+        /// <summary>
+        /// Set's the user's Reset Password flag. Throws error if unsuccessful
+        /// </summary>
+        /// <param name="userId">User's Database ID</param>
+        public void MarkResetPassword(int userId)
+        {
+            int numRows = 0;
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "UPDATE Users SET updatePassword = 1 WHERE id = @UserID;";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@UserID", userId);
+
+                numRows = cmd.ExecuteNonQuery();
+            }
+
+            if (numRows != 1)
+            {
+                throw new MarkResetPasswordFailedException();
+            }
         }
 
         #endregion

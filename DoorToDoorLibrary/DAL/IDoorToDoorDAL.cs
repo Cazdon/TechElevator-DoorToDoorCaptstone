@@ -26,5 +26,11 @@ namespace DoorToDoorLibrary.DAL
         /// <param name="managerID">Database ID of the Manager</param>
         /// <returns>List of Salespeople under the given Manager</returns>
         IList<UserItem> GetMySalespeople(int managerID);
+
+        /// <summary>
+        /// Set's the user's Reset Password flag. Throws error if unsuccessful
+        /// </summary>
+        /// <param name="userId">User's Database ID</param>
+        void MarkResetPassword(int userId);
     }
 }

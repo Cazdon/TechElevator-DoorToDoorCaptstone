@@ -34,5 +34,36 @@ namespace DoorToDoorWeb.Controllers
                 return RedirectToAction("Login", "Home");
             }
         }
+
+        [HttpPost]
+        public ActionResult ResetPassword(ResetPasswordViewModel model)
+        {
+            ActionResult result = null;
+
+            if (Role.IsAdministrator)
+            {
+                try
+                {
+
+                    _db.MarkResetPassword(model.UserId);
+
+                    TempData["resetSuccess"] = true;
+
+                    result = RedirectToAction("Home", "Administrator");
+                }
+                catch(Exception ex)
+                {
+                    ModelState.AddModelError("resetFailed", ex.Message);
+
+                    result = RedirectToAction("Home", "Administrator");
+                }
+            }
+            else
+            {
+                result = RedirectToAction("Login", "Home");
+            }
+
+            return result;
+        }
     }
 }

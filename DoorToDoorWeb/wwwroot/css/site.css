@@ -36,6 +36,16 @@ body {
     }
 }
 
+.field-validation-error {
+    color: red;
+    font-weight: bold;
+}
+
+#reset-success {
+    color: green;
+    font-weight: bold;
+}
+
 #admin-manager-list {
     padding: 0;
     list-style: none;
@@ -52,8 +62,8 @@ body {
 .manager-list-item {
     padding: 5px;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 2fr 1fr 2fr 1fr;
-    grid-template-areas: ". first . last . email .";
+    grid-template-columns: 1fr 2fr 1fr 2fr 1fr 2fr 1fr 2fr 1fr;
+    grid-template-areas: ". first . last . email . reset .";
 }
 
 .manager-list-first-name{
@@ -66,4 +76,8 @@ body {
 
 .manager-list-email {
     grid-area: email
+}
+
+.manager-list-reset {
+    grid-area: reset
 }
