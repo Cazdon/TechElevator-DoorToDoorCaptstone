@@ -14,7 +14,7 @@ BEGIN TRANSACTION
 		
 		CREATE TABLE Roles (
 			id			int				IDENTITY(0,1) NOT NULL,
-			[name]		varchar(50)		NOT NULL,
+			[name]		varchar(50)		UNIQUE NOT NULL,
 			CONSTRAINT PK_Roles PRIMARY KEY ([id])
 		);
 
@@ -35,10 +35,10 @@ BEGIN TRANSACTION
 		);
 
 		CREATE TABLE Admin_Saleperson (
-			adminID				int		NOT NULL,
+			managerID			int		NOT NULL,
 			salespersonID		int		NOT NULL,
-			CONSTRAINT PK_Admin_Salesperson PRIMARY KEY (adminID, salespersonID),
-			CONSTRAINT FK_Users_Admin FOREIGN KEY (adminID) REFERENCES Users(id),
+			CONSTRAINT PK_Admin_Salesperson PRIMARY KEY (managerID, salespersonID),
+			CONSTRAINT FK_Users_Manager FOREIGN KEY (managerID) REFERENCES Users(id),
 			CONSTRAINT FK_Users_Salesperson FOREIGN KEY (salespersonID) REFERENCES Users(id)
 		);
 
@@ -58,11 +58,11 @@ BEGIN TRANSACTION
 			district			varchar(50)		NOT NULL,
 			zipCode				varchar(10)		NOT NULL,
 			country				varchar(50)		NOT NULL,
-			adminID				int				NOT NULL,
+			managerID			int				NOT NULL,
 			salespersonID		int				NOT NULL,
 			statusID			int				NOT NULL,
 			CONSTRAINT PK_Houses PRIMARY KEY (id),
-			CONSTRAINT FK_Users_Admin_House FOREIGN KEY (adminID) REFERENCES Users(id),
+			CONSTRAINT FK_Users_Manager_House FOREIGN KEY (managerID) REFERENCES Users(id),
 			CONSTRAINT FK_Users_Salesperson_House FOREIGN KEY (salespersonID) REFERENCES Users(id),
 			CONSTRAINT FK_House_Status FOREIGN KEY (statusID) REFERENCES House_Status(id)
 		);
@@ -94,20 +94,20 @@ BEGIN TRANSACTION
 		);
 
 		CREATE TABLE Manager_Products (
-			adminID		int		NOT NULL,
-			productID	int		NOT NULL,
-			CONSTRAINT PK_Manager_Products PRIMARY KEY (adminID, productID),
-			CONSTRAINT FK_Users_Manager_Products FOREIGN KEY (adminID) REFERENCES Users(id),
+			managerID		int		NOT NULL,
+			productID		int		NOT NULL,
+			CONSTRAINT PK_Manager_Products PRIMARY KEY (managerID, productID),
+			CONSTRAINT FK_Users_Manager_Products FOREIGN KEY (managerID) REFERENCES Users(id),
 			CONSTRAINT FK_Products_Manager_Products FOREIGN KEY (productID) REFERENCES Products(id)
 		);
 
 		CREATE TABLE Sales_Transactions (
-			id		int		IDENTITY(1,1) NOT NULL,
-			[date]	datetime	NOT NULL,
-			houseID	int	NOT NULL,
-			Amount	real	NOT NULL,
-			productID	int	NOT NULL,
-			salespersonID	int	NOT NULL,
+			id				int			IDENTITY(1,1) NOT NULL,
+			[date]			datetime	NOT NULL,
+			houseID			int			NOT NULL,
+			Amount			real		NOT NULL,
+			productID		int			NOT NULL,
+			salespersonID	int			NOT NULL,
 			CONSTRAINT PK_Sales_Transactions PRIMARY KEY (id),
 			CONSTRAINT FK_Houses_Sales_Transactions FOREIGN KEY (houseID) REFERENCES Houses(id),
 			CONSTRAINT FK_Products_Sales_Transactions FOREIGN KEY (productID) REFERENCES Products(id),

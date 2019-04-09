@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DoorToDoorLibrary.Logic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,21 +9,28 @@ namespace DoorToDoorWeb.Models
 {
     public class RegisterViewModel
     {
-        public int UserID { get; set; }
-
-        [Required(ErrorMessage = "*")]
+        [Display(Name = "First Name")]
+        [Required(ErrorMessage = ErrorConsts.BlankError)]
+        [MaxLength(ErrorConsts.MaxCharFifty, ErrorMessage = ErrorConsts.MaxFiftyError)]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "*")]
+        [Display(Name = "Last Name")]
+        [Required(ErrorMessage = ErrorConsts.BlankError)]
+        [MaxLength(ErrorConsts.MaxCharFifty, ErrorMessage = ErrorConsts.MaxFiftyError)]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "*")]
+        [Display(Name = "Email Address")]
+        [Required(ErrorMessage = ErrorConsts.BlankError)]
+        [MaxLength(ErrorConsts.MaxCharHundred, ErrorMessage = ErrorConsts.MaxHundredError)]
         public string EmailAddress { get; set; }
 
-        [Required(ErrorMessage = "*")]
+        [Display(Name = "Password")]
+        [Required(ErrorMessage = ErrorConsts.BlankError)]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "*")]
+        [Display(Name = "Confirm Password")]
+        [Required(ErrorMessage = ErrorConsts.BlankError)]
+        [Compare("Password", ErrorMessage = ErrorConsts.NoPasswordMatch)]
         public string ConfirmPassword { get; set; }
     }
 }

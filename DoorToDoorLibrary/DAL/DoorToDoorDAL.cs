@@ -24,6 +24,11 @@ namespace DoorToDoorLibrary.DAL
 
         #region User Methods
 
+        /// <summary>
+        /// Finds a single user in the database using the user's Email Address
+        /// </summary>
+        /// <param name="emailAddress">The desired user's Email Address</param>
+        /// <returns>UserItem containing the user's information</returns>
         public UserItem GetUserItem(string emailAddress)
         {
             UserItem user = null;
@@ -34,7 +39,8 @@ namespace DoorToDoorLibrary.DAL
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@EmailAddress", emailAddress);
-                var reader = cmd.ExecuteReader();
+
+                SqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
@@ -50,6 +56,11 @@ namespace DoorToDoorLibrary.DAL
             return user;
         }
 
+        /// <summary>
+        /// Generates a UserItem from the provided Sql Data Reader
+        /// </summary>
+        /// <param name="reader">The given Sql Data Reader</param>
+        /// <returns>UserItem containing the information for a particular user</returns>
         private UserItem GetUserItemFromReader(SqlDataReader reader)
         {
             UserItem item = new UserItem();
@@ -87,38 +98,63 @@ namespace DoorToDoorLibrary.DAL
         //    }
         //}
 
-        //public List<RegisterViewModel> GetUsers()
-        //{
-        //    List<RegisterViewModel> output = new List<RegisterViewModel>();
+        /// <summary>
+        /// Returns a list of all Manager-type users from the system for Admin use
+        /// </summary>
+        /// <returns>List of Mangaer users</returns>
+        public IList<UserItem> GetAllManagers()
+        {
+            List<UserItem> output = new List<UserItem>();
 
-        //    //Create a SqlConnection to our database
-        //    using (SqlConnection connection = new SqlConnection(connectionString))
-        //    {
-        //        connection.Open();
-        //        string getSurveySQLString = "select user.firstName, user.lastName" +
-        //                                    "from Users " +
-        //                                    "join Roles on Users.RoleID = Roles.id " +
-        //                                    "group by Role.id, order by firstName";
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
 
-        //        SqlCommand cmd = new SqlCommand(getSurveySQLString, connection);
+                string sql = "SELECT * FROM [Users] WHERE roleID = (SELECT id FROM Roles WHERE [name] = 'Manager');";
 
-        //        // Execute the query to the database
-        //        SqlDataReader reader = cmd.ExecuteReader();
+                SqlCommand cmd = new SqlCommand(sql, conn);
 
-        //        // The results come back as a SqlDataReader. Loop through each of the rows
-        //        // and add to the output list
-        //        while (reader.Read())
-        //        {
-        //            RegisterViewModel newuser = new RegisterViewModel();
-        //            newuser.FirstName = Convert.ToString(reader["firstName"]);
-        //            newuser.LastName = Convert.ToString(reader["lastName"]);
-        //            newuser.EmailAddress = Convert.ToInt32(reader["emailAddress"]);
-        //            newuser.Password = Convert.ToInt32(reader["password"]);
-        //            output.Add(newuser);
-        //        }
-        //    }
-        //    return output;
-        //}
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    UserItem newuser = GetUserItemFromReader(reader);
+                    output.Add(newuser);
+                }
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Returns a list of all Salesperson-type users from the system for a particular Manager
+        /// </summary>
+        /// <param name="managerID">Database ID of the Manager</param>
+        /// <returns>List of Salespeople under the given Manager</returns>
+        public IList<UserItem> GetMySalespeople(int managerID)
+        {
+            List<UserItem> output = new List<UserItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT * FROM [Users] WHERE id IN(SELECT salespersonID FROM Admin_Saleperson WHERE managerID = @ManagerID);";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ManagerID", managerID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    UserItem newuser = GetUserItemFromReader(reader);
+                    output.Add(newuser);
+                }
+            }
+
+            return output;
+        }
 
         #endregion
     }

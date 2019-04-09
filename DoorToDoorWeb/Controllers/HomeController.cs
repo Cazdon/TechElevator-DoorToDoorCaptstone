@@ -44,15 +44,15 @@ namespace DoorToDoorWeb.Controllers
 
                 if (Role.IsAdministrator)
                 {
-                    result = RedirectToAction("Index", "Administrator");
+                    result = RedirectToAction("Home", "Administrator");
                 }
                 else if (Role.IsManager)
                 {
-                    result = RedirectToAction("Index", "Manager");
+                    result = RedirectToAction("Home", "Manager");
                 }
                 else if (Role.IsSalesperson)
                 {
-                    result = RedirectToAction("Index", "Salesperson");
+                    result = RedirectToAction("Home", "Salesperson");
                 }
             }
             catch (Exception ex)
