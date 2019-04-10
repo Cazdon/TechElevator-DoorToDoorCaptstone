@@ -41,7 +41,7 @@ namespace DoorToDoorLibrary.DAL
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@EmailAddress", emailAddress);
+                cmd.Parameters.AddWithValue("@EmailAddress", emailAddress.ToLower());
 
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -81,10 +81,12 @@ namespace DoorToDoorLibrary.DAL
         }
 
 
-        public int AddUserItem(UserItem item)
+        public void RegisterNewUser(UserItem item)
         {
-            const string sql = "INSERT [User] (FirstName, LastName, EmailAddress, Hash, Salt, RoleId) " +
-                               "VALUES (@FirstName, @LastName, @EmailAddress, @Hash, @Salt, @RoleId);";
+            int ID = 0;
+
+            const string sql = "INSERT INTO [Users] (firstName, lastName, emailAddress, hash, salt, roleID, updatePassword) " +
+                               "VALUES (@FirstName, @LastName, @EmailAddress, @Hash, @Salt, @RoleId, 1);";
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
@@ -92,35 +94,21 @@ namespace DoorToDoorLibrary.DAL
                 SqlCommand cmd = new SqlCommand(sql + " " + _getLastIdSql, conn);
                 cmd.Parameters.AddWithValue("@FirstName",  item.FirstName);
                 cmd.Parameters.AddWithValue("@LastName", item.LastName);
-                cmd.Parameters.AddWithValue("@EmailAddress", item.EmailAddress);
+                cmd.Parameters.AddWithValue("@EmailAddress", item.EmailAddress.ToLower());
                 cmd.Parameters.AddWithValue("@Hash", item.Hash);
                 cmd.Parameters.AddWithValue("@Salt", item.Salt);
                 cmd.Parameters.AddWithValue("@RoleId", item.RoleId);
-                item.Id = (int)cmd.ExecuteScalar();
+
+                try
+                {
+                    ID = (int)cmd.ExecuteScalar();
+                }
+                catch(Exception ex)
+                {
+                    throw ex;
+                }
             }
-
-            return item.Id;
         }
-        //public void RegisterNewUser(RegisterViewModel newuser)
-        //{
-        //    // Create a new connection object
-        //    using (SqlConnection conn = new SqlConnection(connectionString))
-        //    {
-        //        // Open the connection
-        //        conn.Open();
-        //        string saveSurvey = "INSERT into Users (firstName,lastName,emailAddress)" +
-        //            "VALUES (@,@FirstName,@LastName,@EmailAddress)";
-
-        //        SqlCommand cmd = new SqlCommand(saveSurvey, conn);
-
-        //        cmd.Parameters.AddWithValue("@firstName", newuser.FirstName);
-        //        cmd.Parameters.AddWithValue("@lastName", newuser.LastName);
-        //        cmd.Parameters.AddWithValue("@emailAddress", newuser.EmailAddress);
-        //        //cmd.Parameters.AddWithValue("@password", newuser.Password);
-
-        //        cmd.ExecuteScalar();
-        //    }
-        //}
 
         /// <summary>
         /// Returns a list of all Manager-type users from the system for Admin use

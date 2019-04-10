@@ -11,10 +11,13 @@
     <title>@RenderSection("Title", required: true)</title>
 </head>
 <body>
-    @RenderSection("NavBar", required: true)
-    <div class="container body-content">
+    <header>
+        <h1>Door To Door Sales Tracker</h1>
+        @RenderSection("NavBar", required: true)
+    </header>
+    <main class="container body-content">
         @RenderBody()
-    </div>
+    </main>
     <footer>
         <p>&copy; Door To Door Sales Tracker - 2019</p>
     </footer>

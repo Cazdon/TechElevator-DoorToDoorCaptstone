@@ -77,7 +77,7 @@ namespace DoorToDoorWeb.Controllers
             UserItem userItem = null;
             try
             {
-                userItem = _db.GetUserItem(userModel.Username);
+                userItem = _db.GetUserItem(userModel.EmailAddress);
             }
             catch (Exception)
             {
@@ -98,14 +98,13 @@ namespace DoorToDoorWeb.Controllers
             {
                 FirstName = userModel.FirstName,
                 LastName = userModel.LastName,
-                EmailAddress = userModel.Email,
+                EmailAddress = userModel.EmailAddress,
                 Salt = passHelper.Salt,
                 Hash = passHelper.Hash,
-                RoleId = (int)RoleManager.eRole.Salesperson
+                RoleId = userModel.RoleId
             };
 
-            _db.AddUserItem(newUser);
-            LoginUser(newUser.Username, userModel.Password);
+            _db.RegisterNewUser(newUser);
         }
 
         /// <summary>
