@@ -80,6 +80,27 @@ namespace DoorToDoorLibrary.DAL
             return item;
         }
 
+
+        public int AddUserItem(UserItem item)
+        {
+            const string sql = "INSERT [User] (FirstName, LastName, EmailAddress, Hash, Salt, RoleId) " +
+                               "VALUES (@FirstName, @LastName, @EmailAddress, @Hash, @Salt, @RoleId);";
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(sql + " " + _getLastIdSql, conn);
+                cmd.Parameters.AddWithValue("@FirstName",  item.FirstName);
+                cmd.Parameters.AddWithValue("@LastName", item.LastName);
+                cmd.Parameters.AddWithValue("@EmailAddress", item.EmailAddress);
+                cmd.Parameters.AddWithValue("@Hash", item.Hash);
+                cmd.Parameters.AddWithValue("@Salt", item.Salt);
+                cmd.Parameters.AddWithValue("@RoleId", item.RoleId);
+                item.Id = (int)cmd.ExecuteScalar();
+            }
+
+            return item.Id;
+        }
         //public void RegisterNewUser(RegisterViewModel newuser)
         //{
         //    // Create a new connection object

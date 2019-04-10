@@ -14,6 +14,8 @@ namespace DoorToDoorLibrary.DAL
         /// <returns>UserItem containing the user's information</returns>
         UserItem GetUserItem(string emailAddress);
 
+        int AddUserItem(UserItem item);
+
         /// <summary>
         /// Returns a list of all Manager-type users from the system for Admin use
         /// </summary>

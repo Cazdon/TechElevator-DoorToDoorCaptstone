@@ -6,6 +6,7 @@ using DoorToDoorLibrary.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace DoorToDoorWeb.Controllers
 {
     public class AuthController : SessionController
@@ -71,41 +72,41 @@ namespace DoorToDoorWeb.Controllers
         /// Adds a new user to the Door to Door sales system
         /// </summary>
         /// <param name="userModel">Model that contains all the user information</param>
-        //public void RegisterUser(User userModel)
-        //{
-        //    UserItem userItem = null;
-        //    try
-        //    {
-        //        userItem = _db.GetUserItem(userModel.Username);
-        //    }
-        //    catch (Exception)
-        //    {
-        //    }
+        public void RegisterUser(User userModel)
+        {
+            UserItem userItem = null;
+            try
+            {
+                userItem = _db.GetUserItem(userModel.Username);
+            }
+            catch (Exception)
+            {
+            }
 
-        //    if (userItem != null)
-        //    {
-        //        throw new UserExistsException("The username is already taken.");
-        //    }
+            if (userItem != null)
+            {
+                throw new UserExistsException("The username is already taken.");
+            }
 
-        //    if (userModel.Password != userModel.ConfirmPassword)
-        //    {
-        //        throw new PasswordMatchException("The password and confirm password do not match.");
-        //    }
+            if (userModel.Password != userModel.ConfirmPassword)
+            {
+                throw new PasswordMatchException("The password and confirm password do not match.");
+            }
 
-        //    PasswordManager passHelper = new PasswordManager(userModel.Password);
-        //    UserItem newUser = new UserItem()
-        //    {
-        //        FirstName = userModel.FirstName,
-        //        LastName = userModel.LastName,
-        //        EmailAddress = userModel.Email,
-        //        Salt = passHelper.Salt,
-        //        Hash = passHelper.Hash,
-        //        RoleId = (int)RoleManager.eRole.Customer
-        //    };
+            PasswordManager passHelper = new PasswordManager(userModel.Password);
+            UserItem newUser = new UserItem()
+            {
+                FirstName = userModel.FirstName,
+                LastName = userModel.LastName,
+                EmailAddress = userModel.Email,
+                Salt = passHelper.Salt,
+                Hash = passHelper.Hash,
+                RoleId = (int)RoleManager.eRole.Salesperson
+            };
 
-        //    _db.AddUserItem(newUser);
-        //    LoginUser(newUser.Username, userModel.Password);
-        //}
+            _db.AddUserItem(newUser);
+            LoginUser(newUser.Username, userModel.Password);
+        }
 
         /// <summary>
         /// Logs a user into the Door to Door sales tracker system and throws exceptions on any failures
