@@ -34,10 +34,10 @@ BEGIN TRANSACTION
 			CONSTRAINT FK_Roles FOREIGN KEY (roleID) REFERENCES Roles(id)
 		);
 
-		CREATE TABLE Admin_Saleperson (
+		CREATE TABLE Manager_Saleperson (
 			managerID			int		NOT NULL,
 			salespersonID		int		NOT NULL,
-			CONSTRAINT PK_Admin_Salesperson PRIMARY KEY (managerID, salespersonID),
+			CONSTRAINT PK_Manager_Salesperson PRIMARY KEY (managerID, salespersonID),
 			CONSTRAINT FK_Users_Manager FOREIGN KEY (managerID) REFERENCES Users(id),
 			CONSTRAINT FK_Users_Salesperson FOREIGN KEY (salespersonID) REFERENCES Users(id)
 		);
