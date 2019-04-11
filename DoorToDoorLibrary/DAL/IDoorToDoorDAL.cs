@@ -7,6 +7,7 @@ namespace DoorToDoorLibrary.DAL
 {
     public interface IDoorToDoorDAL
     {
+        #region User Methods
         /// <summary>
         /// Finds a single user in the database using the user's Email Address
         /// </summary>
@@ -56,10 +57,27 @@ namespace DoorToDoorLibrary.DAL
         /// <param name="SalespersonID">User ID of the Salesperson</param>
         void PairManagerWithSalesperson(int managerID, int SalespersonID);
 
+        #endregion
+
+        #region Houses Methods
+
         /// <summary>
         /// Returns a list of all Houses from the system entered by the Manager
         /// </summary>
         /// <returns>List of Mangaer users</returns>
         IList<HouseItem> GetAllHouses(int managerID);
+
+        #endregion
+
+        #region SalesTransaction Methods
+
+        /// <summary>
+        /// Generates the data of salesman transactions, relevant to the specific Manager.
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>A list of Sales Transactions from salesmen belonging to the passed in Manager ID</returns>
+        IList<SalesTransactionItem> GetSalesmanTransactionData(int managerID);
+
+        #endregion
     }
 }
