@@ -1,4 +1,5 @@
 ﻿using DoorToDoorLibrary.DatabaseObjects;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,6 +35,13 @@ namespace DoorToDoorLibrary.DAL
         /// <param name="managerID">Database ID of the Manager</param>
         /// <returns>List of Salespeople under the given Manager</returns>
         IList<UserItem> GetMySalespeople(int managerID);
+
+        /// <summary>
+        /// Returns a Select List of all Salesperson-type users from the system for a particular Manager
+        /// </summary>
+        /// <param name="managerID">Database ID of the Manager</param>
+        /// <returns>Select List of Salespeople under the given Manager</returns>
+        IList<SelectListItem> GetMySalespeopleOptions(int managerID);
 
         /// <summary>
         /// Set's the user's Reset Password flag. Throws error if unsuccessful

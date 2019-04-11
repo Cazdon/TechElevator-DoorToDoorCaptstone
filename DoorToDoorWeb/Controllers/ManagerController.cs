@@ -33,6 +33,7 @@ namespace DoorToDoorWeb.Controllers
             ManagerHousesListViewModel houseListModel = new ManagerHousesListViewModel();
             houseListModel.Houses = _db.GetAllHouses(CurrentUser.Id);
             houseListModel.CreatedHouse = new CreateHouseViewModel();
+            houseListModel.PossibleSalespeople = _db.GetMySalespeopleOptions(CurrentUser.Id);
 
             return houseListModel;
         }
@@ -70,7 +71,7 @@ namespace DoorToDoorWeb.Controllers
         [HttpGet]
         public IActionResult Houses()
         {
-            ActionResult result = GetAuthenticatedView("Salespeople", CreateManagerHousesListViewModel());
+            ActionResult result = GetAuthenticatedView("Houses", CreateManagerHousesListViewModel());
 
             if (Role.IsManager)
             {

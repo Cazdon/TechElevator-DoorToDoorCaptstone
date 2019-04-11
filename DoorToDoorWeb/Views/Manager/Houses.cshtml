@@ -5,28 +5,44 @@
 @model ManagerHousesListViewModel
 @using DoorToDoorLibrary.DatabaseObjects
 
-<form asp-controller="Manager" asp-action="CreateHouse" method="post" id="manager-create-house">
-    <label asp-for="CreatedHouse.Street"></label>
-    <input asp-for="CreatedHouse.Street" type="text" />
-    <span asp-validation-for="CreatedHouse.Street"></span>
-    <label asp-for="CreatedHouse.City"></label>
-    <input asp-for="CreatedHouse.City" type="text" />
-    <span asp-validation-for="CreatedHouse.City"></span>
-    <label asp-for="CreatedHouse.District"></label>
-    <input asp-for="CreatedHouse.District" type="text" />
-    <span asp-validation-for="CreatedHouse.District"></span>
-    <label asp-for="CreatedHouse.ZipCode"></label>
-    <input asp-for="CreatedHouse.ZipCode" type="text" />
-    <span asp-validation-for="CreatedHouse.ZipCode"></span>
-    <label asp-for="CreatedHouse.Country"></label>
-    <input asp-for="CreatedHouse.Country" type="text" />
-    <span asp-validation-for="CreatedHouse.Country"></span>
-
-    <button>Create House</button>
-    <span>
-        @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
-    </span>
-</form>
+    <form asp-controller="Manager" asp-action="CreateHouse" method="post" id="manager-create-house">
+        <div class="form-group">
+            <label asp-for="CreatedHouse.Street"></label>
+            <input asp-for="CreatedHouse.Street" type="text" />
+            <span asp-validation-for="CreatedHouse.Street"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CreatedHouse.City"></label>
+            <input asp-for="CreatedHouse.City" type="text" />
+            <span asp-validation-for="CreatedHouse.City"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CreatedHouse.District"></label>
+            <input asp-for="CreatedHouse.District" type="text" />
+            <span asp-validation-for="CreatedHouse.District"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CreatedHouse.ZipCode"></label>
+            <input asp-for="CreatedHouse.ZipCode" type="text" />
+            <span asp-validation-for="CreatedHouse.ZipCode"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CreatedHouse.Country"></label>
+            <input asp-for="CreatedHouse.Country" type="text" />
+            <span asp-validation-for="CreatedHouse.Country"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CreatedHouse.AssignedSalespersonID"></label>
+            <select asp-for="CreatedHouse.AssignedSalespersonID" asp-items="Model.PossibleSalespeople"></select>
+            <span asp-validation-for="CreatedHouse.AssignedSalespersonID"></span>
+        </div>
+        <div class="form-group">
+            <button>Create House</button>
+            <span>
+                @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
+            </span>
+        </div>
+    </form>
 <h2>My Houses:</h2>
 @*<div class="container">
     <span>
@@ -48,21 +64,16 @@
             <div class="house-list-salesperson">Assigned Salesperson</div>
         </li>
         @{
-            @*foreach (UserItem user in Model.Salespeople)
+            foreach (HouseItem house in Model.Houses)
             {
-                <li class="manager-list-item">
-                    <div class="salespeople-list-first-name">@(user.FirstName)</div>
-                    <div class="salespeople-list-last-name">@(user.LastName)</div>
-                    <div class="salespeople-list-email">@(user.EmailAddress)</div>
-                    <form asp-controller="Manager" asp-action="ResetPassword" method="post" id="manager-update-password-form@(user.Id)" class="salespeople-list-reset">
-                        <input type="hidden" value="@(user.Id)" name="userID" />
-                        <button>Reset Password</button>
-                        <span>
-                            @Html.ValidationMessage($"resetFailed{user.Id}", new { @class = "field-validation-error" })
-                        </span>
-                    </form>
+                <li class="house-list-item">
+                    <div class="house-list-street">@(house.Street)</div>
+                    <div class="house-list-city">@(house.City)</div>
+                    <div class="house-list-district">@(house.District)</div>
+                    <div class="house-list-country">@(house.Country)</div>
+                    <div class="house-list-salesperson">@(house.AssignedSalesperson)</div>
                 </li>
-            }*@
+            }
         }
     </ul>
 </div>

@@ -5,27 +5,40 @@
 @model AdminManagerListViewModel
 @using DoorToDoorLibrary.DatabaseObjects
 
-<form asp-controller="Administrator" asp-action="RegisterManager" method="post" id="admin-create-manager">
-    <label asp-for="Register.FirstName"></label>
-    <input asp-for="Register.FirstName" type="text" />
-    <span asp-validation-for="Register.FirstName"></span>
-    <label asp-for="Register.LastName"></label>
-    <input asp-for="Register.LastName" type="text" />
-    <span asp-validation-for="Register.LastName"></span>
-    <label asp-for="Register.EmailAddress"></label>
-    <input asp-for="Register.EmailAddress" type="email" />
-    <span asp-validation-for="Register.EmailAddress"></span>
-    <label asp-for="Register.Password"></label>
-    <input asp-for="Register.Password" type="password" />
-    <span asp-validation-for="Register.Password"></span>
-    <label asp-for="Register.ConfirmPassword"></label>
-    <input asp-for="Register.ConfirmPassword" type="password" />
-    <span asp-validation-for="Register.ConfirmPassword"></span>
-    <button>Create User</button>
-    <span>
-        @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
-    </span>
-</form><h2>Registered Managers:</h2>
+    <form asp-controller="Administrator" asp-action="RegisterManager" method="post" id="admin-create-manager">
+        <div class="form-group">
+            <label asp-for="Register.FirstName"></label>
+            <input asp-for="Register.FirstName" type="text" />
+            <span asp-validation-for="Register.FirstName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Register.LastName"></label>
+            <input asp-for="Register.LastName" type="text" />
+            <span asp-validation-for="Register.LastName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Register.EmailAddress"></label>
+            <input asp-for="Register.EmailAddress" type="email" />
+            <span asp-validation-for="Register.EmailAddress"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Register.Password"></label>
+            <input asp-for="Register.Password" type="password" />
+            <span asp-validation-for="Register.Password"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Register.ConfirmPassword"></label>
+            <input asp-for="Register.ConfirmPassword" type="password" />
+            <span asp-validation-for="Register.ConfirmPassword"></span>
+        </div>
+        <div class="form-group">
+            <button>Create User</button>
+            <span>
+                @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
+            </span>
+        </div>
+    </form>
+<h2>Registered Managers:</h2>
 <div class="container">
     <span>
         @Html.ValidationMessage("resetFailed", new { @class = "field-validation-error" })

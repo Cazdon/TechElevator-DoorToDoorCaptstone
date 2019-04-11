@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using DoorToDoorLibrary.Exceptions;
 using DoorToDoorLibrary.DatabaseObjects;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DoorToDoorLibrary.DAL
 {
@@ -168,6 +169,39 @@ namespace DoorToDoorLibrary.DAL
                 {
                     UserItem newuser = GetUserItemFromReader(reader);
                     output.Add(newuser);
+                }
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Returns a Select List of all Salesperson-type users from the system for a particular Manager
+        /// </summary>
+        /// <param name="managerID">Database ID of the Manager</param>
+        /// <returns>Select List of Salespeople under the given Manager</returns>
+        public IList<SelectListItem> GetMySalespeopleOptions(int managerID)
+        {
+            List<SelectListItem> output = new List<SelectListItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT firstName, lastName, [id] FROM [Users] WHERE id IN(SELECT salespersonID FROM Manager_Saleperson WHERE managerID = @ManagerID);";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ManagerID", managerID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string salespersonName = Convert.ToString(reader["firstName"]) + " " + Convert.ToString(reader["lastName"]);
+                    int salespersonID = Convert.ToInt32(reader["id"]);
+                    SelectListItem item = new SelectListItem(salespersonName, salespersonID.ToString());
+                    
+                    output.Add(item);
                 }
             }
 
