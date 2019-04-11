@@ -81,3 +81,42 @@ body {
 .manager-list-reset {
     grid-area: reset
 }
+
+
+
+
+#manger-salespeople-list {
+    padding: 0;
+    list-style: none;
+}
+
+    #manager-salespeople-list > :first-child {
+        font-weight: bold;
+    }
+
+    #manager-salespeople-list > :nth-child(even) {
+        background-color: lightsteelblue;
+    }
+
+.salespeople-list-item {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 2fr 1fr 2fr 1fr 2fr 1fr;
+    grid-template-areas: ". first . last . email . reset .";
+}
+
+.salespeople-list-first-name {
+    grid-area: first;
+}
+
+.salespeople-list-last-name {
+    grid-area: last;
+}
+
+.salespeople-list-email {
+    grid-area: email
+}
+
+.salespeople-list-reset {
+    grid-area: reset
+}

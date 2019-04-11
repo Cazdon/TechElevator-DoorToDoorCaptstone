@@ -1,0 +1,21 @@
+﻿@section Title{Reset Password}
+@section NavBar{
+    <partial name="~/Views/Home/HomePartials/HomeNavBar.cshtml" />
+}
+@model ResetPasswordViewModel
+
+<h4>Please Reset your Password</h4>
+
+<form asp-controller="Home" asp-action="Reset" method="post" id="password-reset-form">
+    <input type="hidden" asp-for="EmailAddress" value="@(Model.EmailAddress)" />
+    <label asp-for="Password"></label>
+    <input asp-for="Password" type="password" />
+    <span asp-validation-for="Password"></span>
+    <label asp-for="ConfirmPassword"></label>
+    <input asp-for="ConfirmPassword" type="password" />
+    <span asp-validation-for="ConfirmPassword"></span>
+    <button>Login</button>
+    <span>
+        @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
+    </span>
+</form>

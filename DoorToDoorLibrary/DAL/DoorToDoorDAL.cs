@@ -80,8 +80,12 @@ namespace DoorToDoorLibrary.DAL
             return item;
         }
 
-
-        public void RegisterNewUser(UserItem item)
+        /// <summary>
+        /// Creates a new User in the database
+        /// </summary>
+        /// <param name="item">The user to be created</param>
+        /// <returns>ID of the created User</returns>
+        public int RegisterNewUser(UserItem item)
         {
             int ID = 0;
 
@@ -108,6 +112,8 @@ namespace DoorToDoorLibrary.DAL
                     throw ex;
                 }
             }
+
+            return ID;
         }
 
         /// <summary>
@@ -191,6 +197,62 @@ namespace DoorToDoorLibrary.DAL
             if (numRows != 1)
             {
                 throw new MarkResetPasswordFailedException();
+            }
+        }
+
+        /// <summary>
+        /// Reset's the given User's Password values
+        /// </summary>
+        /// <param name="emailAddress">Email Address of the User</param>
+        /// <param name="salt">New Salt value for the User</param>
+        /// <param name="hash">New Hash value for the User</param>
+        /// <returns>True if successful, false if unsuccessful</returns>
+        public bool ResetPassword(string emailAddress, string salt, string hash)
+        {
+            int numRows = 0;
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "UPDATE Users SET salt = @Salt, hash = @Hash, updatePassword = 0 WHERE emailAddress = @EmailAddress;";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Salt", salt);
+                cmd.Parameters.AddWithValue("@Hash", hash);
+                cmd.Parameters.AddWithValue("@EmailAddress", emailAddress);
+
+                numRows = cmd.ExecuteNonQuery();
+            }
+
+            return numRows == 1 ? true : false;
+        }
+
+        /// <summary>
+        /// Pairs the current logged in Manager with the newly created Salesperson
+        /// </summary>
+        /// <param name="managerID">User ID of the Manager</param>
+        /// <param name="SalespersonID">User ID of the Salesperson</param>
+        public void PairManagerWithSalesperson(int managerID, int SalespersonID)
+        {
+            int numRows = 0;
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "INSERT INTO [Manager_Saleperson] (managerID, salespersonID) VALUES (@ManagerID, @SalespersonID);";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ManagerID", managerID);
+                cmd.Parameters.AddWithValue("@SalespersonID", SalespersonID);
+
+                numRows = cmd.ExecuteNonQuery();
+            }
+
+            if (numRows != 1)
+            {
+                throw new ManagerSalespersonLinkFailedException();
             }
         }
 

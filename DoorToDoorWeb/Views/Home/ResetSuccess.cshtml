@@ -1,0 +1,11 @@
+﻿@section Title{Reset Password}
+@section NavBar{
+    <partial name="~/Views/Home/HomePartials/HomeNavBar.cshtml" />
+}
+@model ResetPasswordViewModel
+
+<h4>Successfully Reset Password!</h4>
+
+<form asp-controller="Home" asp-action="ResetRedirect" method="post" id="password-reset-redirect">
+    <button>Continue</button>
+</form>

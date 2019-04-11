@@ -1,11 +1,11 @@
-﻿@section Title {Home - Admin}
+﻿@section Title {Home - Manager}
 @section NavBar{
-    <partial name="~/Views/Administrator/Partials/AdminNavBar.cshtml" />
+    <partial name="~/Views/Manager/Partials/ManagerNavBar.cshtml" />
 }
-@model AdminManagerListViewModel
+@model ManagerSalespersonListViewModel
 @using DoorToDoorLibrary.Models
 
-<form asp-controller="Administrator" asp-action="RegisterManager" method="post" id="admin-create-manager">
+<form asp-controller="Manager" asp-action="RegisterSalesperson" method="post" id="manager-create-salesperson">
     <label asp-for="Register.FirstName"></label>
     <input asp-for="Register.FirstName" type="text" />
     <span asp-validation-for="Register.FirstName"></span>
@@ -25,7 +25,8 @@
     <span>
         @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
     </span>
-</form><h2>Registered Managers:</h2>
+</form>
+<h2>Registered Salespeople:</h2>
 <div class="container">
     <span>
         @Html.ValidationMessage("resetFailed", new { @class = "field-validation-error" })
@@ -37,26 +38,19 @@
 </div>
 
 <div class="container">
-    <ul id="admin-manager-list">
-        <li class="manager-list-item">
-            <div class="manager-list-first-name">First Name</div>
-            <div class="manager-list-last-name">Last Name</div>
-            <div class="manager-list-email">Email Addresss</div>
+    <ul id="manager-salespeople-list">
+        <li class="salespeople-list-item">
+            <div class="salespeople-list-first-name">First Name</div>
+            <div class="salespeople-list-last-name">Last Name</div>
+            <div class="salespeople-list-email">Email Addresss</div>
         </li>
         @{
-            foreach (UserItem user in Model.Managers)
+            foreach (UserItem user in Model.Salespeople)
             {
                 <li class="manager-list-item">
-                    <div class="manager-list-first-name">@(user.FirstName)</div>
-                    <div class="manager-list-last-name">@(user.LastName)</div>
-                    <div class="manager-list-email">@(user.EmailAddress)</div>
-                    <form asp-controller="Administrator" asp-action="ResetPassword" method="post" id="admin-update-password-form@(user.Id)" class="manager-list-reset">
-                        <input type="hidden" value="@(user.Id)" name="userID" />
-                        <button>Reset Password</button>
-                        <span>
-                            @Html.ValidationMessage($"resetFailed{user.Id}", new { @class = "field-validation-error" })
-                        </span>
-                    </form>
+                    <div class="salespeople-list-first-name">@(user.FirstName)</div>
+                    <div class="salespeople-list-last-name">@(user.LastName)</div>
+                    <div class="salespeople-list-email">@(user.EmailAddress)</div>
                 </li>
             }
         }
