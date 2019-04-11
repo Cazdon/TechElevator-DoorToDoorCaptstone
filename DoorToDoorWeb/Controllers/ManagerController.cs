@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DoorToDoorLibrary.DAL;
+using DoorToDoorLibrary.DatabaseObjects;
 using DoorToDoorLibrary.Logic;
 using DoorToDoorLibrary.Models;
 using DoorToDoorWeb.Models;
@@ -27,6 +28,7 @@ namespace DoorToDoorWeb.Controllers
             return salespeoplelist;
         }
 
+
         private ManagerDashboardViewModel CreateManagerDashboardViewModel()
         {
             ManagerDashboardViewModel dashboard = new ManagerDashboardViewModel();
@@ -34,6 +36,16 @@ namespace DoorToDoorWeb.Controllers
             dashboard.TotalSales = _db.GetTotalSales(CurrentUser.Id);
 
             return dashboard;
+        }
+
+        private ManagerHousesListViewModel CreateManagerHousesListViewModel()
+        {
+            ManagerHousesListViewModel houseListModel = new ManagerHousesListViewModel();
+            houseListModel.Houses = _db.GetAllHouses(CurrentUser.Id);
+            houseListModel.CreatedHouse = new CreateHouseViewModel();
+
+            return houseListModel;
+
         }
 
         [HttpGet]
@@ -66,20 +78,31 @@ namespace DoorToDoorWeb.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Houses()
+        {
+            ActionResult result = GetAuthenticatedView("Salespeople", CreateManagerHousesListViewModel());
+
+            if (Role.IsManager)
+            {
+                return result;
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+        }
+
         [HttpPost]
         public ActionResult RegisterSalesperson(ManagerSalespersonListViewModel model)
         {
-            ActionResult result = null;
+            ActionResult result = View("Salespeople", CreateManagerSalespersonListViewModel()); ;
 
             if (Role.IsManager)
             {
                 try
                 {
-                    if (!ModelState.IsValid)
-                    {
-                        result = View("Salespeople", CreateManagerSalespersonListViewModel());
-                    }
-                    else
+                    if (ModelState.IsValid)
                     {
                         User newUser = new User()
                         {
@@ -101,8 +124,6 @@ namespace DoorToDoorWeb.Controllers
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("invalid", ex.Message);
-
-                    result = View("Salespeople", CreateManagerSalespersonListViewModel());
                 }
             }
             else
@@ -134,6 +155,46 @@ namespace DoorToDoorWeb.Controllers
                     ModelState.AddModelError($"resetFailed{userID}", ex.Message);
 
                     result = RedirectToAction("Salespeople", CreateManagerSalespersonListViewModel());
+                }
+            }
+            else
+            {
+                result = RedirectToAction("Login", "Home");
+            }
+
+            return result;
+        }
+
+        [HttpPost]
+        public ActionResult CreateHouse(ManagerHousesListViewModel model)
+        {
+            ActionResult result = View("Houses", CreateManagerHousesListViewModel());
+
+            if (Role.IsManager)
+            {
+                try
+                {
+                    if (ModelState.IsValid)
+                    {
+                        HouseItem newHouse = new HouseItem()
+                        {
+                            Street = model.CreatedHouse.Street,
+                            City = model.CreatedHouse.City,
+                            District = model.CreatedHouse.District,
+                            ZipCode = model.CreatedHouse.ZipCode,
+                            Country = model.CreatedHouse.Country,
+                            ManagerID = CurrentUser.Id,
+                            AssignedSalespersonID = model.CreatedHouse.AssignedSalespersonID
+                        };
+
+                        _db.CreateHouse(newHouse);
+
+                        result = RedirectToAction("Houses", CreateManagerHousesListViewModel());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("invalid", ex.Message);
                 }
             }
             else

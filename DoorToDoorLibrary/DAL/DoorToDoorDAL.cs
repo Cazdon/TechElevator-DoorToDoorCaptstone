@@ -256,15 +256,120 @@ namespace DoorToDoorLibrary.DAL
             }
         }
 
+        private bool IsMySalesperson(int salespersonID, int managerID)
+        {
+            foreach(UserItem user in GetMySalespeople(managerID))
+            {
+                if(user.Id == salespersonID)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         #endregion
 
         #region House Methods
 
+        /// <summary>
+        /// Returns a list of Houses associated to the given Manager
+        /// </summary>
+        /// <param name="managerID">User ID of the Manager</param>
+        /// <returns>List of Houses associated to that Manager</returns>
         public IList<HouseItem> GetAllHouses(int managerID)
         {
             List<HouseItem> houseList = new List<HouseItem>();
 
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT h.*, (u.firstName + ' ' + u.lastName) AS salespersonName " +
+                    "FROM[Houses] AS h JOIN[Users] AS u ON h.salespersonID = u.id " +
+                    "WHERE h.managerID = @ManagerID;";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ManagerID", managerID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    HouseItem newHouse = GetHouseItemFromReader(reader);
+                    houseList.Add(newHouse);
+                }
+            }
+
             return houseList;
+        }
+
+        /// <summary>
+        /// Generates a HouseItem from the provided Sql Data Reader
+        /// </summary>
+        /// <param name="reader">The given Sql Data Reader</param>
+        /// <returns>HouseItem containing the information for a particular hosue</returns>
+        private HouseItem GetHouseItemFromReader(SqlDataReader reader)
+        {
+            HouseItem item = new HouseItem();
+
+            item.Id = Convert.ToInt32(reader["id"]);
+            item.Street = Convert.ToString(reader["street"]);
+            item.City = Convert.ToString(reader["city"]);
+            item.District = Convert.ToString(reader["district"]);
+            item.ZipCode = Convert.ToString(reader["zipCode"]);
+            item.Country = Convert.ToString(reader["country"]);
+            item.ManagerID = Convert.ToInt32(reader["managerID"]);
+            item.AssignedSalespersonID = Convert.ToInt32(reader["salespersonID"]);
+            item.StatusID = Convert.ToInt32(reader["statusID"]);
+            item.AssignedSalesperson = Convert.ToString(reader["salespersonName"]);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Creates a new House in the database
+        /// </summary>
+        /// <param name="item">The House to be created</param>
+        /// <returns>ID of the created House</returns>
+        public int CreateHouse(HouseItem item)
+        {
+            if (IsMySalesperson(item.AssignedSalespersonID, item.ManagerID))
+            {
+                int ID = 0;
+
+                const string sql = "INSERT INTO [Houses] (street, city, district, zipCode, country, managerID, salespersonID, statusID) " +
+                                   "VALUES (@Street, @City, @District, @ZipCode, @Country, @ManagerID, @SalespersonID, 1);";
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql + " " + _getLastIdSql, conn);
+                    cmd.Parameters.AddWithValue("@Street", item.Street);
+                    cmd.Parameters.AddWithValue("@City", item.City);
+                    cmd.Parameters.AddWithValue("@District", item.District.ToLower());
+                    cmd.Parameters.AddWithValue("@ZipCode", item.ZipCode);
+                    cmd.Parameters.AddWithValue("@Country", item.Country);
+                    cmd.Parameters.AddWithValue("@ManagerID", item.ManagerID);
+                    cmd.Parameters.AddWithValue("@SalespersonID", item.AssignedSalespersonID);
+
+                    try
+                    {
+                        ID = (int)cmd.ExecuteScalar();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+
+                return ID;
+            }
+            else
+            {
+                throw new NotMySalespersonException();
+            }
         }
 
         #endregion

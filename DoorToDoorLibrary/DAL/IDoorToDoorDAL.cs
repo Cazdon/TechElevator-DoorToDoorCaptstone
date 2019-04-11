@@ -62,10 +62,18 @@ namespace DoorToDoorLibrary.DAL
         #region Houses Methods
 
         /// <summary>
-        /// Returns a list of all Houses from the system entered by the Manager
+        /// Returns a list of Houses associated to the given Manager
         /// </summary>
-        /// <returns>List of Mangaer users</returns>
+        /// <param name="managerID">User ID of the Manager</param>
+        /// <returns>List of Houses associated to that Manager</returns>
         IList<HouseItem> GetAllHouses(int managerID);
+
+        /// <summary>
+        /// Creates a new House in the database
+        /// </summary>
+        /// <param name="item">The House to be created</param>
+        /// <returns>ID of the created House</returns>
+        int CreateHouse(HouseItem item);
 
         #endregion
 

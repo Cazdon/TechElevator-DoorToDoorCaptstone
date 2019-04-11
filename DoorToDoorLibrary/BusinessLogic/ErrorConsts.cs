@@ -18,6 +18,16 @@ namespace DoorToDoorLibrary.Logic
         public const string NoPasswordMatch = "Password and Confirm Password must match";
 
         /// <summary>
+        /// Integer for ten character input field limit
+        /// </summary>
+        public const int MaxCharTen = 10;
+
+        /// <summary>
+        /// Error message for exceeding ten characters
+        /// </summary>
+        public const string MaxTenError = "Field must not exceed 10 characters";
+
+        /// <summary>
         /// Integer for fifty character input field limit
         /// </summary>
         public const int MaxCharFifty = 50;
