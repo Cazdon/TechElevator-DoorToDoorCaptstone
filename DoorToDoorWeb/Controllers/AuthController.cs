@@ -72,7 +72,7 @@ namespace DoorToDoorWeb.Controllers
         /// Adds a new user to the Door to Door sales system
         /// </summary>
         /// <param name="userModel">Model that contains all the user information</param>
-        public void RegisterUser(User userModel)
+        public int RegisterUser(User userModel)
         {
             UserItem userItem = null;
             try
@@ -104,7 +104,7 @@ namespace DoorToDoorWeb.Controllers
                 RoleId = userModel.RoleId
             };
             
-            _db.RegisterNewUser(newUser);
+            return _db.RegisterNewUser(newUser);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace DoorToDoorWeb.Controllers
         }
 
         /// <summary>
-        /// Logs the current user out of the vending machine system
+        /// Logs the current user out of the Door to Door Sales Tracker system
         /// </summary>
         public void LogoutUser()
         {

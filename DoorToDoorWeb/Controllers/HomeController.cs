@@ -180,6 +180,14 @@ namespace DoorToDoorWeb.Controllers
             return result;
         }
 
+        [HttpGet]
+        public ActionResult Logout()
+        {
+            LogoutUser();
+
+            return RedirectToAction("Login");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

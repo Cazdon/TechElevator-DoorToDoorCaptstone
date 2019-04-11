@@ -82,21 +82,18 @@ body {
     grid-area: reset
 }
 
-
-
-
 #manger-salespeople-list {
     padding: 0;
     list-style: none;
 }
 
-    #manager-salespeople-list > :first-child {
-        font-weight: bold;
-    }
+#manager-salespeople-list > :first-child {
+    font-weight: bold;
+}
 
-    #manager-salespeople-list > :nth-child(even) {
-        background-color: lightsteelblue;
-    }
+#manager-salespeople-list > :nth-child(even) {
+    background-color: lightsteelblue;
+}
 
 .salespeople-list-item {
     padding: 5px;
@@ -120,3 +117,22 @@ body {
 .salespeople-list-reset {
     grid-area: reset
 }
+
+
+footer > p {
+    text-align: center;
+}
+
+/*Affects the header section, fits logo to header, applies a translucent background*/
+.header > h1 {
+    height: 35%;
+    background-color: rgba(66, 226, 244,.5);
+    padding: 0px;
+}
+
+    /*Changes logo with and height*/
+    .header img {
+        width: 600px;
+        height: auto;
+        opacity: unset;
+    }
