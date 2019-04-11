@@ -12,6 +12,6 @@ namespace DoorToDoorLibrary.Models
         public int HouseID { get; set; }
         public int ProductID { get; set; }
         public int SalesmenID { get; set; }
-        public int Amount { get; set; }
+        public double Amount { get; set; }
     }
 }
