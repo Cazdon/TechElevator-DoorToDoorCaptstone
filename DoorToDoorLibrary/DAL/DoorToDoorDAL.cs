@@ -256,6 +256,19 @@ namespace DoorToDoorLibrary.DAL
             }
         }
 
+        private bool IsMySalesperson(int salespersonID, int managerID)
+        {
+            foreach(UserItem user in GetMySalespeople(managerID))
+            {
+                if(user.Id == salespersonID)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         #endregion
 
         #region House Methods
@@ -273,7 +286,9 @@ namespace DoorToDoorLibrary.DAL
             {
                 conn.Open();
 
-                string sql = "SELECT * FROM [Houses] WHERE managerID = @ManagerID;";
+                string sql = "SELECT h.*, (u.firstName + ' ' + u.lastName) AS salespersonName " +
+                    "FROM[Houses] AS h JOIN[Users] AS u ON h.salespersonID = u.id " +
+                    "WHERE h.managerID = @ManagerID;";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@ManagerID", managerID);
@@ -308,8 +323,53 @@ namespace DoorToDoorLibrary.DAL
             item.ManagerID = Convert.ToInt32(reader["managerID"]);
             item.AssignedSalespersonID = Convert.ToInt32(reader["salespersonID"]);
             item.StatusID = Convert.ToInt32(reader["statusID"]);
+            item.AssignedSalesperson = Convert.ToString(reader["salespersonName"]);
 
             return item;
+        }
+
+        /// <summary>
+        /// Creates a new House in the database
+        /// </summary>
+        /// <param name="item">The House to be created</param>
+        /// <returns>ID of the created House</returns>
+        public int CreateHouse(HouseItem item)
+        {
+            if (IsMySalesperson(item.AssignedSalespersonID, item.ManagerID))
+            {
+                int ID = 0;
+
+                const string sql = "INSERT INTO [Houses] (street, city, district, zipCode, country, managerID, salespersonID, statusID) " +
+                                   "VALUES (@Street, @City, @District, @ZipCode, @Country, @ManagerID, @SalespersonID, 1);";
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql + " " + _getLastIdSql, conn);
+                    cmd.Parameters.AddWithValue("@Street", item.Street);
+                    cmd.Parameters.AddWithValue("@City", item.City);
+                    cmd.Parameters.AddWithValue("@District", item.District.ToLower());
+                    cmd.Parameters.AddWithValue("@ZipCode", item.ZipCode);
+                    cmd.Parameters.AddWithValue("@Country", item.Country);
+                    cmd.Parameters.AddWithValue("@ManagerID", item.ManagerID);
+                    cmd.Parameters.AddWithValue("@SalespersonID", item.AssignedSalespersonID);
+
+                    try
+                    {
+                        ID = (int)cmd.ExecuteScalar();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+
+                return ID;
+            }
+            else
+            {
+                throw new NotMySalespersonException();
+            }
         }
 
         #endregion

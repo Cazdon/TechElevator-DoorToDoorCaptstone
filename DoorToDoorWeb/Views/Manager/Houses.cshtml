@@ -2,32 +2,33 @@
 @section NavBar{
     <partial name="~/Views/Manager/Partials/ManagerNavBar.cshtml" />
 }
-@model ManagerSalespersonListViewModel
+@model ManagerHousesListViewModel
 @using DoorToDoorLibrary.DatabaseObjects
 
-<form asp-controller="Manager" asp-action="RegisterSalesperson" method="post" id="manager-create-salesperson">
-    <label asp-for="Register.FirstName"></label>
-    <input asp-for="Register.FirstName" type="text" />
-    <span asp-validation-for="Register.FirstName"></span>
-    <label asp-for="Register.LastName"></label>
-    <input asp-for="Register.LastName" type="text" />
-    <span asp-validation-for="Register.LastName"></span>
-    <label asp-for="Register.EmailAddress"></label>
-    <input asp-for="Register.EmailAddress" type="email" />
-    <span asp-validation-for="Register.EmailAddress"></span>
-    <label asp-for="Register.Password"></label>
-    <input asp-for="Register.Password" type="password" />
-    <span asp-validation-for="Register.Password"></span>
-    <label asp-for="Register.ConfirmPassword"></label>
-    <input asp-for="Register.ConfirmPassword" type="password" />
-    <span asp-validation-for="Register.ConfirmPassword"></span>
-    <button>Create User</button>
+<form asp-controller="Manager" asp-action="CreateHouse" method="post" id="manager-create-house">
+    <label asp-for="CreatedHouse.Street"></label>
+    <input asp-for="CreatedHouse.Street" type="text" />
+    <span asp-validation-for="CreatedHouse.Street"></span>
+    <label asp-for="CreatedHouse.City"></label>
+    <input asp-for="CreatedHouse.City" type="text" />
+    <span asp-validation-for="CreatedHouse.City"></span>
+    <label asp-for="CreatedHouse.District"></label>
+    <input asp-for="CreatedHouse.District" type="text" />
+    <span asp-validation-for="CreatedHouse.District"></span>
+    <label asp-for="CreatedHouse.ZipCode"></label>
+    <input asp-for="CreatedHouse.ZipCode" type="text" />
+    <span asp-validation-for="CreatedHouse.ZipCode"></span>
+    <label asp-for="CreatedHouse.Country"></label>
+    <input asp-for="CreatedHouse.Country" type="text" />
+    <span asp-validation-for="CreatedHouse.Country"></span>
+
+    <button>Create House</button>
     <span>
         @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
     </span>
 </form>
-<h2>Registered Salespeople:</h2>
-<div class="container">
+<h2>My Houses:</h2>
+@*<div class="container">
     <span>
         @Html.ValidationMessage("resetFailed", new { @class = "field-validation-error" })
     </span>
@@ -35,17 +36,19 @@
     {
         <span id="reset-success">Reset Password flag successfully set!</span>
     }
-</div>
+</div>*@
 
 <div class="container">
-    <ul id="manager-salespeople-list">
-        <li class="salespeople-list-item">
-            <div class="salespeople-list-first-name">First Name</div>
-            <div class="salespeople-list-last-name">Last Name</div>
-            <div class="salespeople-list-email">Email Addresss</div>
+    <ul id="manager-house-list">
+        <li class="house-list-item">
+            <div class="house-list-street">Street</div>
+            <div class="house-list-city">City</div>
+            <div class="house-list-district">District</div>
+            <div class="house-list-country">Country</div>
+            <div class="house-list-salesperson">Assigned Salesperson</div>
         </li>
         @{
-            foreach (UserItem user in Model.Salespeople)
+            @*foreach (UserItem user in Model.Salespeople)
             {
                 <li class="manager-list-item">
                     <div class="salespeople-list-first-name">@(user.FirstName)</div>
@@ -59,7 +62,7 @@
                         </span>
                     </form>
                 </li>
-            }
+            }*@
         }
     </ul>
 </div>
