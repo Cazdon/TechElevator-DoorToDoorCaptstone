@@ -105,7 +105,7 @@ BEGIN TRANSACTION
 			id				int			IDENTITY(1,1) NOT NULL,
 			[date]			datetime	NOT NULL,
 			houseID			int			NOT NULL,
-			Amount			real		NOT NULL,
+			amount			real		NOT NULL,
 			productID		int			NOT NULL,
 			salespersonID	int			NOT NULL,
 			CONSTRAINT PK_Sales_Transactions PRIMARY KEY (id),

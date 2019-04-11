@@ -1,5 +1,6 @@
 ﻿using System;
 using DoorToDoorLibrary.DAL;
+using DoorToDoorLibrary.DatabaseObjects;
 using DoorToDoorLibrary.Exceptions;
 using DoorToDoorLibrary.Logic;
 using DoorToDoorLibrary.Models;

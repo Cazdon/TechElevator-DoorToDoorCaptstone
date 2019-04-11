@@ -1,8 +1,8 @@
-﻿using DoorToDoorLibrary.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using DoorToDoorLibrary.Exceptions;
+using DoorToDoorLibrary.DatabaseObjects;
 
 namespace DoorToDoorLibrary.DAL
 {
@@ -254,6 +254,17 @@ namespace DoorToDoorLibrary.DAL
             {
                 throw new ManagerSalespersonLinkFailedException();
             }
+        }
+
+        #endregion
+
+        #region House Methods
+
+        public IList<HouseItem> GetAllHouses(int managerID)
+        {
+            List<HouseItem> houseList = new List<HouseItem>();
+
+            return houseList;
         }
 
         #endregion

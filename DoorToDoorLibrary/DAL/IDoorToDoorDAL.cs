@@ -1,4 +1,4 @@
-﻿using DoorToDoorLibrary.Models;
+﻿using DoorToDoorLibrary.DatabaseObjects;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -55,5 +55,11 @@ namespace DoorToDoorLibrary.DAL
         /// <param name="managerID">User ID of the Manager</param>
         /// <param name="SalespersonID">User ID of the Salesperson</param>
         void PairManagerWithSalesperson(int managerID, int SalespersonID);
+
+        /// <summary>
+        /// Returns a list of all Houses from the system entered by the Manager
+        /// </summary>
+        /// <returns>List of Mangaer users</returns>
+        IList<HouseItem> GetAllHouses(int managerID);
     }
 }
