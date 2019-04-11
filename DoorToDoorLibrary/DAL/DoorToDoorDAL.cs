@@ -80,6 +80,29 @@ namespace DoorToDoorLibrary.DAL
             return item;
         }
 
+        //public UserItem GetManagerID()
+        //{
+
+        //    using (SqlConnection conn = new SqlConnection(_connectionString))
+        //    {
+        //        conn.Open();
+
+        //        string sql = "SELECT id FROM [Users] WHERE id IN(SELECT salespersonID FROM Admin_Saleperson WHERE managerID = @ManagerID);";
+
+        //        SqlCommand cmd = new SqlCommand(sql, conn);
+        //        cmd.Parameters.AddWithValue("@ManagerID", managerID);
+
+        //        SqlDataReader reader = cmd.ExecuteReader();
+
+        //        while (reader.Read())
+        //        {
+        //            UserItem newuser = GetUserItemFromReader(reader);
+        //            output.Add(newuser);
+        //        }
+        //    }
+
+        //    return output;
+        //}
 
         public void RegisterNewUser(UserItem item)
         {
@@ -167,6 +190,7 @@ namespace DoorToDoorLibrary.DAL
 
             return output;
         }
+
 
         /// <summary>
         /// Set's the user's Reset Password flag. Throws error if unsuccessful
