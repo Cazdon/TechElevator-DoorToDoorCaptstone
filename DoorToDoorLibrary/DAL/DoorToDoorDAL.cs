@@ -257,5 +257,61 @@ namespace DoorToDoorLibrary.DAL
         }
 
         #endregion
+
+        #region SalesTransaction Methods
+        /// <summary>
+        /// Generates a SalesTransactionItem from the provided Sql Data Reader
+        /// </summary>
+        /// <param name="reader">The given Sql Data Reader</param>
+        /// <returns>SalesTransactionItem containing the information for a particular sale</returns>
+        private SalesTransactionItem GetSalesItemFromReader(SqlDataReader reader)
+        {
+            SalesTransactionItem item = new SalesTransactionItem();
+
+            item.Id = Convert.ToInt32(reader["id"]);
+            item.Date = Convert.ToDateTime(reader["date"]);
+            item.HouseID = Convert.ToInt32(reader["houseID"]);
+            item.ProductID = Convert.ToInt32(reader["productID"]);
+            item.SalesmenID = Convert.ToInt32(reader["salespersonID"]);
+            item.Amount = Convert.ToDouble(reader["amount"]);
+            
+
+            return item;
+        }
+
+
+        /// <summary>
+        /// Generates the data of salesman transactions, relevant to the specific Manager.
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>A list of Sales Transactions from salesmen belonging to the passed in Manager ID</returns>
+        public IList<SalesTransactionItem> GetSalesmanTransactionData(int managerID)
+        {
+            var output = new List<SalesTransactionItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT u.firstName, u.lastName, COUNT(st.ID) AS numSales " +
+                    "FROM Users AS u JOIN Sales_Transactions AS st ON u.id = st.salespersonIDWHERE u.id " +
+                    "IN(SELECT ms.salespersonID FROM Manager_Saleperson AS ms WHERE ms.managerID = 1) " +
+                    "GROUP BY u.firstName, u.lastName ORDER BY numSales DESC; ";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ManagerID", managerID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    SalesTransactionItem sale = GetSalesItemFromReader(reader);
+                    output.Add(sale);
+                }
+            }
+            return output;
+        }
+
+        #endregion
     }
 }
