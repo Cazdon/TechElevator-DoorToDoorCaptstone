@@ -27,10 +27,19 @@ namespace DoorToDoorWeb.Controllers
             return salespeoplelist;
         }
 
+        private ManagerDashboardViewModel CreateManagerDashboardViewModel()
+        {
+            ManagerDashboardViewModel dashboard = new ManagerDashboardViewModel();
+            dashboard.Transactions = _db.GetSalesmanTransactionData(CurrentUser.Id);
+            dashboard.TotalSales = _db.GetTotalSales(CurrentUser.Id);
+
+            return dashboard;
+        }
+
         [HttpGet]
         public IActionResult Home()
         {
-            ActionResult result = GetAuthenticatedView("Home");
+            ActionResult result = GetAuthenticatedView("Home", CreateManagerDashboardViewModel());
 
             if (Role.IsManager)
             {
