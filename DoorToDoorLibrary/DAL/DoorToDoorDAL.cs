@@ -194,6 +194,27 @@ namespace DoorToDoorLibrary.DAL
             }
         }
 
+        public bool ResetPassword(string emailAddress, string salt, string hash)
+        {
+            int numRows = 0;
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "UPDATE Users SET salt = @Salt, hash = @Hash, updatePassword = 0 WHERE emailAddress = @EmailAddress;";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@Salt", salt);
+                cmd.Parameters.AddWithValue("@Hash", hash);
+                cmd.Parameters.AddWithValue("@EmailAddress", emailAddress);
+
+                numRows = cmd.ExecuteNonQuery();
+            }
+
+            return numRows == 1 ? true : false;
+        }
+
         #endregion
     }
 }

@@ -34,5 +34,8 @@ namespace DoorToDoorLibrary.DAL
         /// </summary>
         /// <param name="userId">User's Database ID</param>
         void MarkResetPassword(int userId);
+
+
+        bool ResetPassword(string emailAddress, string salt, string hash);
     }
 }

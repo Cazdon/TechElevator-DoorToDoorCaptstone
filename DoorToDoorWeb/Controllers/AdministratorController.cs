@@ -43,7 +43,7 @@ namespace DoorToDoorWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult ResetPassword(ResetPasswordViewModel model)
+        public ActionResult ResetPassword(int userID)
         {
             ActionResult result = null;
 
@@ -52,7 +52,7 @@ namespace DoorToDoorWeb.Controllers
                 try
                 {
 
-                    _db.MarkResetPassword(model.UserId);
+                    _db.MarkResetPassword(userID);
 
                     TempData["resetSuccess"] = true;
 
@@ -60,7 +60,7 @@ namespace DoorToDoorWeb.Controllers
                 }
                 catch(Exception ex)
                 {
-                    ModelState.AddModelError($"resetFailed{model.UserId}", ex.Message);
+                    ModelState.AddModelError($"resetFailed{userID}", ex.Message);
 
                     result = RedirectToAction("Home", CreateAdminManagerListViewModel());
                 }
