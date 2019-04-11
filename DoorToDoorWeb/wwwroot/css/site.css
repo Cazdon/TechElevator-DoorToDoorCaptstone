@@ -82,21 +82,18 @@ body {
     grid-area: reset
 }
 
-
-
-
 #manger-salespeople-list {
     padding: 0;
     list-style: none;
 }
 
-    #manager-salespeople-list > :first-child {
-        font-weight: bold;
-    }
+#manager-salespeople-list > :first-child {
+    font-weight: bold;
+}
 
-    #manager-salespeople-list > :nth-child(even) {
-        background-color: lightsteelblue;
-    }
+#manager-salespeople-list > :nth-child(even) {
+    background-color: lightsteelblue;
+}
 
 .salespeople-list-item {
     padding: 5px;

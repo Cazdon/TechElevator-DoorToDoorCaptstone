@@ -68,7 +68,9 @@ namespace DoorToDoorWeb.Controllers
                             RoleId = (int)RoleManager.eRole.Salesperson
                         };
 
-                        RegisterUser(newUser);
+                        int newSalespersonID = RegisterUser(newUser);
+
+                        _db.PairManagerWithSalesperson(CurrentUser.Id, newSalespersonID);
 
                         result = RedirectToAction("Home", CreateManagerSalespersonListViewModel());
                     }
@@ -78,6 +80,37 @@ namespace DoorToDoorWeb.Controllers
                     ModelState.AddModelError("invalid", ex.Message);
 
                     result = View("Home", CreateManagerSalespersonListViewModel());
+                }
+            }
+            else
+            {
+                result = RedirectToAction("Login", "Home");
+            }
+
+            return result;
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(int userID)
+        {
+            ActionResult result = null;
+
+            if (Role.IsManager)
+            {
+                try
+                {
+
+                    _db.MarkResetPassword(userID);
+
+                    TempData["resetSuccess"] = true;
+
+                    result = RedirectToAction("Home", CreateManagerSalespersonListViewModel());
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError($"resetFailed{userID}", ex.Message);
+
+                    result = RedirectToAction("Home", CreateManagerSalespersonListViewModel());
                 }
             }
             else

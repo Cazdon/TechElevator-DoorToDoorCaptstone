@@ -51,6 +51,13 @@
                     <div class="salespeople-list-first-name">@(user.FirstName)</div>
                     <div class="salespeople-list-last-name">@(user.LastName)</div>
                     <div class="salespeople-list-email">@(user.EmailAddress)</div>
+                    <form asp-controller="Manager" asp-action="ResetPassword" method="post" id="manager-update-password-form@(user.Id)" class="salespeople-list-reset">
+                        <input type="hidden" value="@(user.Id)" name="userID" />
+                        <button>Reset Password</button>
+                        <span>
+                            @Html.ValidationMessage($"resetFailed{user.Id}", new { @class = "field-validation-error" })
+                        </span>
+                    </form>
                 </li>
             }
         }
