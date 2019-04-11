@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace DoorToDoorWeb.Models
 {
-    public class ManagerListViewModel
+    public class AdminManagerListViewModel
     {
         public IList<UserItem> Managers { get; set; }
+        public RegisterViewModel Register { get; set; }
     }
 }

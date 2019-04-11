@@ -34,20 +34,3 @@ namespace DoorToDoorWeb.Models
         public string ConfirmPassword { get; set; }
     }
 }
-
-//- Add Salesperson fields:
-//- - First Name
-//- - - Required
-//- - - Max Length: 50 characters
-//- - Last Name
-//- - - Required
-//- - - Max Length: 50 characters
-//- - Email Address
-//- - - Required
-//- - - Unique
-//- - - Max Length: 100 characters
-//- - Password
-//- - - Required
-//- - Confirm Password
-//- - - Required
-//- - - Must match Password

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DoorToDoorLibrary.DAL;
+using DoorToDoorLibrary.Logic;
 using DoorToDoorLibrary.Models;
 using DoorToDoorWeb.Models;
 using Microsoft.AspNetCore.Http;
@@ -17,13 +18,19 @@ namespace DoorToDoorWeb.Controllers
 
         }
 
+        private AdminManagerListViewModel CreateAdminManagerListViewModel()
+        {
+            AdminManagerListViewModel managerList = new AdminManagerListViewModel();
+            managerList.Managers = _db.GetAllManagers();
+            managerList.Register = new RegisterViewModel();
+
+            return managerList;
+        }
+
         [HttpGet]
         public IActionResult Home()
         {
-            ManagerListViewModel managerList = new ManagerListViewModel();
-            managerList.Managers = _db.GetAllManagers();
-
-            ActionResult result = GetAuthenticatedView("Home", managerList);
+            ActionResult result = GetAuthenticatedView("Home", CreateAdminManagerListViewModel());
 
             if (Role.IsAdministrator)
             {
@@ -49,13 +56,58 @@ namespace DoorToDoorWeb.Controllers
 
                     TempData["resetSuccess"] = true;
 
-                    result = RedirectToAction("Home", "Administrator");
+                    result = RedirectToAction("Home", CreateAdminManagerListViewModel());
                 }
                 catch(Exception ex)
                 {
-                    ModelState.AddModelError("resetFailed", ex.Message);
+                    ModelState.AddModelError($"resetFailed{model.UserId}", ex.Message);
 
-                    result = RedirectToAction("Home", "Administrator");
+                    result = RedirectToAction("Home", CreateAdminManagerListViewModel());
+                }
+            }
+            else
+            {
+                result = RedirectToAction("Login", "Home");
+            }
+
+            return result;
+        }
+
+        [HttpPost]
+        public ActionResult RegisterManager(AdminManagerListViewModel model)
+        {
+            ActionResult result = null;
+
+            if (Role.IsAdministrator)
+            {
+                try
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        result = View("Home", CreateAdminManagerListViewModel());
+                    }
+                    else
+                    {
+                        User newUser = new User()
+                        {
+                            FirstName = model.Register.FirstName,
+                            LastName = model.Register.LastName,
+                            EmailAddress = model.Register.EmailAddress,
+                            Password = model.Register.Password,
+                            ConfirmPassword = model.Register.ConfirmPassword,
+                            RoleId = (int)RoleManager.eRole.Manager
+                        };
+
+                        RegisterUser(newUser);
+
+                        result = RedirectToAction("Home", CreateAdminManagerListViewModel());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("invalid", ex.Message);
+
+                    result = View("Home", CreateAdminManagerListViewModel());
                 }
             }
             else

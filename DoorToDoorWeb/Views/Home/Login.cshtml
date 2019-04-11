@@ -1,6 +1,6 @@
 ﻿@section Title{Login}
 @section NavBar{
-    <partial name="~/Views/Home/NavBarPartial/HomeNavBar.cshtml" />
+    <partial name="~/Views/Home/HomePartials/HomeNavBar.cshtml" />
 }
 @model LoginViewModel
 
@@ -9,7 +9,7 @@
     <input asp-for="EmailAddress" type="email" />
     <span asp-validation-for="EmailAddress"></span>
     <label asp-for="Password"></label>
-    <input asp-for="Password" type="text" />
+    <input asp-for="Password" type="password" />
     <span asp-validation-for="Password"></span>
     <button>Login</button>
     <span>
