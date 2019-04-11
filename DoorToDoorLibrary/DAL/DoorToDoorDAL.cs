@@ -157,7 +157,7 @@ namespace DoorToDoorLibrary.DAL
             {
                 conn.Open();
 
-                string sql = "SELECT * FROM [Users] WHERE id IN(SELECT salespersonID FROM Admin_Saleperson WHERE managerID = @ManagerID);";
+                string sql = "SELECT * FROM [Users] WHERE id IN(SELECT salespersonID FROM Manager_Saleperson WHERE managerID = @ManagerID);";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@ManagerID", managerID);
