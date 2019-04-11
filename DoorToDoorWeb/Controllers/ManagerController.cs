@@ -30,7 +30,7 @@ namespace DoorToDoorWeb.Controllers
         [HttpGet]
         public IActionResult Home()
         {
-            ActionResult result = GetAuthenticatedView("Home", CreateManagerSalespersonListViewModel());
+            ActionResult result = GetAuthenticatedView("Home");
 
             if (Role.IsManager)
             {
@@ -42,7 +42,21 @@ namespace DoorToDoorWeb.Controllers
             }
         }
 
-      
+        [HttpGet]
+        public IActionResult Salespeople()
+        {
+            ActionResult result = GetAuthenticatedView("Salespeople", CreateManagerSalespersonListViewModel());
+
+            if (Role.IsManager)
+            {
+                return result;
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+        }
+
         [HttpPost]
         public ActionResult RegisterSalesperson(ManagerSalespersonListViewModel model)
         {
@@ -54,7 +68,7 @@ namespace DoorToDoorWeb.Controllers
                 {
                     if (!ModelState.IsValid)
                     {
-                        result = View("Home", CreateManagerSalespersonListViewModel());
+                        result = View("Salespeople", CreateManagerSalespersonListViewModel());
                     }
                     else
                     {
@@ -68,16 +82,49 @@ namespace DoorToDoorWeb.Controllers
                             RoleId = (int)RoleManager.eRole.Salesperson
                         };
 
-                        RegisterUser(newUser);
+                        int newSalespersonID = RegisterUser(newUser);
 
-                        result = RedirectToAction("Home", CreateManagerSalespersonListViewModel());
+                        _db.PairManagerWithSalesperson(CurrentUser.Id, newSalespersonID);
+
+                        result = RedirectToAction("Salespeople", CreateManagerSalespersonListViewModel());
                     }
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("invalid", ex.Message);
 
-                    result = View("Home", CreateManagerSalespersonListViewModel());
+                    result = View("Salespeople", CreateManagerSalespersonListViewModel());
+                }
+            }
+            else
+            {
+                result = RedirectToAction("Login", "Home");
+            }
+
+            return result;
+        }
+
+        [HttpPost]
+        public ActionResult ResetPassword(int userID)
+        {
+            ActionResult result = null;
+
+            if (Role.IsManager)
+            {
+                try
+                {
+
+                    _db.MarkResetPassword(userID);
+
+                    TempData["resetSuccess"] = true;
+
+                    result = RedirectToAction("Salespeople", CreateManagerSalespersonListViewModel());
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError($"resetFailed{userID}", ex.Message);
+
+                    result = RedirectToAction("Salespeople", CreateManagerSalespersonListViewModel());
                 }
             }
             else

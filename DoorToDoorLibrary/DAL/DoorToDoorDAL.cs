@@ -80,31 +80,12 @@ namespace DoorToDoorLibrary.DAL
             return item;
         }
 
-        //public UserItem GetManagerID()
-        //{
-
-        //    using (SqlConnection conn = new SqlConnection(_connectionString))
-        //    {
-        //        conn.Open();
-
-        //        string sql = "SELECT id FROM [Users] WHERE id IN(SELECT salespersonID FROM Admin_Saleperson WHERE managerID = @ManagerID);";
-
-        //        SqlCommand cmd = new SqlCommand(sql, conn);
-        //        cmd.Parameters.AddWithValue("@ManagerID", managerID);
-
-        //        SqlDataReader reader = cmd.ExecuteReader();
-
-        //        while (reader.Read())
-        //        {
-        //            UserItem newuser = GetUserItemFromReader(reader);
-        //            output.Add(newuser);
-        //        }
-        //    }
-
-        //    return output;
-        //}
-
-        public void RegisterNewUser(UserItem item)
+        /// <summary>
+        /// Creates a new User in the database
+        /// </summary>
+        /// <param name="item">The user to be created</param>
+        /// <returns>ID of the created User</returns>
+        public int RegisterNewUser(UserItem item)
         {
             int ID = 0;
 
@@ -131,6 +112,8 @@ namespace DoorToDoorLibrary.DAL
                     throw ex;
                 }
             }
+
+            return ID;
         }
 
         /// <summary>
@@ -174,12 +157,11 @@ namespace DoorToDoorLibrary.DAL
             {
                 conn.Open();
 
-                string sql = "SELECT * FROM [Users] WHERE id IN(SELECT salespersonID FROM Admin_Saleperson WHERE managerID = @ManagerID);";
+                string sql = "SELECT * FROM [Users] WHERE id IN(SELECT salespersonID FROM Manager_Saleperson WHERE managerID = @ManagerID);";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@ManagerID", managerID);
 
-                //Error when logging in as manager, need to add manager to managersalesperson table and associate salespeople with them
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -191,7 +173,6 @@ namespace DoorToDoorLibrary.DAL
 
             return output;
         }
-
 
         /// <summary>
         /// Set's the user's Reset Password flag. Throws error if unsuccessful
@@ -219,6 +200,13 @@ namespace DoorToDoorLibrary.DAL
             }
         }
 
+        /// <summary>
+        /// Reset's the given User's Password values
+        /// </summary>
+        /// <param name="emailAddress">Email Address of the User</param>
+        /// <param name="salt">New Salt value for the User</param>
+        /// <param name="hash">New Hash value for the User</param>
+        /// <returns>True if successful, false if unsuccessful</returns>
         public bool ResetPassword(string emailAddress, string salt, string hash)
         {
             int numRows = 0;
@@ -238,6 +226,34 @@ namespace DoorToDoorLibrary.DAL
             }
 
             return numRows == 1 ? true : false;
+        }
+
+        /// <summary>
+        /// Pairs the current logged in Manager with the newly created Salesperson
+        /// </summary>
+        /// <param name="managerID">User ID of the Manager</param>
+        /// <param name="SalespersonID">User ID of the Salesperson</param>
+        public void PairManagerWithSalesperson(int managerID, int SalespersonID)
+        {
+            int numRows = 0;
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "INSERT INTO [Manager_Saleperson] (managerID, salespersonID) VALUES (@ManagerID, @SalespersonID);";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ManagerID", managerID);
+                cmd.Parameters.AddWithValue("@SalespersonID", SalespersonID);
+
+                numRows = cmd.ExecuteNonQuery();
+            }
+
+            if (numRows != 1)
+            {
+                throw new ManagerSalespersonLinkFailedException();
+            }
         }
 
         #endregion
