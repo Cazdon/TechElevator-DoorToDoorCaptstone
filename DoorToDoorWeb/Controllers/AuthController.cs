@@ -105,7 +105,7 @@ namespace DoorToDoorWeb.Controllers
             };
 
             _db.AddUserItem(newUser);
-            LoginUser(newUser.Username, userModel.Password);
+            LoginUser(newUser.EmailAddress, userModel.Password);
         }
 
         /// <summary>
