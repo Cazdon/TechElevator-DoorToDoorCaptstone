@@ -179,6 +179,7 @@ namespace DoorToDoorLibrary.DAL
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@ManagerID", managerID);
 
+                //Error when logging in as manager, need to add manager to managersalesperson table and associate salespeople with them
                 SqlDataReader reader = cmd.ExecuteReader();
 
                 while (reader.Read())

@@ -21,7 +21,7 @@ namespace DoorToDoorWeb.Controllers
         private ManagerSalespersonListViewModel CreateManagerSalespersonListViewModel()
         {
             ManagerSalespersonListViewModel salespeoplelist = new ManagerSalespersonListViewModel();
-            salespeoplelist.Salespeople = _db.GetMySalespeople(1); /*placeholder manager id*/
+            salespeoplelist.Salespeople = _db.GetMySalespeople(CurrentUser.Id);
             salespeoplelist.Register = new RegisterViewModel();
 
             return salespeoplelist;
