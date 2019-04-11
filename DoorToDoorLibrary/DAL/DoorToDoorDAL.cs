@@ -411,20 +411,17 @@ namespace DoorToDoorLibrary.DAL
         #region SalesTransaction Methods
 
         /// <summary>
-        /// Generates a SalesTransactionItem from the provided Sql Data Reader
+        /// Generates a UserSalesCountItem from the provided Sql Data Reader
         /// </summary>
         /// <param name="reader">The given Sql Data Reader</param>
-        /// <returns>SalesTransactionItem containing the information for a particular sale</returns>
-        private SalesTransactionItem GetSalesItemFromReader(SqlDataReader reader)
+        /// <returns>UserSalesCountItem containing the information for a particular sale</returns>
+        private UserSalesCountItem GetSalesItemFromReader(SqlDataReader reader)
         {
-            SalesTransactionItem item = new SalesTransactionItem();
+            UserSalesCountItem item = new UserSalesCountItem();
 
-            item.Id = Convert.ToInt32(reader["id"]);
-            item.Date = Convert.ToDateTime(reader["date"]);
-            item.HouseID = Convert.ToInt32(reader["houseID"]);
-            item.ProductID = Convert.ToInt32(reader["productID"]);
-            item.SalesmenID = Convert.ToInt32(reader["salespersonID"]);
-            item.Amount = Convert.ToDouble(reader["amount"]);
+            item.FirstName = Convert.ToString(reader["firstName"]);
+            item.LastName = Convert.ToString(reader["lastName"]);
+            item.SalesCount = Convert.ToInt32(reader["numSales"]);
             
 
             return item;
@@ -435,18 +432,18 @@ namespace DoorToDoorLibrary.DAL
         /// Generates the data of salesman transactions, relevant to the specific Manager.
         /// </summary>
         /// <param name="managerID"></param>
-        /// <returns>A list of Sales Transactions from salesmen belonging to the passed in Manager ID</returns>
-        public IList<SalesTransactionItem> GetSalesmanTransactionData(int managerID)
+        /// <returns>A list of the names and totals sales of those under the manager</returns>
+        public IList<UserSalesCountItem> GetSalesmanTransactionData(int managerID)
         {
-            var output = new List<SalesTransactionItem>();
+            var output = new List<UserSalesCountItem>();
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
 
                 string sql = "SELECT u.firstName, u.lastName, COUNT(st.ID) AS numSales " +
-                    "FROM Users AS u JOIN Sales_Transactions AS st ON u.id = st.salespersonIDWHERE u.id " +
-                    "IN(SELECT ms.salespersonID FROM Manager_Saleperson AS ms WHERE ms.managerID = 1) " +
+                    "FROM Users AS u JOIN Sales_Transactions AS st ON u.id = st.salespersonID WHERE u.id " +
+                    "IN(SELECT ms.salespersonID FROM Manager_Saleperson AS ms WHERE ms.managerID = @ManagerID) " +
                     "GROUP BY u.firstName, u.lastName ORDER BY numSales DESC; ";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -456,11 +453,38 @@ namespace DoorToDoorLibrary.DAL
 
                 while (reader.Read())
                 {
-                    SalesTransactionItem sale = GetSalesItemFromReader(reader);
+                    UserSalesCountItem sale = GetSalesItemFromReader(reader);
                     output.Add(sale);
                 }
             }
             return output;
+        }
+
+        /// <summary>
+        /// Gets the total number of transactions that have taken place under this manager.
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>The total number of transactions from a manager's salesmen as an Int</returns>
+        public int GetTotalSales(int managerID)
+        {
+            int output = 0;
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT COUNT(st.id) AS salesCount FROM Sales_Transactions AS st " +
+                    "JOIN Users AS u ON u.id = st.salespersonID WHERE u.id " +
+                    "IN(SELECT ms.salespersonID FROM Manager_Saleperson AS ms WHERE ms.managerID = @ManagerID)";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ManagerID", managerID);
+
+                output = (Int32)cmd.ExecuteScalar();
+
+            }
+
+                return output;
         }
 
         #endregion

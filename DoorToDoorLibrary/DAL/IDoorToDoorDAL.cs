@@ -92,7 +92,14 @@ namespace DoorToDoorLibrary.DAL
         /// </summary>
         /// <param name="managerID"></param>
         /// <returns>A list of Sales Transactions from salesmen belonging to the passed in Manager ID</returns>
-        IList<SalesTransactionItem> GetSalesmanTransactionData(int managerID);
+        IList<UserSalesCountItem> GetSalesmanTransactionData(int managerID);
+
+        /// <summary>
+        /// Gets the total number of transactions that have taken place under this manager.
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>The total number of transactions from a manager's salesmen as an Int</returns>
+        int GetTotalSales(int managerID);
 
         #endregion
     }

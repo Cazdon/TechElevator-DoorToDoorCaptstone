@@ -3,4 +3,20 @@
     <partial name="~/Views/Manager/Partials/ManagerNavBar.cshtml" />
 }
 
+@model ManagerDashboardViewModel
+@using DoorToDoorLibrary.DatabaseObjects
+
 <h2>Home</h2>
+
+<h3>@Model.TotalSales</h3>
+
+<ul>
+
+    @foreach (UserSalesCountItem sale in Model.Transactions)
+    {
+        <li>@sale.FirstName</li>
+        <li>@sale.LastName</li>
+        <li>@sale.SalesCount</li>
+
+    }
+</ul>
