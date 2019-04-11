@@ -1,0 +1,65 @@
+﻿@section Title {Salespeople - Manager}
+@section NavBar{
+    <partial name="~/Views/Manager/Partials/ManagerNavBar.cshtml" />
+}
+@model ManagerSalespersonListViewModel
+@using DoorToDoorLibrary.Models
+
+<form asp-controller="Manager" asp-action="RegisterSalesperson" method="post" id="manager-create-salesperson">
+    <label asp-for="Register.FirstName"></label>
+    <input asp-for="Register.FirstName" type="text" />
+    <span asp-validation-for="Register.FirstName"></span>
+    <label asp-for="Register.LastName"></label>
+    <input asp-for="Register.LastName" type="text" />
+    <span asp-validation-for="Register.LastName"></span>
+    <label asp-for="Register.EmailAddress"></label>
+    <input asp-for="Register.EmailAddress" type="email" />
+    <span asp-validation-for="Register.EmailAddress"></span>
+    <label asp-for="Register.Password"></label>
+    <input asp-for="Register.Password" type="password" />
+    <span asp-validation-for="Register.Password"></span>
+    <label asp-for="Register.ConfirmPassword"></label>
+    <input asp-for="Register.ConfirmPassword" type="password" />
+    <span asp-validation-for="Register.ConfirmPassword"></span>
+    <button>Create User</button>
+    <span>
+        @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
+    </span>
+</form>
+<h2>Registered Salespeople:</h2>
+<div class="container">
+    <span>
+        @Html.ValidationMessage("resetFailed", new { @class = "field-validation-error" })
+    </span>
+    @if ((TempData["resetSuccess"] != null) && ((bool)TempData["resetSuccess"]))
+    {
+        <span id="reset-success">Reset Password flag successfully set!</span>
+    }
+</div>
+
+<div class="container">
+    <ul id="manager-salespeople-list">
+        <li class="salespeople-list-item">
+            <div class="salespeople-list-first-name">First Name</div>
+            <div class="salespeople-list-last-name">Last Name</div>
+            <div class="salespeople-list-email">Email Addresss</div>
+        </li>
+        @{
+            foreach (UserItem user in Model.Salespeople)
+            {
+                <li class="manager-list-item">
+                    <div class="salespeople-list-first-name">@(user.FirstName)</div>
+                    <div class="salespeople-list-last-name">@(user.LastName)</div>
+                    <div class="salespeople-list-email">@(user.EmailAddress)</div>
+                    <form asp-controller="Manager" asp-action="ResetPassword" method="post" id="manager-update-password-form@(user.Id)" class="salespeople-list-reset">
+                        <input type="hidden" value="@(user.Id)" name="userID" />
+                        <button>Reset Password</button>
+                        <span>
+                            @Html.ValidationMessage($"resetFailed{user.Id}", new { @class = "field-validation-error" })
+                        </span>
+                    </form>
+                </li>
+            }
+        }
+    </ul>
+</div>
