@@ -4,21 +4,23 @@
 }
 @model LoginViewModel
 
-    <form asp-controller="Home" asp-action="Login" method="post" id="user-login-form">
-        <div class="form-group">
-            <label asp-for="EmailAddress"></label>
-            <input asp-for="EmailAddress" type="email" />
-            <span asp-validation-for="EmailAddress"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Password"></label>
-            <input asp-for="Password" type="password" />
-            <span asp-validation-for="Password"></span>
-        </div>
-        <div class="form-group">
-            <span>
-                @Html.ValidationMessage("invalid")
-            </span>
-        </div>
-        <button>Login</button>
-    </form>
+    <div class="container">
+        <form asp-controller="Home" asp-action="Login" method="post" id="user-login-form">
+            <div class="form-group">
+                <label asp-for="EmailAddress"></label>
+                <input asp-for="EmailAddress" type="email" />
+                <span asp-validation-for="EmailAddress"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" type="password" />
+                <span asp-validation-for="Password"></span>
+            </div>
+            <div class="form-group">
+                <span>
+                    @Html.ValidationMessage("invalid")
+                </span>
+            </div>
+            <button>Login</button>
+        </form>
+    </div>
