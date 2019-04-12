@@ -21,21 +21,24 @@
     font-weight: bold;
 }
 
-#admin-manager-list, #manger-salespeople-list, #manager-house-list {
+#admin-manager-list, #manger-salespeople-list,
+#manager-house-list, #salesperson-house-list {
     padding: 0;
     list-style: none;
 }
 
 #admin-manager-list > :first-child,
 #manager-salespeople-list > :first-child,
-#manager-house-list > :first-child {
+#manager-house-list > :first-child,
+#salesperson-house-list > :first-child {
     font-weight: bold;
     border-bottom: 3px solid black;
 }
 
     #admin-manager-list > :nth-child(even),
     #manager-salespeople-list > :nth-child(even),
-    #manager-house-list > :nth-child(even) {
+    #manager-house-list > :nth-child(even),
+    #salesperson-house-list > :nth-child(even) {
         background-color: cadetblue;
     }
 
@@ -43,8 +46,9 @@
 .salespeople-list-item {
     padding: 5px;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 2fr 1fr 2fr 1fr 2fr 1fr;
-    grid-template-areas: ". first . last . email . reset .";
+    grid-template-columns: 2fr 2fr 3fr 1fr;
+    grid-template-areas: "first last email reset .";
+    grid-gap: 5px;
 }
 
 .manager-list-item, .salespeople-list-item,
@@ -79,6 +83,14 @@
     display: grid;
     grid-template-columns: 3fr 2fr 2fr 2fr 2fr 2fr 1fr;
     grid-template-areas: "street city district country sales status details";
+    grid-gap: 5px;
+}
+
+#salesperson-house-list .house-list-item {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr 2fr 2fr 1fr;
+    grid-template-areas: "street city district country status details";
     grid-gap: 5px;
 }
 
@@ -268,7 +280,7 @@ footer > p {
 
     #user-login-form button, #admin-create-manager button,
     #manager-create-salesperson button, #manager-create-house button,
-    .reset-password-button, .show-hide-button {
+    .reset-password-button {
         background: lightgrey;
         padding: 0.7em;
         border: 0;
@@ -276,7 +288,7 @@ footer > p {
 
         #user-login-form button:hover, #admin-create-manager button:hover,
         #manager-create-salesperson button:hover, #manager-create-house button:hover,
-        .reset-password-button:hover, .show-hide-button:hover {
+        .reset-password-button:hover {
             background: gold;
         }
 

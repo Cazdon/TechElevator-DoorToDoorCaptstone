@@ -102,11 +102,22 @@ namespace DoorToDoorLibrary.DAL
         #region SalesTransaction Methods
 
         /// <summary>
-        /// Generates the data of salesman transactions, relevant to the specific Manager.
+        /// Generates the top salesman based on amount of sales for current manager.
         /// </summary>
         /// <param name="managerID"></param>
-        /// <returns>A list of Sales Transactions from salesmen belonging to the passed in Manager ID</returns>
-        IList<UserSalesCountItem> GetSalesmanTransactionData(int managerID);
+        /// <returns>A list of SalesmanCountItem</returns>
+        IList<SalesmanSalesCountItem> GetTopSalesmenByQuantity(int managerID);
+
+        /// <summary>
+        /// Generates the top salesman based on total revenue of sales for current manager.
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>A list of SalesRevenueItem</returns>
+        IList<SalesmanRevenueItem> GetTopSalesmenByRevenue(int managerID);
+
+        IList<HouseSalesCountItem> GetTopHouseByQuantity(int managerID);
+
+        IList<HouseRevenueItem> GetTopHouseByRevenue(int managerID);
 
         /// <summary>
         /// Gets the total number of transactions that have taken place under this manager.
@@ -114,6 +125,13 @@ namespace DoorToDoorLibrary.DAL
         /// <param name="managerID"></param>
         /// <returns>The total number of transactions from a manager's salesmen as an Int</returns>
         int GetTotalSales(int managerID);
+
+        /// <summary>
+        /// Gets the total amount of revenue generated under this manager.
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>The total revenue from manager as an Int</returns>
+        int GetTotalRevenue(int managerID);
 
         #endregion
     }

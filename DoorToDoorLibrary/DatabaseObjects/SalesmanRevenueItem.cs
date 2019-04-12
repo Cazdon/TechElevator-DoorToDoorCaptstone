@@ -4,10 +4,10 @@ using System.Text;
 
 namespace DoorToDoorLibrary.DatabaseObjects
 {
-    public class UserSalesCountItem : BaseItem
+    public class SalesmanRevenueItem : BaseItem
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int SalesCount { get; set; }
+        public decimal TotalRevenue { get; set; }
     }
 }
