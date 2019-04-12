@@ -15,8 +15,10 @@
             <input asp-for="Password" type="password" />
             <span asp-validation-for="Password"></span>
         </div>
+        <div class="form-group">
+            <span>
+                @Html.ValidationMessage("invalid")
+            </span>
+        </div>
         <button>Login</button>
-        <span>
-            @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
-        </span>
     </form>

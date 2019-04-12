@@ -44,16 +44,6 @@
         </div>
     </form>
 <h2>My Houses:</h2>
-@*<div class="container">
-    <span>
-        @Html.ValidationMessage("resetFailed", new { @class = "field-validation-error" })
-    </span>
-    @if ((TempData["resetSuccess"] != null) && ((bool)TempData["resetSuccess"]))
-    {
-        <span id="reset-success">Reset Password flag successfully set!</span>
-    }
-</div>*@
-
 <div class="container">
     <ul id="manager-house-list">
         <li class="house-list-item">
@@ -62,6 +52,7 @@
             <div class="house-list-district">District</div>
             <div class="house-list-country">Country</div>
             <div class="house-list-salesperson">Assigned Salesperson</div>
+            <div class="house-list-status">Status</div>
         </li>
         @{
             foreach (HouseItem house in Model.Houses)
@@ -72,6 +63,7 @@
                     <div class="house-list-district">@(house.District)</div>
                     <div class="house-list-country">@(house.Country)</div>
                     <div class="house-list-salesperson">@(house.AssignedSalesperson)</div>
+                    <div class="house-list-status">@(house.Status)</div>
                 </li>
             }
         }

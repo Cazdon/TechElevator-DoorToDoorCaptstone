@@ -73,6 +73,12 @@ body {
     grid-template-areas: ". first . last . email . reset .";
 }
 
+.manager-list-item,
+.salespeople-list-item,
+.house-list-item {
+    align-items: center;
+}
+
 .manager-list-first-name,
 .salespeople-list-first-name {
     grid-area: first;
@@ -96,8 +102,8 @@ body {
 .house-list-item {
     padding: 5px;
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr 3fr 1fr 3fr 1fr 3fr 1fr 3fr 1fr;
-    grid-template-areas: ". street . city . district . country . sales .";
+    grid-template-columns: 1fr 3fr 1fr 3fr 1fr 3fr 1fr 3fr 1fr 3fr 1fr 3fr 1fr;
+    grid-template-areas: ". street . city . district . country . sales . status .";
 }
 
 .house-list-street {
@@ -118,6 +124,10 @@ body {
 
 .house-list-salesperson {
     grid-area: sales;
+}
+
+.house-list-status {
+    grid-area: status;
 }
 
 footer > p {

@@ -64,7 +64,8 @@ BEGIN TRANSACTION
 			CONSTRAINT PK_Houses PRIMARY KEY (id),
 			CONSTRAINT FK_Users_Manager_House FOREIGN KEY (managerID) REFERENCES Users(id),
 			CONSTRAINT FK_Users_Salesperson_House FOREIGN KEY (salespersonID) REFERENCES Users(id),
-			CONSTRAINT FK_House_Status FOREIGN KEY (statusID) REFERENCES House_Status(id)
+			CONSTRAINT FK_House_Status FOREIGN KEY (statusID) REFERENCES House_Status(id),
+			CONSTRAINT U_Houses UNIQUE (street, city, district, zipCode, country)
 		);
 
 		CREATE TABLE Residents (
