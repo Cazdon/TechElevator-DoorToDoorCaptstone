@@ -97,7 +97,7 @@ namespace DoorToDoorLibrary.DAL
                 conn.Open();
 
                 SqlCommand cmd = new SqlCommand(sql + " " + _getLastIdSql, conn);
-                cmd.Parameters.AddWithValue("@FirstName",  item.FirstName);
+                cmd.Parameters.AddWithValue("@FirstName", item.FirstName);
                 cmd.Parameters.AddWithValue("@LastName", item.LastName);
                 cmd.Parameters.AddWithValue("@EmailAddress", item.EmailAddress.ToLower());
                 cmd.Parameters.AddWithValue("@Hash", item.Hash);
@@ -108,7 +108,7 @@ namespace DoorToDoorLibrary.DAL
                 {
                     ID = (int)cmd.ExecuteScalar();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     throw ex;
                 }
@@ -200,7 +200,7 @@ namespace DoorToDoorLibrary.DAL
                     string salespersonName = Convert.ToString(reader["firstName"]) + " " + Convert.ToString(reader["lastName"]);
                     int salespersonID = Convert.ToInt32(reader["id"]);
                     SelectListItem item = new SelectListItem(salespersonName, salespersonID.ToString());
-                    
+
                     output.Add(item);
                 }
             }
@@ -292,9 +292,9 @@ namespace DoorToDoorLibrary.DAL
 
         private bool IsMySalesperson(int salespersonID, int managerID)
         {
-            foreach(UserItem user in GetMySalespeople(managerID))
+            foreach (UserItem user in GetMySalespeople(managerID))
             {
-                if(user.Id == salespersonID)
+                if (user.Id == salespersonID)
                 {
                     return true;
                 }
@@ -411,37 +411,37 @@ namespace DoorToDoorLibrary.DAL
         #region SalesTransaction Methods
 
         /// <summary>
-        /// Generates a UserSalesCountItem from the provided Sql Data Reader
+        /// Generates a SalesmanSalesCountItem from the provided Sql Data Reader
         /// </summary>
         /// <param name="reader">The given Sql Data Reader</param>
-        /// <returns>UserSalesCountItem containing the information for a particular sale</returns>
-        private UserSalesCountItem GetSalesItemFromReader(SqlDataReader reader)
+        /// <returns>SalesmanSalesCountItem containing the information for a particular sale</returns>
+        private SalesmanSalesCountItem GetSalesCountItemFromReader(SqlDataReader reader)
         {
-            UserSalesCountItem item = new UserSalesCountItem();
+            SalesmanSalesCountItem item = new SalesmanSalesCountItem();
 
             item.FirstName = Convert.ToString(reader["firstName"]);
             item.LastName = Convert.ToString(reader["lastName"]);
             item.SalesCount = Convert.ToInt32(reader["numSales"]);
-            
+
 
             return item;
         }
 
 
         /// <summary>
-        /// Generates the data of salesman transactions, relevant to the specific Manager.
+        /// Generates the top salesman based on amount of sales for current manager.
         /// </summary>
         /// <param name="managerID"></param>
-        /// <returns>A list of the names and totals sales of those under the manager</returns>
-        public IList<UserSalesCountItem> GetSalesmanTransactionData(int managerID)
+        /// <returns>A list of SalesmanCountItem</returns>
+        public IList<SalesmanSalesCountItem> GetTopSalesmenByQuantity(int managerID)
         {
-            var output = new List<UserSalesCountItem>();
+            var output = new List<SalesmanSalesCountItem>();
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
 
-                string sql = "SELECT u.firstName, u.lastName, COUNT(st.ID) AS numSales " +
+                string sql = "SELECT TOP 5 u.firstName, u.lastName, COUNT(st.ID) AS numSales " +
                     "FROM Users AS u JOIN Sales_Transactions AS st ON u.id = st.salespersonID WHERE u.id " +
                     "IN(SELECT ms.salespersonID FROM Manager_Saleperson AS ms WHERE ms.managerID = @ManagerID) " +
                     "GROUP BY u.firstName, u.lastName ORDER BY numSales DESC; ";
@@ -453,13 +453,74 @@ namespace DoorToDoorLibrary.DAL
 
                 while (reader.Read())
                 {
-                    UserSalesCountItem sale = GetSalesItemFromReader(reader);
+                    SalesmanSalesCountItem sale = GetSalesCountItemFromReader(reader);
                     output.Add(sale);
                 }
             }
             return output;
         }
 
+        /// <summary>
+        /// Generates a SalesmanRevenueItem from the provided Sql Data Reader
+        /// </summary>
+        /// <param name="reader">The given Sql Data Reader</param>
+        /// <returns>SalesmanRevenueItem containing the information for a particular sale</returns>
+        private SalesmanRevenueItem GetSalesRevenueItemFromReader(SqlDataReader reader)
+        {
+            SalesmanRevenueItem item = new SalesmanRevenueItem();
+
+            item.FirstName = Convert.ToString(reader["firstName"]);
+            item.LastName = Convert.ToString(reader["lastName"]);
+            item.TotalRevenue = Convert.ToInt32(reader["numTotal"]);
+
+
+            return item;
+        }
+
+        /// <summary>
+        /// Generates the top salesman based on total revenue of sales for current manager.
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>A list of SalesRevenueItem</returns>
+        public IList<SalesmanRevenueItem> GetTopSalesmenByRevenue(int managerID)
+        {
+            var output = new List<SalesmanRevenueItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT TOP 5 u.firstName, u.lastName, SUM(st.amount) AS numTotal " +
+                    "FROM Users AS u JOIN Sales_Transactions AS st ON u.id = st.salespersonID WHERE u.id " +
+                    "IN(SELECT ms.salespersonID FROM Manager_Saleperson AS ms WHERE ms.managerID = @ManagerID) " +
+                    "GROUP BY u.firstName, u.lastName ORDER BY numTotal DESC; ";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ManagerID", managerID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    SalesmanRevenueItem sale = GetSalesRevenueItemFromReader(reader);
+                    output.Add(sale);
+                }
+            }
+
+            return output;
+        }
+
+        public IList<HouseSalesCountItem> GetTopHouseByQuantity(int managerID)
+        {
+            var output = new List<HouseSalesCountItem>();
+            return output;
+        }
+
+        public IList<HouseRevenueItem> GetTopHouseByRevenue(int managerID)
+        {
+            var output = new List<HouseRevenueItem>();
+            return output;
+        }
         /// <summary>
         /// Gets the total number of transactions that have taken place under this manager.
         /// </summary>
@@ -485,6 +546,18 @@ namespace DoorToDoorLibrary.DAL
             }
 
                 return output;
+        }
+
+        /// <summary>
+        /// Gets the total amount of revenue generated under this manager.
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>The total revenue from manager as an Int</returns>
+        public int GetTotalRevenue(int managerID)
+        {
+            int output = 0;
+
+            return output;
         }
 
         #endregion

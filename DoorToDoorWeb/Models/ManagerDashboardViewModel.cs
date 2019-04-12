@@ -8,8 +8,11 @@ namespace DoorToDoorWeb.Models
 {
     public class ManagerDashboardViewModel
     {
-        public IList<UserSalesCountItem> Transactions { get; set; }
+        public IList<SalesmanSalesCountItem> SalesmanRankByQuantity { get; set; }
+        public IList<SalesmanRevenueItem> SalesmanRankByRevenue { get; set; }
+        public IList<HouseSalesCountItem> HouseRankByQuantity { get; set; }
+        public IList<HouseRevenueItem> HouseRankByRevenue { get; set; }
         public int TotalSales { get; set; }
-        public decimal TotalIncome { get; set; }
+        public decimal TotalRevenue { get; set; }
     }
 }
