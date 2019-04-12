@@ -254,7 +254,7 @@ namespace DoorToDoorLibrary.DAL
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@Salt", salt);
                 cmd.Parameters.AddWithValue("@Hash", hash);
-                cmd.Parameters.AddWithValue("@EmailAddress", emailAddress);
+                cmd.Parameters.AddWithValue("@EmailAddress", emailAddress.ToLower());
 
                 numRows = cmd.ExecuteNonQuery();
             }
@@ -380,11 +380,11 @@ namespace DoorToDoorLibrary.DAL
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand(sql + " " + _getLastIdSql, conn);
-                    cmd.Parameters.AddWithValue("@Street", item.Street);
-                    cmd.Parameters.AddWithValue("@City", item.City);
+                    cmd.Parameters.AddWithValue("@Street", item.Street.ToLower());
+                    cmd.Parameters.AddWithValue("@City", item.City.ToLower());
                     cmd.Parameters.AddWithValue("@District", item.District.ToLower());
-                    cmd.Parameters.AddWithValue("@ZipCode", item.ZipCode);
-                    cmd.Parameters.AddWithValue("@Country", item.Country);
+                    cmd.Parameters.AddWithValue("@ZipCode", item.ZipCode.ToLower());
+                    cmd.Parameters.AddWithValue("@Country", item.Country.ToLower());
                     cmd.Parameters.AddWithValue("@ManagerID", item.ManagerID);
                     cmd.Parameters.AddWithValue("@SalespersonID", item.AssignedSalespersonID);
 
