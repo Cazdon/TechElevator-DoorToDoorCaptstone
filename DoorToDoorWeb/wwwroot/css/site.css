@@ -57,13 +57,14 @@ body {
 #manager-salespeople-list > :first-child,
 #manager-house-list > :first-child {
     font-weight: bold;
+    border-bottom: 3px solid black;
 }
 
-#admin-manager-list > :nth-child(even),
-#manager-salespeople-list > :nth-child(even),
-#manager-house-list > :nth-child(even) {
-    background-color: lightsteelblue;
-}
+    #admin-manager-list > :nth-child(even),
+    #manager-salespeople-list > :nth-child(even),
+    #manager-house-list > :nth-child(even) {
+        background-color: cadetblue;
+    }
 
 .manager-list-item,
 .salespeople-list-item {
@@ -73,10 +74,10 @@ body {
     grid-template-areas: ". first . last . email . reset .";
 }
 
-.manager-list-item,
-.salespeople-list-item,
-.house-list-item {
+.manager-list-item, .salespeople-list-item,
+.house-list-item, #house-details {
     align-items: center;
+    text-transform: capitalize;
 }
 
 .manager-list-first-name,
@@ -91,19 +92,21 @@ body {
 
 .manager-list-email,
 .salespeople-list-email {
-    grid-area: email
+    grid-area: email;
+    text-transform: none;
 }
 
 .manager-list-reset,
 .salespeople-list-reset {
-    grid-area: reset
+    grid-area: reset;
 }
 
 .house-list-item {
     padding: 5px;
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr 3fr 1fr 3fr 1fr 3fr 1fr 3fr 1fr 3fr 1fr;
-    grid-template-areas: ". street . city . district . country . sales . status .";
+    grid-template-columns: 3fr 2fr 2fr 2fr 2fr 2fr 1fr;
+    grid-template-areas: "street city district country sales status details";
+    grid-gap: 5px;
 }
 
 .house-list-street {
@@ -130,6 +133,10 @@ body {
     grid-area: status;
 }
 
+.house-list-details {
+    grid-area: details;
+}
+
 footer > p {
     text-align: center;
 }
@@ -137,18 +144,15 @@ footer > p {
 /*Affects the header section, fits logo to header, applies a translucent background*/
 .header > h1 {
     height: 35%;
-    background-color: rgba(66, 226, 244,.5);
-    padding: 0px;
+    background-color: rgba(66, 226, 244, .5);
+    padding: 0;
 }
 
 /*Navigation bar settings, affected by the header class*/
 .navbar-nav {
     height: 50px;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 0 1px 0 1px;
     background-color: cadetblue;
-    margin-left: 1px;
-    margin-right: 1px;
     opacity: .8;
 }
 
@@ -165,7 +169,6 @@ footer > p {
         float: left;
         padding: 15px;
         margin-left: -30px;
-        width: auto;
     }
 
     /*Affects the anchors attached to each list item on the navbar */
@@ -177,8 +180,85 @@ footer > p {
         color: black;
     }
 
+.no-link-modify {
+    text-decoration: none;
+    color: inherit;
+}
 
+#house-details {
+    display: flex;
+    padding: 5px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
 
+#house-details > div {
+    border: 1px solid black;
+    width: 100%;
+}
+
+#house-detail-address {
+    display: grid;
+    padding: 5px;
+    grid-template-columns: 20% 20% 10% 40% 10%;
+    grid-template-areas:
+        ". head . street ."
+        ". head . city ."
+        ". head . country .";
+    grid-gap: 5px;
+    align-items: center;
+}
+
+#house-detail-address h5 {
+    grid-area: head;
+}
+
+#house-detail-address :nth-child(2) {
+    grid-area: street;
+}
+
+#house-detail-address :nth-child(3) {
+    grid-area: city;
+}
+
+#house-detail-address :nth-child(4) {
+    grid-area: country;
+}
+
+#house-detail-salesperson {
+    display: grid;
+    padding: 5px;
+    grid-template-columns: 20% 20% 10% 40% 10%;
+    grid-template-areas: ". head . salesperson .";
+    grid-gap: 5px;
+    align-items: center;
+}
+
+#house-detail-salesperson h5 {
+    grid-area: head;
+}
+
+#house-detail-salesperson div {
+    grid-area: salesperson;
+}
+
+#house-detail-status {
+    display: grid;
+    padding: 5px;
+    grid-template-columns: 20% 20% 10% 40% 10%;
+    grid-template-areas: ". head . status .";
+    grid-gap: 5px;
+    align-items: center;
+}
+
+    #house-detail-status h5 {
+        grid-area: head;
+    }
+
+    #house-detail-status div {
+        grid-area: status;
+    }
 
 
 
@@ -201,7 +281,6 @@ footer > p {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-    padding: 1em;
 }
 
     #user-login-form input, #admin-create-manager input,
@@ -212,14 +291,16 @@ footer > p {
     }
 
     #user-login-form button, #admin-create-manager button,
-    #manager-create-salesperson button, #manager-create-house button {
+    #manager-create-salesperson button, #manager-create-house button,
+    .reset-password-button, .show-hide-button {
         background: lightgrey;
         padding: 0.7em;
         border: 0;
     }
 
         #user-login-form button:hover, #admin-create-manager button:hover,
-        #manager-create-salesperson button:hover, #manager-create-house button:hover {
+        #manager-create-salesperson button:hover, #manager-create-house button:hover,
+        .reset-password-button:hover, .show-hide-button:hover {
             background: gold;
         }
 

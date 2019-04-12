@@ -2,49 +2,56 @@
 @section NavBar{
     <partial name="~/Views/Manager/Partials/ManagerNavBar.cshtml" />
 }
+@section Scripts {
+    <script src="~/js/site.js"></script>
+}
 @model ManagerHousesListViewModel
 @using DoorToDoorLibrary.DatabaseObjects
 
-    <form asp-controller="Manager" asp-action="CreateHouse" method="post" id="manager-create-house">
-        <div class="form-group">
-            <label asp-for="CreatedHouse.Street"></label>
-            <input asp-for="CreatedHouse.Street" type="text" />
-            <span asp-validation-for="CreatedHouse.Street"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="CreatedHouse.City"></label>
-            <input asp-for="CreatedHouse.City" type="text" />
-            <span asp-validation-for="CreatedHouse.City"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="CreatedHouse.District"></label>
-            <input asp-for="CreatedHouse.District" type="text" />
-            <span asp-validation-for="CreatedHouse.District"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="CreatedHouse.ZipCode"></label>
-            <input asp-for="CreatedHouse.ZipCode" type="text" />
-            <span asp-validation-for="CreatedHouse.ZipCode"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="CreatedHouse.Country"></label>
-            <input asp-for="CreatedHouse.Country" type="text" />
-            <span asp-validation-for="CreatedHouse.Country"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="CreatedHouse.AssignedSalespersonID"></label>
-            <select asp-for="CreatedHouse.AssignedSalespersonID" asp-items="Model.PossibleSalespeople"></select>
-            <span asp-validation-for="CreatedHouse.AssignedSalespersonID"></span>
-        </div>
-        <div class="form-group">
-            <button>Create House</button>
-            <span>
-                @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
-            </span>
-        </div>
-    </form>
+<button id="show-hide-form" class="show-hide-button">Show/Hide Form</button>
+<form asp-controller="Manager" asp-action="CreateHouse" method="post" id="manager-create-house" hidden>
+    <div class="form-group">
+        <label asp-for="CreatedHouse.Street"></label>
+        <input asp-for="CreatedHouse.Street" type="text" />
+        <span asp-validation-for="CreatedHouse.Street"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CreatedHouse.City"></label>
+        <input asp-for="CreatedHouse.City" type="text" />
+        <span asp-validation-for="CreatedHouse.City"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CreatedHouse.District"></label>
+        <input asp-for="CreatedHouse.District" type="text" />
+        <span asp-validation-for="CreatedHouse.District"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CreatedHouse.ZipCode"></label>
+        <input asp-for="CreatedHouse.ZipCode" type="text" />
+        <span asp-validation-for="CreatedHouse.ZipCode"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CreatedHouse.Country"></label>
+        <input asp-for="CreatedHouse.Country" type="text" />
+        <span asp-validation-for="CreatedHouse.Country"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CreatedHouse.AssignedSalespersonID"></label>
+        <select asp-for="CreatedHouse.AssignedSalespersonID" asp-items="Model.PossibleSalespeople"></select>
+        <span asp-validation-for="CreatedHouse.AssignedSalespersonID"></span>
+    </div>
+    <div class="form-group">
+        <button>Create House</button>
+        <span>
+            @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
+        </span>
+    </div>
+</form>
 <h2>My Houses:</h2>
 <div class="container">
+    <span>
+        @Html.ValidationMessage("not-your-house")
+    </span>
     <ul id="manager-house-list">
         <li class="house-list-item">
             <div class="house-list-street">Street</div>
@@ -64,6 +71,11 @@
                     <div class="house-list-country">@(house.Country)</div>
                     <div class="house-list-salesperson">@(house.AssignedSalesperson)</div>
                     <div class="house-list-status">@(house.Status)</div>
+                    <div class="house-list-details">
+                        <a asp-controller="Manager" asp-action="HouseDetails" asp-route-houseID="@(house.Id)" class="no-link-modify">
+                            <i class="fas fa-list-ul"></i> Details
+                        </a>
+                    </div>
                 </li>
             }
         }
