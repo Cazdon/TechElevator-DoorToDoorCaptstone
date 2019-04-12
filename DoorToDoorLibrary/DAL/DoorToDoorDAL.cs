@@ -340,6 +340,69 @@ namespace DoorToDoorLibrary.DAL
         }
 
         /// <summary>
+        /// Returns a list of Houses associated to the given Salesperson
+        /// </summary>
+        /// <param name="managerID">User ID of the Manager</param>
+        /// <returns>List of Houses associated to that Manager</returns>
+        public IList<HouseItem> GetAassignedHouses(int salespersonID)
+        {
+            List<HouseItem> houseList = new List<HouseItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT h.*, (u.firstName + ' ' + u.lastName) AS salespersonName " +
+                    "FROM[Houses] AS h JOIN[Users] AS u ON h.salespersonID = u.id " +
+                    "WHERE h.salespersonID = @SalespersonID;";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@SalespersonID", salespersonID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    HouseItem newHouse = GetHouseItemFromReader(reader);
+                    houseList.Add(newHouse);
+                }
+            }
+
+            return houseList;
+        }
+
+        /// <summary>
+        /// Retrieves a specific House from the Database
+        /// </summary>
+        /// <param name="houseID">Database ID of the House</param>
+        /// <returns>HouseItem containing the House's information</returns>
+        public HouseItem GetHouse(int houseID)
+        {
+            HouseItem house = null;
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT h.*, (u.firstName + ' ' + u.lastName) AS salespersonName " +
+                    "FROM[Houses] AS h JOIN[Users] AS u ON h.salespersonID = u.id " +
+                    "WHERE h.id = @HouseID;";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@HouseID", houseID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    house = GetHouseItemFromReader(reader);
+                }
+            }
+
+            return house;
+        }
+
+        /// <summary>
         /// Generates a HouseItem from the provided Sql Data Reader
         /// </summary>
         /// <param name="reader">The given Sql Data Reader</param>

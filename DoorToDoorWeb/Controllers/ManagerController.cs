@@ -50,7 +50,6 @@ namespace DoorToDoorWeb.Controllers
             houseListModel.PossibleSalespeople = _db.GetMySalespeopleOptions(CurrentUser.Id);
 
             return houseListModel;
-
         }
 
         [HttpGet]
@@ -96,6 +95,26 @@ namespace DoorToDoorWeb.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
+        }
+
+        [HttpGet]
+        public IActionResult HouseDetails(int houseID)
+        {
+            HouseItem house = _db.GetHouse(houseID);
+
+            ActionResult result = GetAuthenticatedView("HouseDetails", house);
+
+            if (!Role.IsManager)
+            {
+                result = RedirectToAction("Login", "Home");
+            }
+            else if (house.ManagerID != CurrentUser.Id)
+            {
+                ModelState.AddModelError("not-your-house", "You do not have permission to see this house");
+                result = View("Houses", CreateManagerHousesListViewModel());
+            }
+
+            return result;
         }
 
         [HttpPost]

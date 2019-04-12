@@ -77,6 +77,20 @@ namespace DoorToDoorLibrary.DAL
         IList<HouseItem> GetAllHouses(int managerID);
 
         /// <summary>
+        /// Returns a list of Houses associated to the given Salesperson
+        /// </summary>
+        /// <param name="managerID">User ID of the Manager</param>
+        /// <returns>List of Houses associated to that Manager</returns>
+        IList<HouseItem> GetAassignedHouses(int salespersonID);
+
+        /// <summary>
+        /// Retrieves a specific House from the Database
+        /// </summary>
+        /// <param name="houseID">Database ID of the House</param>
+        /// <returns>HouseItem containing the House's information</returns>
+        HouseItem GetHouse(int houseID);
+
+        /// <summary>
         /// Creates a new House in the database
         /// </summary>
         /// <param name="item">The House to be created</param>

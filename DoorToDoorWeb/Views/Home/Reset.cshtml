@@ -4,24 +4,26 @@
 }
 @model ResetPasswordViewModel
 
-<h4>Please Reset your Password</h4>
+    <div class="container">
+        <h4>Please Reset your Password</h4>
 
-<form asp-controller="Home" asp-action="Reset" method="post" id="password-reset-form">
-    <input type="hidden" asp-for="EmailAddress" value="@(Model.EmailAddress)" />
-    <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" type="password" />
-        <span asp-validation-for="Password"></span>
+        <form asp-controller="Home" asp-action="Reset" method="post" id="password-reset-form">
+            <input type="hidden" asp-for="EmailAddress" value="@(Model.EmailAddress)" />
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" type="password" />
+                <span asp-validation-for="Password"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" type="password" />
+                <span asp-validation-for="ConfirmPassword"></span>
+            </div>
+            <div class="form-group">
+                <button>Submit</button>
+                <span>
+                    @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
+                </span>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <label asp-for="ConfirmPassword"></label>
-        <input asp-for="ConfirmPassword" type="password" />
-        <span asp-validation-for="ConfirmPassword"></span>
-    </div>
-    <div class="form-group">
-        <button>Login</button>
-        <span>
-            @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
-        </span>
-    </div>
-</form>

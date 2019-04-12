@@ -6,16 +6,17 @@
 @model ManagerDashboardViewModel
 @using DoorToDoorLibrary.DatabaseObjects
 
-<h2>Home</h2>
-    
-<h3>Total Number of Sales: @Model.TotalSales</h3>
-<h3>Total Revenue @Model.TotalRevenue</h3>
-<ul>
-    @foreach (SalesmanSalesCountItem sale in Model.SalesmanRankByQuantity)
-    {
-        <li>@sale.FirstName</li>
-        <li>@sale.LastName</li>
-        <li>@sale.SalesCount</li>
+<div class="container">
+    <h2>Home</h2>
 
-    }
-</ul>
+    <h3>Total Number of Sales: @Model.TotalSales</h3>
+    <h3>Total Revenue @Model.TotalRevenue</h3>
+    <ul>
+        @foreach (SalesmanSalesCountItem sale in Model.SalesmanRankByQuantity)
+        {
+            <li>@sale.FirstName</li>
+            <li>@sale.LastName</li>
+            <li>@sale.SalesCount</li>
+        }
+    </ul>
+</div>

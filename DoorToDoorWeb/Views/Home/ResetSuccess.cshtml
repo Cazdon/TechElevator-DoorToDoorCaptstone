@@ -4,8 +4,11 @@
 }
 @model ResetPasswordViewModel
 
-<h4>Successfully Reset Password!</h4>
 
-<form asp-controller="Home" asp-action="ResetRedirect" method="post" id="password-reset-redirect">
-    <button>Continue</button>
-</form>
+    <div class="container">
+        <h4>Successfully Reset Password!</h4>
+
+        <form asp-controller="Home" asp-action="ResetRedirect" method="post" id="password-reset-redirect">
+            <button>Continue</button>
+        </form>
+    </div>
