@@ -551,5 +551,115 @@ namespace DoorToDoorLibrary.DAL
         }
 
         #endregion
+
+        #region Product Methods
+
+        /// <summary>
+        /// Retrieves a list of Products associated with the given Manager
+        /// </summary>
+        /// <param name="managerID">Database ID of the Manager</param>
+        /// <returns>List of Products associated with the manager</returns>
+        public IList<ProductItem> GetMyProducts(int managerID)
+        {
+            List<ProductItem> products = new List<ProductItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT * FROM [Products] WHERE id IN(SELECT productID FROM Manager_Products WHERE managerID = @ManagerID);";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ManagerID", managerID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ProductItem product = GetProductItemFromReader(reader);
+                    products.Add(product);
+                }
+            }
+
+            return products;
+        }
+
+        /// <summary>
+        /// Generates a ProductItem from the provided Sql Data Reader
+        /// </summary>
+        /// <param name="reader">The given Sql Data Reader</param>
+        /// <returns>ProductItem containing the information for a particular product</returns>
+        private ProductItem GetProductItemFromReader(SqlDataReader reader)
+        {
+            ProductItem item = new ProductItem();
+
+            item.Id = Convert.ToInt32(reader["id"]);
+            item.Name = Convert.ToString(reader["name"]);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Creates a Product in the Database with the given name and associates that Product with the given Manager
+        /// </summary>
+        /// <param name="productName">Name of the new Product</param>
+        /// <param name="managerID">Database ID of the Manager</param>
+        /// <returns>Newly created Product's ID</returns>
+        public int CreateProduct(string productName, int managerID)
+        {
+            int ID = 0;
+
+            const string sql = "INSERT INTO [Products] (name) VALUES (@Name);";
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(sql + " " + _getLastIdSql, conn);
+                cmd.Parameters.AddWithValue("@Name", productName.ToLower());
+
+                try
+                {
+                    ID = (int)cmd.ExecuteScalar();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            LinkProductToManager(ID, managerID);
+
+            return ID;
+        }
+
+        /// <summary>
+        /// Links the Product with a Manager using their given Database IDs
+        /// </summary>
+        /// <param name="productName">Name of the Product</param>
+        /// <param name="managerID">Database ID of the Manager</param>
+        private void LinkProductToManager(int productID, int managerID)
+        {
+            int numRows = 0;
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "INSERT INTO Manager_Products (managerID, productID) VALUES (@ManagerID, @ProductID);";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ManagerID", managerID);
+                cmd.Parameters.AddWithValue("@ProductID", productID);
+
+                numRows = cmd.ExecuteNonQuery();
+            }
+
+            if (numRows != 1)
+            {
+                throw new ProductManagerLinkFailedException();
+            }
+        }
+
+        #endregion
     }
 }

@@ -48,6 +48,15 @@ namespace DoorToDoorWeb.Controllers
             return houseListModel;
         }
 
+        private ManagerProductsListViewModel CreateManagerProductsListViewModel()
+        {
+            ManagerProductsListViewModel houseListModel = new ManagerProductsListViewModel();
+            houseListModel.Products = _db.GetMyProducts(CurrentUser.Id);
+            houseListModel.CreatedProduct = new CreateProductViewModel();
+
+            return houseListModel;
+        }
+
         [HttpGet]
         public IActionResult Home()
         {
@@ -111,6 +120,21 @@ namespace DoorToDoorWeb.Controllers
             }
 
             return result;
+        }
+
+        [HttpGet]
+        public IActionResult Products()
+        {
+            ActionResult result = GetAuthenticatedView("Products", CreateManagerProductsListViewModel());
+
+            if (Role.IsManager)
+            {
+                return result;
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
         }
 
         [HttpPost]
@@ -210,6 +234,35 @@ namespace DoorToDoorWeb.Controllers
                         _db.CreateHouse(newHouse);
 
                         result = RedirectToAction("Houses", CreateManagerHousesListViewModel());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("invalid", ex.Message);
+                }
+            }
+            else
+            {
+                result = RedirectToAction("Login", "Home");
+            }
+
+            return result;
+        }
+
+        [HttpPost]
+        public ActionResult CreateProduct(ManagerProductsListViewModel model)
+        {
+            ActionResult result = View("Products", CreateManagerProductsListViewModel());
+
+            if (Role.IsManager)
+            {
+                try
+                {
+                    if (ModelState.IsValid)
+                    {
+                        _db.CreateProduct(model.CreatedProduct.Name, CurrentUser.Id);
+
+                        result = RedirectToAction("Products", CreateManagerProductsListViewModel());
                     }
                 }
                 catch (Exception ex)

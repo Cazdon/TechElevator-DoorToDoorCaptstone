@@ -116,5 +116,24 @@ namespace DoorToDoorLibrary.DAL
         int GetTotalSales(int managerID);
 
         #endregion
+
+        #region Product Methods
+
+        /// <summary>
+        /// Retrieves a list of Products associated with the given Manager
+        /// </summary>
+        /// <param name="managerID">Database ID of the Manager</param>
+        /// <returns>List of Products associated with the manager</returns>
+        IList<ProductItem> GetMyProducts(int managerID);
+
+        /// <summary>
+        /// Creates a Product in the Database with the given name and associates that Product with the given Manager
+        /// </summary>
+        /// <param name="productName">Name of the new Product</param>
+        /// <param name="managerID">Database ID of the Manager</param>
+        /// <returns>Newly created Product's ID</returns>
+        int CreateProduct(string productName, int managerID);
+
+        #endregion
     }
 }
