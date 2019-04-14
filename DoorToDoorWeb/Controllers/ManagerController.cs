@@ -187,8 +187,11 @@ namespace DoorToDoorWeb.Controllers
             {
                 try
                 {
+                    string newPassword = GenerateNewPassword();
 
-                    _db.MarkResetPassword(userID);
+                    _db.MarkResetPassword(userID, newPassword);
+
+                    TempData["tempPassword"] = newPassword;
 
                     TempData["resetSuccess"] = true;
 

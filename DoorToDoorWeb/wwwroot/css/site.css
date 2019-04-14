@@ -16,7 +16,7 @@
     text-align: end;
 }
 
-#reset-success {
+.reset-success {
     color: green;
     font-weight: bold;
 }

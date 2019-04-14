@@ -179,5 +179,12 @@ namespace DoorToDoorWeb.Controllers
             }
             return result;
         }
+
+        public string GenerateNewPassword()
+        {
+            Random rnd = new Random();
+
+            return $"Password{rnd.Next(101)}";
+        }
     }
 }

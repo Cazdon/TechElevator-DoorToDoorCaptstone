@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using DoorToDoorLibrary.Exceptions;
 using DoorToDoorLibrary.DatabaseObjects;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using DoorToDoorLibrary.Logic;
 
 namespace DoorToDoorLibrary.DAL
 {
@@ -212,18 +213,24 @@ namespace DoorToDoorLibrary.DAL
         /// Set's the user's Reset Password flag. Throws error if unsuccessful
         /// </summary>
         /// <param name="userId">User's Database ID</param>
-        public void MarkResetPassword(int userId)
+        public void MarkResetPassword(int userId, string newPassword)
         {
             int numRows = 0;
+
+            PasswordManager pm = new PasswordManager(newPassword);
+            string salt = pm.Salt;
+            string hash = pm.Hash;
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
 
-                string sql = "UPDATE Users SET updatePassword = 1 WHERE id = @UserID;";
+                string sql = "UPDATE Users SET updatePassword = 1, salt = @Salt, hash = @Hash WHERE id = @UserID;";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@UserID", userId);
+                cmd.Parameters.AddWithValue("@Salt", salt);
+                cmd.Parameters.AddWithValue("@Hash", hash);
 
                 numRows = cmd.ExecuteNonQuery();
             }

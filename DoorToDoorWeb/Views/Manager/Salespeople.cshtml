@@ -51,7 +51,8 @@
             </span>
             @if ((TempData["resetSuccess"] != null) && ((bool)TempData["resetSuccess"]))
             {
-                <span id="reset-success">Reset Password flag successfully set!</span>
+                <div class="reset-success">Reset Password flag successfully set!</div>
+                <div class="reset-success">New Password is @(TempData["tempPassword"])</div>
             }
         </div>
 

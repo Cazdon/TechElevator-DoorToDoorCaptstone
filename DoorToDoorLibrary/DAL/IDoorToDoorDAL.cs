@@ -47,7 +47,7 @@ namespace DoorToDoorLibrary.DAL
         /// Set's the user's Reset Password flag. Throws error if unsuccessful
         /// </summary>
         /// <param name="userId">User's Database ID</param>
-        void MarkResetPassword(int userId);
+        void MarkResetPassword(int userId, string newPassword);
 
         /// <summary>
         /// Reset's the given User's Password values
