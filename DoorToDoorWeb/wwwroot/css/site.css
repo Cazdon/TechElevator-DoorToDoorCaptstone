@@ -1,8 +1,18 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-    background-color: cadetblue !important;
+﻿/*Sets the page background to the chosen URL*/
+/*body {
+    background-image: url("https://i0.wp.com/www.itsdevelopers.in/wp-content/uploads/2017/11/web-designer-kottayam-background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+}*/
+
+body {
+    background: repeating-linear-gradient(white,#6695C1, white, #6695C1);
+    background-repeat:no-repeat;
+    color: blue
 }
+
 
 .body-content {
     padding-left: 15px;
@@ -330,13 +340,19 @@ form {
         margin-bottom: 1rem;
         background: #fff;
         border: 1px solid #9c9c9c;
+        width: 100%;
+        padding: 0.7em;
     }
 
-form button {
-    background: lightgrey;
-    padding: 0.7em;
-    border: 0;
-}
+        form input:focus {
+            outline: 3px solid gold;
+        }
+
+    form button {
+        background: lightgrey;
+        padding: 0.7em;
+        border: 0;
+    }
 
         form button:hover {
             background: gold;
@@ -348,28 +364,23 @@ form button {
         padding: 0.5em 1.5em 0.5em 0;
     }
 
-   form input {
-        width: 100%;
-        padding: 0.7em;
-        margin-bottom: 0.5rem;
-    }
-
-        form input:focus {
-            outline: 3px solid gold;
-        }
-
     form select {
         width: 100%;
         padding: 0.7em;
         margin-bottom: 0.5rem;
     }
 
-@media (min-width: 400px) {
-  form {
-        overflow: hidden;
+    form textarea {
+        float: right;
+        width: calc(100% - 200px);
     }
 
-       form label {
+@media (min-width: 400px) {
+    form {
+        overflow: hidden;
+    }
+    
+        form label {
             float: left;
             width: 200px;
         }
@@ -379,7 +390,7 @@ form button {
             width: calc(100% - 200px);
         }
 
-      form select {
+        form select {
             float: left;
             width: calc(100% - 200px);
         }
@@ -388,18 +399,4 @@ form button {
             float: right;
             width: calc(100% - 200px);
         }
-
-        form textarea {
-            float: right;
-            width: calc(100% - 200px);
-        }
-
-    /*Sets the page background to the chosen URL*/
-    body {
-        background-image: url("https://i0.wp.com/www.itsdevelopers.in/wp-content/uploads/2017/11/web-designer-kottayam-background.jpg");
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        margin: 0;
-        padding: 0;
-    }
 }

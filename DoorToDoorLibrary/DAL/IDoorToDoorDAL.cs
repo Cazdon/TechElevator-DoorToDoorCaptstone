@@ -131,6 +131,11 @@ namespace DoorToDoorLibrary.DAL
 
         IList<HouseSalesCountItem> GetTopHouseByQuantity(int managerID);
 
+        /// <summary>
+        /// Generates the top house based on total revenue of sales for current manager.
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>A list of HouseRevenueItems</returns>
         IList<HouseRevenueItem> GetTopHouseByRevenue(int managerID);
 
         /// <summary>
@@ -145,7 +150,7 @@ namespace DoorToDoorLibrary.DAL
         /// </summary>
         /// <param name="managerID"></param>
         /// <returns>The total revenue from manager as an Int</returns>
-        int GetTotalRevenue(int managerID);
+        double GetTotalRevenue(int managerID);
 
         #endregion
 

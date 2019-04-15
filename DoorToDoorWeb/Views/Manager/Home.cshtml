@@ -6,17 +6,33 @@
 @model ManagerDashboardViewModel
 @using DoorToDoorLibrary.DatabaseObjects
 
-<div class="container">
-    <h2>Home</h2>
+    <div class="container">
+        <h2>Home</h2>
 
-    <h3>Total Number of Sales: @Model.TotalSales</h3>
-    <h3>Total Revenue @Model.TotalRevenue</h3>
-    <ul>
-        @foreach (SalesmanSalesCountItem sale in Model.SalesmanRankByQuantity)
-        {
-            <li>@sale.FirstName</li>
-            <li>@sale.LastName</li>
-            <li>@sale.SalesCount</li>
-        }
-    </ul>
-</div>
+        <h3>Total Number of Sales: @Model.TotalSales</h3>
+        <h3>Total Revenue: @Model.TotalRevenue</h3>
+        <ul>
+            @foreach (SalesmanSalesCountItem sale in Model.SalesmanRankByQuantity)
+            {
+                <li>Name: @sale.FirstName @sale.LastName - Total Sales: @sale.SalesCount</li>
+            }
+        </ul>
+        <ul>
+            @foreach (SalesmanRevenueItem sale in Model.SalesmanRankByRevenue)
+            {
+                <li>Name: @sale.FirstName @sale.LastName - Total Revenue: @sale.TotalRevenue</li>
+            }
+        </ul>
+        <ul>
+            @foreach (HouseSalesCountItem sale in Model.HouseRankByQuantity)
+            {
+                <li>House Details: @sale.Street, @sale.City @sale.District, @sale.Country - Total Sales: @sale.SalesCount</li>
+            }
+        </ul>
+        <ul>
+            @foreach (HouseRevenueItem sale in Model.HouseRankByRevenue)
+            {
+                <li>House Details: @sale.Street, @sale.City @sale.District, @sale.Country - Total Revenue: @sale.TotalRevenue</li>
+            }
+        </ul>
+    </div>

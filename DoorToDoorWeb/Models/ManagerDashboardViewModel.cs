@@ -13,6 +13,6 @@ namespace DoorToDoorWeb.Models
         public IList<HouseSalesCountItem> HouseRankByQuantity { get; set; }
         public IList<HouseRevenueItem> HouseRankByRevenue { get; set; }
         public int TotalSales { get; set; }
-        public decimal TotalRevenue { get; set; }
+        public double TotalRevenue { get; set; }
     }
 }
