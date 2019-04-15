@@ -17,6 +17,13 @@ namespace DoorToDoorWeb.Controllers
 
         }
 
+        private SalespersonDashboardViewModel CreateSalespersonDashboardViewModel()
+        {
+            SalespersonDashboardViewModel dashboardViewModel = new SalespersonDashboardViewModel();
+
+            return dashboardViewModel;
+        }
+
         private SalespersonHousesListViewModel CreateSalespersonHousesListViewModel()
         {
             SalespersonHousesListViewModel houseListModel = new SalespersonHousesListViewModel();

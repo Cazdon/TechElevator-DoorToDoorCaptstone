@@ -695,13 +695,17 @@ namespace DoorToDoorLibrary.DAL
 
                 string sql = "SELECT COUNT(st.id) AS salesCount FROM Sales_Transactions AS st " +
                     "JOIN Users AS u ON u.id = st.salespersonID WHERE u.id " +
-                    "IN(SELECT ms.salespersonID FROM Manager_Saleperson AS ms WHERE ms.managerID = @ManagerID)";
+                    "IN(SELECT ms.salespersonID FROM Manager_Saleperson AS ms WHERE ms.managerID = @ManagerID);";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@ManagerID", managerID);
 
-                output = (Int32)cmd.ExecuteScalar();
+                SqlDataReader reader = cmd.ExecuteReader();
 
+                while (reader.Read())
+                {
+                    output = Convert.ToInt32(reader["salesCount"]);
+                }
             }
 
                 return output;
@@ -722,12 +726,24 @@ namespace DoorToDoorLibrary.DAL
 
                 string sql = "SELECT Sum(st.amount) AS revenue FROM Sales_Transactions AS st " +
                     "JOIN Users AS u ON u.id = st.salespersonID WHERE u.id " +
-                    "IN(SELECT ms.salespersonID FROM Manager_Saleperson AS ms WHERE ms.managerID = @ManagerID)";
+                    "IN(SELECT ms.salespersonID FROM Manager_Saleperson AS ms WHERE ms.managerID = @ManagerID); ";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@ManagerID", managerID);
 
-                output = (double)cmd.ExecuteScalar();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                try
+                {
+                    while (reader.Read())
+                    {
+                        output = Convert.ToDouble(reader["revenue"]);
+                    }
+                }
+                catch
+                {
+                    output = 0;
+                }
             }
 
 
