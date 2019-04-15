@@ -13,7 +13,6 @@ body {
     color: blue
 }
 
-
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -57,6 +56,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     grid-gap: 5px;
+    list-style: none;
 }
 
 .product-list-item {
@@ -100,8 +100,7 @@ body {
     grid-area: reset;
 }
 
-.manager-list-reset form,
-.salespeople-list-reset form {
+.action-icon-form {
     overflow: inherit;
     padding: 0;
     background: none;
@@ -110,11 +109,12 @@ body {
     max-width: none;
 }
 
-.manager-list-reset form button,
-.salespeople-list-reset form button {
-    float: none;
-    width: auto;
-}
+    .action-icon-form button {
+        float: none;
+        width: auto;
+        background: none;
+        padding: 0;
+    }
 
 .house-list-item {
     padding: 5px;
@@ -158,6 +158,34 @@ body {
 
 .house-list-details {
     grid-area: details;
+}
+
+#house-notes-list {
+    list-style: none;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+.house-note {
+    display: grid;
+    grid-template-columns: 10% 30% auto;
+    grid-template-areas:
+        ". date ."
+        "info info info";
+    grid-gap: 5px;
+    border: 1px solid black;
+    margin: 5px;
+    padding: 5px;
+}
+
+.house-note-user-date {
+    grid-area: date;
+}
+
+.house-note-info {
+    grid-area: info;
+    border-top: 1px solid black;
 }
 
 footer > p {
@@ -286,11 +314,6 @@ footer > p {
         grid-area: status;
     }
 
-
-
-
-
-
  * {
     box-sizing: border-box;
 }
@@ -307,21 +330,23 @@ form {
  
 }
 
-    form input {
+    form input, form textarea {
         margin-bottom: 1rem;
         background: #fff;
         border: 1px solid #9c9c9c;
+        width: 100%;
+        padding: 0.7em;
     }
 
-    form input:focus{
-        outline: 3px solid gold;
-    }
+        form input:focus{
+            outline: 3px solid gold;
+        }
 
-form button {
-    background: lightgrey;
-    padding: 0.7em;
-    border: 0;
-}
+    form button {
+        background: lightgrey;
+        padding: 0.7em;
+        border: 0;
+    }
 
         form button:hover {
             background: gold;
@@ -333,38 +358,46 @@ form button {
         padding: 0.5em 1.5em 0.5em 0;
     }
 
-   form input {
-        width: 100%;
-        padding: 0.7em;
-        margin-bottom: 0.5rem;
-    }
-
-        form input:focus {
-            outline: 3px solid gold;
-        }
-
     form select {
         width: 100%;
         padding: 0.7em;
         margin-bottom: 0.5rem;
     }
 
+.userlist {
+    background-color: white;
+}
+
+    .userlist h2 {
+        text-align: center;
+        text-decoration: underline;
+    }
+
+.show-hide-button {
+    color: gold;
+    font-weight: bolder;
+}
+
+.registerformspace {
+    padding-bottom: 10%;
+}
+
 @media (min-width: 400px) {
-  form {
+    form {
         overflow: hidden;
     }
 
-       form label {
+        form label {
             float: left;
             width: 200px;
         }
 
-        form input {
+        form input, form textarea {
             float: left;
             width: calc(100% - 200px);
         }
 
-      form select {
+        form select {
             float: left;
             width: calc(100% - 200px);
         }
@@ -373,133 +406,5 @@ form button {
             float: right;
             width: calc(100% - 200px);
         }
-
-      .userlist{
-          background-color:white;
-
-       
-      }
-
-      .userlist h2{
-          text-align:center;
-          text-decoration:underline;
-      }
-
-.show-hide-button{
-    color:gold;
-    font-weight:bolder;
-    font-size:x-large;
-}
-
-.registerformspace{
-    padding-bottom: 3%;
-}
-
-
-
-/*Testing new navbar and header*/
-    .navbar-global {
-        background-color: indigo;
-    }
-
-        .navbar-global .navbar-brand {
-            color: white;
-        }
-
-        .navbar-global .navbar-user > li > a {
-            color: white;
-        }
-
-    .navbar-primary {
-        background-color: #333;
-        bottom: 0px;
-        left: 0px;
-        position: absolute;
-        top: 51px;
-        width: 200px;
-        z-index: 8;
-        overflow: hidden;
-        -webkit-transition: all 0.1s ease-in-out;
-        -moz-transition: all 0.1s ease-in-out;
-        transition: all 0.1s ease-in-out;
-    }
-
-        .navbar-primary.collapsed {
-            width: 60px;
-        }
-
-            .navbar-primary.collapsed .glyphicon {
-                font-size: 22px;
-            }
-
-            .navbar-primary.collapsed .nav-label {
-                display: none;
-            }
-
-    .btn-expand-collapse {
-        position: absolute;
-        display: block;
-        left: 0px;
-        bottom: 0;
-        width: 100%;
-        padding: 8px 0;
-        border-top: solid 1px #666;
-        color: grey;
-        font-size: 20px;
-        text-align: center;
-    }
-
-        .btn-expand-collapse:hover,
-        .btn-expand-collapse:focus {
-            background-color: #222;
-            color: white;
-        }
-
-        .btn-expand-collapse:active {
-            background-color: #111;
-        }
-
-    .navbar-primary-menu,
-    .navbar-primary-menu li {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-    }
-
-        .navbar-primary-menu li a {
-            display: block;
-            padding: 10px 18px;
-            text-align: left;
-            border-bottom: solid 1px #444;
-            color: #ccc;
-        }
-
-            .navbar-primary-menu li a:hover {
-                background-color: #000;
-                text-decoration: none;
-                color: white;
-            }
-
-            .navbar-primary-menu li a .glyphicon {
-                margin-right: 6px;
-            }
-
-            .navbar-primary-menu li a:hover .glyphicon {
-                color: orchid;
-            }
-
-    .main-content {
-        margin-top: 60px;
-        margin-left: 200px;
-        padding: 20px;
-    }
-
-    .collapsed + .main-content {
-        margin-left: 60px;
-    }
-
-
-
-
 
 }
