@@ -16,3 +16,4 @@ function toggleForm(showMessage, hideMessage) {
 formToggleElement.addEventListener('click', (event) => {
     toggleForm(showMessage, hideMessage);
 });
+
