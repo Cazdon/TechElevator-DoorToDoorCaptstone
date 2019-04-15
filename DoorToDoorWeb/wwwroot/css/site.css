@@ -1,8 +1,12 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-    background-color: cadetblue !important;
+﻿/*Sets the page background to the chosen URL*/
+body {
+    background-image: url("https://i0.wp.com/www.itsdevelopers.in/wp-content/uploads/2017/11/web-designer-kottayam-background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
 }
+
 
 .body-content {
     padding-left: 15px;
@@ -88,6 +92,22 @@
 .manager-list-reset,
 .salespeople-list-reset {
     grid-area: reset;
+}
+
+.manager-list-reset form,
+.salespeople-list-reset form {
+    overflow: inherit;
+    padding: 0;
+    background: none;
+    border: none;
+    margin: 0;
+    max-width: none;
+}
+
+.manager-list-reset form button,
+.salespeople-list-reset form button {
+    float: none;
+    width: auto;
 }
 
 .house-list-item {
@@ -263,19 +283,14 @@ footer > p {
 
 
 
-/*#user-login-form, #manager-create-salesperson, #manager-create-salesperson*/
 
 
 
-#user-login-form, #admin-create-manager,
-#manager-create-salesperson, #manager-create-house,
-#manager-create-product {
+ * {
     box-sizing: border-box;
 }
 
-#user-login-form, #admin-create-manager,
-#manager-create-salesperson, #manager-create-house,
-#manager-create-product {
+form {
     padding: 1em;
     background: #f9f9f9;
     border: 1px solid #c1c1c1;
@@ -283,98 +298,78 @@ footer > p {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    
+ 
 }
 
-    #user-login-form input, #admin-create-manager input,
-    #manager-create-salesperson input, #manager-create-house input,
-    #manager-create-product input {
+    form input {
         margin-bottom: 1rem;
         background: #fff;
         border: 1px solid #9c9c9c;
     }
 
-    #user-login-form button, #admin-create-manager button,
-    #manager-create-salesperson button, #manager-create-house button,
-    .reset-password-button, #manager-create-product button {
-        background: lightgrey;
-        padding: 0.7em;
-        border: 0;
-    }
+form button {
+    background: lightgrey;
+    padding: 0.7em;
+    border: 0;
+}
 
-        #user-login-form button:hover, #admin-create-manager button:hover,
-        #manager-create-salesperson button:hover, #manager-create-house button:hover,
-        .reset-password-button:hover, #manager-create-product button:hover {
+        form button:hover {
             background: gold;
         }
 
-    #user-login-form label, #admin-create-manager label,
-    #manager-create-salesperson label, #manager-create-house label,
-    #manager-create-product label {
+    form label {
         text-align: right;
         display: block;
         padding: 0.5em 1.5em 0.5em 0;
     }
 
-    #user-login-form input, #admin-create-manager input,
-    #manager-create-salesperson input, #manager-create-house input,
-    #manager-create-product input {
+   form input {
         width: 100%;
         padding: 0.7em;
         margin-bottom: 0.5rem;
     }
 
-        #user-login-form input:focus, #admin-create-manager input:focus,
-        #manager-create-salesperson input:focus, #manager-create-house input:focus,
-        #manager-create-product input:focus {
+        form input:focus {
             outline: 3px solid gold;
         }
 
-    #manager-create-house select {
+    form select {
         width: 100%;
         padding: 0.7em;
         margin-bottom: 0.5rem;
     }
 
 @media (min-width: 400px) {
-    #user-login-form, #admin-create-manager,
-    #manager-create-salesperson, #manager-create-house,
-    #manager-create-product {
+  form {
         overflow: hidden;
     }
 
-        #user-login-form label, #admin-create-manager label,
-        #manager-create-salesperson label, #manager-create-house label,
-        #manager-create-product label {
+       form label {
             float: left;
             width: 200px;
         }
 
-        #user-login-form input, #admin-create-manager input,
-        #manager-create-salesperson input, #manager-create-house input,
-        #manager-create-product input {
+        form input {
             float: left;
             width: calc(100% - 200px);
         }
 
-        #user-login-form select, #admin-create-manager select,
-        #manager-create-salesperson select, #manager-create-house select {
+      form select {
             float: left;
             width: calc(100% - 200px);
         }
 
-        #user-login-form button, #admin-create-manager button,
-        #manager-create-salesperson button, #manager-create-house button,
-        #manager-create-product button {
+        form button {
             float: right;
             width: calc(100% - 200px);
         }
 
-    /*Sets the page background to the chosen URL*/
-    body {
-        background-image: url("https://i0.wp.com/www.itsdevelopers.in/wp-content/uploads/2017/11/web-designer-kottayam-background.jpg");
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        margin: 0;
-        padding: 0;
-    }
+        .admin-manager-list{
+            background-color:white;
+        }
+
+        /*.container{
+            background-color: white !important;
+        }*/
 }
