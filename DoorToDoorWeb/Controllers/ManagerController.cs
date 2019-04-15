@@ -154,7 +154,8 @@ namespace DoorToDoorWeb.Controllers
         [HttpPost]
         public ActionResult RegisterSalesperson(ManagerSalespersonListViewModel model)
         {
-            ActionResult result = View("Salespeople", CreateManagerSalespersonListViewModel()); ;
+            ActionResult result = View("Salespeople", CreateManagerSalespersonListViewModel());
+            TempData["holdForm"] = true;
 
             if (Role.IsManager)
             {
@@ -175,6 +176,8 @@ namespace DoorToDoorWeb.Controllers
                         int newSalespersonID = RegisterUser(newUser);
 
                         _db.PairManagerWithSalesperson(CurrentUser.Id, newSalespersonID);
+
+                        TempData["holdForm"] = false;
 
                         result = RedirectToAction("Salespeople");
                     }
@@ -230,6 +233,7 @@ namespace DoorToDoorWeb.Controllers
         public ActionResult CreateHouse(ManagerHousesListViewModel model)
         {
             ActionResult result = View("Houses", CreateManagerHousesListViewModel());
+            TempData["holdForm"] = true;
 
             if (Role.IsManager)
             {
@@ -249,6 +253,8 @@ namespace DoorToDoorWeb.Controllers
                         };
 
                         _db.CreateHouse(newHouse);
+
+                        TempData["holdForm"] = false;
 
                         result = RedirectToAction("Houses");
                     }
@@ -270,6 +276,7 @@ namespace DoorToDoorWeb.Controllers
         public ActionResult CreateProduct(ManagerProductsListViewModel model)
         {
             ActionResult result = View("Products", CreateManagerProductsListViewModel());
+            TempData["holdForm"] = true;
 
             if (Role.IsManager)
             {
@@ -278,6 +285,8 @@ namespace DoorToDoorWeb.Controllers
                     if (ModelState.IsValid)
                     {
                         _db.CreateProduct(model.CreatedProduct.Name, CurrentUser.Id);
+
+                        TempData["holdForm"] = false;
 
                         result = RedirectToAction("Products");
                     }
@@ -299,6 +308,7 @@ namespace DoorToDoorWeb.Controllers
         public ActionResult AddHouseNote(HouseDetailsViewModel model)
         {
             ActionResult result = View("HouseDetails", CreateHouseDetailsViewModel(model.AddNote.HouseID));
+            TempData["holdForm"] = true;
 
             if (Role.IsManager)
             {
@@ -315,6 +325,8 @@ namespace DoorToDoorWeb.Controllers
                         };
 
                         _db.AddHouseNote(newNote);
+
+                        TempData["holdForm"] = false;
 
                         result = RedirectToAction("HouseDetails", new { houseID = model.AddNote.HouseID });
                     }

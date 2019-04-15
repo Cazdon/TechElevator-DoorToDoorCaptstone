@@ -3,8 +3,13 @@
     <partial name="~/Views/Administrator/Partials/AdminNavBar.cshtml" />
 }
 @section Scripts {
-    <script src="~/js/adminRegisterManager.js"></script>
-    <script src="~/js/site.js"></script>
+    @{ 
+        bool isFormOpen = TempData["holdForm"] != null ? (bool)TempData["holdForm"] : false;
+
+        <script>const holdForm = @(Json.Serialize(isFormOpen));</script>
+        <script src="~/js/adminRegisterManager.js"></script>
+        <script src="~/js/site.js"></script>
+    }
 }
 @model AdminManagerListViewModel
 @using DoorToDoorLibrary.DatabaseObjects

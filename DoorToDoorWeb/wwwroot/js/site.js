@@ -1,6 +1,6 @@
 ﻿const formToggleElement = document.getElementById("show-hide-form");
 const formElement = document.querySelector("form");
-formElement.hidden = true;
+formElement.hidden = !holdForm;
 
 function toggleForm(showMessage, hideMessage) {
     formElement.toggleAttribute("hidden");

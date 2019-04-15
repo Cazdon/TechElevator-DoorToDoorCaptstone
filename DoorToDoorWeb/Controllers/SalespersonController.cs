@@ -97,6 +97,7 @@ namespace DoorToDoorWeb.Controllers
         public ActionResult AddHouseNote(HouseDetailsViewModel model)
         {
             ActionResult result = View("HouseDetails", CreateHouseDetailsViewModel(model.AddNote.HouseID));
+            TempData["holdForm"] = true;
 
             if (Role.IsSalesperson)
             {
@@ -113,6 +114,8 @@ namespace DoorToDoorWeb.Controllers
                         };
 
                         _db.AddHouseNote(newNote);
+
+                        TempData["holdForm"] = true;
 
                         result = RedirectToAction("HouseDetails", new { houseID = model.AddNote.HouseID });
                     }

@@ -130,7 +130,7 @@ namespace DoorToDoorLibrary.DAL
             {
                 conn.Open();
 
-                string sql = "SELECT * FROM [Users] WHERE roleID = (SELECT id FROM Roles WHERE [name] = 'Manager');";
+                string sql = "SELECT * FROM [Users] WHERE roleID = (SELECT id FROM Roles WHERE [name] = 'Manager') ORDER BY lastName, firstName;";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
@@ -159,7 +159,8 @@ namespace DoorToDoorLibrary.DAL
             {
                 conn.Open();
 
-                string sql = "SELECT * FROM [Users] WHERE id IN(SELECT salespersonID FROM Manager_Saleperson WHERE managerID = @ManagerID);";
+                string sql = "SELECT * FROM [Users] WHERE id IN(SELECT salespersonID FROM Manager_Saleperson WHERE managerID = @ManagerID)" +
+                    " ORDER BY lastName, firstName;";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@ManagerID", managerID);
@@ -189,7 +190,8 @@ namespace DoorToDoorLibrary.DAL
             {
                 conn.Open();
 
-                string sql = "SELECT firstName, lastName, [id] FROM [Users] WHERE id IN(SELECT salespersonID FROM Manager_Saleperson WHERE managerID = @ManagerID);";
+                string sql = "SELECT firstName, lastName, [id] FROM [Users] WHERE id IN(SELECT salespersonID FROM Manager_Saleperson" +
+                    " WHERE managerID = @ManagerID) ORDER BY lastName, firstName;";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@ManagerID", managerID);
@@ -329,7 +331,7 @@ namespace DoorToDoorLibrary.DAL
 
                 string sql = "SELECT h.*, (u.firstName + ' ' + u.lastName) AS salespersonName " +
                     "FROM [Houses] AS h JOIN [Users] AS u ON h.salespersonID = u.id " +
-                    "WHERE h.managerID = @ManagerID;";
+                    "WHERE h.managerID = @ManagerID ORDER BY country, district, city, street;";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@ManagerID", managerID);
@@ -361,7 +363,7 @@ namespace DoorToDoorLibrary.DAL
 
                 string sql = "SELECT h.*, (u.firstName + ' ' + u.lastName) AS salespersonName " +
                     "FROM [Houses] AS h JOIN [Users] AS u ON h.salespersonID = u.id " +
-                    "WHERE h.salespersonID = @SalespersonID;";
+                    "WHERE h.salespersonID = @SalespersonID ORDER BY country, district, city, street;";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@SalespersonID", salespersonID);
@@ -490,7 +492,7 @@ namespace DoorToDoorLibrary.DAL
                 conn.Open();
 
                 string sql = "SELECT hn.*, (u.firstName + ' ' + u.lastName) AS userName FROM [Houses_Notes] AS hn " +
-                    "JOIN [Users] AS u ON hn.userID = u.id WHERE houseID = @HouseID;";
+                    "JOIN [Users] AS u ON hn.userID = u.id WHERE houseID = @HouseID ORDER BY [date] DESC;";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@HouseID", houseID);
@@ -864,7 +866,7 @@ namespace DoorToDoorLibrary.DAL
             {
                 conn.Open();
 
-                string sql = "SELECT * FROM [Products] WHERE id IN(SELECT productID FROM Manager_Products WHERE managerID = @ManagerID);";
+                string sql = "SELECT * FROM [Products] WHERE id IN(SELECT productID FROM Manager_Products WHERE managerID = @ManagerID) ORDER BY [name];";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@ManagerID", managerID);
