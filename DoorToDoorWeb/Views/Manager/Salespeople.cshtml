@@ -10,7 +10,7 @@
 @using DoorToDoorLibrary.DatabaseObjects
 
     <div class="container">
-        <div id="show-hide-form">Show Register Salesperson Form</div>
+        <div id="show-hide-form" class="show-hide-button">Show Register Salesperson Form</div>
         <form asp-controller="Manager" asp-action="RegisterSalesperson" method="post" id="manager-create-salesperson">
             <div class="form-group">
                 <label asp-for="Register.FirstName"></label>
@@ -71,7 +71,7 @@
                             <div class="salespeople-list-last-name">@(user.LastName)</div>
                             <div class="salespeople-list-email">@(user.EmailAddress)</div>
                             <div class="salespeople-list-reset">
-                                <form asp-controller="Manager" asp-action="ResetPassword" method="post" id="manager-reset-password-form@(user.Id)">
+                                <form asp-controller="Manager" asp-action="ResetPassword" method="post" id="manager-reset-password-form@(user.Id)" class="action-icon-form">
                                     <input type="hidden" value="@(user.Id)" name="userID" />
                                     <button title="Reset Password">
                                         <i class="fas fa-unlock"></i>

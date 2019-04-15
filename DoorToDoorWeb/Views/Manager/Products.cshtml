@@ -10,7 +10,7 @@
 @using DoorToDoorLibrary.DatabaseObjects
 
 <div class="container">
-    <div id="show-hide-form">Show Create Product Form</div>
+    <div id="show-hide-form" class="show-hide-button">Show Create Product Form</div>
     <form asp-controller="Manager" asp-action="CreateProduct" method="post" id="manager-create-product">
         <div class="form-group">
             <label asp-for="CreatedProduct.Name"></label>
@@ -30,7 +30,7 @@
             @{
                 foreach (ProductItem product in Model.Products)
                 {
-                    <li class="product-list-item">@(product.Name)</li>
+                    <li class="product-list-item">&#8226; @(product.Name)</li>
                 }
             }
         </ul>

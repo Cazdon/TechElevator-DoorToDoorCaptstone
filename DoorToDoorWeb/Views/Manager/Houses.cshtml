@@ -10,7 +10,7 @@
 @using DoorToDoorLibrary.DatabaseObjects
 
     <div class="container">
-        <div id="show-hide-form">Show Create House Form</div>
+        <div id="show-hide-form" class="show-hide-button">Show Create House Form</div>
         <form asp-controller="Manager" asp-action="CreateHouse" method="post" id="manager-create-house">
             <div class="form-group">
                 <label asp-for="CreatedHouse.Street"></label>
@@ -74,9 +74,12 @@
                             <div class="house-list-salesperson">@(house.AssignedSalesperson)</div>
                             <div class="house-list-status">@(house.Status)</div>
                             <div class="house-list-details">
-                                <a asp-controller="Manager" asp-action="HouseDetails" asp-route-houseID="@(house.Id)" class="no-link-modify">
-                                    <i class="fas fa-list-ul"></i> Details
-                                </a>
+                                <form asp-controller="Manager" asp-action="HouseDetails" method="get" id="get-house-details-@(house.Id)" class="action-icon-form">
+                                    <input type="hidden" value="@(house.Id)" name="houseID" />
+                                    <button title="Details">
+                                        <i class="fas fa-list-ul"></i>
+                                    </button>
+                                </form>
                             </div>
                         </li>
                     }
