@@ -328,7 +328,7 @@ namespace DoorToDoorLibrary.DAL
                 conn.Open();
 
                 string sql = "SELECT h.*, (u.firstName + ' ' + u.lastName) AS salespersonName " +
-                    "FROM[Houses] AS h JOIN[Users] AS u ON h.salespersonID = u.id " +
+                    "FROM [Houses] AS h JOIN [Users] AS u ON h.salespersonID = u.id " +
                     "WHERE h.managerID = @ManagerID;";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -360,7 +360,7 @@ namespace DoorToDoorLibrary.DAL
                 conn.Open();
 
                 string sql = "SELECT h.*, (u.firstName + ' ' + u.lastName) AS salespersonName " +
-                    "FROM[Houses] AS h JOIN[Users] AS u ON h.salespersonID = u.id " +
+                    "FROM [Houses] AS h JOIN [Users] AS u ON h.salespersonID = u.id " +
                     "WHERE h.salespersonID = @SalespersonID;";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -413,7 +413,7 @@ namespace DoorToDoorLibrary.DAL
         /// Generates a HouseItem from the provided Sql Data Reader
         /// </summary>
         /// <param name="reader">The given Sql Data Reader</param>
-        /// <returns>HouseItem containing the information for a particular hosue</returns>
+        /// <returns>HouseItem containing the information for a particular house</returns>
         private HouseItem GetHouseItemFromReader(SqlDataReader reader)
         {
             HouseItem item = new HouseItem();
@@ -476,6 +476,104 @@ namespace DoorToDoorLibrary.DAL
             }
         }
 
+        /// <summary>
+        /// Returns a list of Notes associated with the given House
+        /// </summary>
+        /// <param name="houseID">Database ID of the House</param>
+        /// <returns>List of NoteItems associated with that House</returns>
+        public IList<NoteItem> GetHouseNotes(int houseID)
+        {
+            List<NoteItem> notes = new List<NoteItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT hn.*, (u.firstName + ' ' + u.lastName) AS userName FROM [Houses_Notes] AS hn " +
+                    "JOIN [Users] AS u ON hn.userID = u.id WHERE houseID = @HouseID;";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@HouseID", houseID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    NoteItem newNote = GetNoteItemFromReader(reader);
+                    notes.Add(newNote);
+                }
+            }
+
+            return notes;
+        }
+
+        /// <summary>
+        /// Generates a NoteItem from the provided Sql Data Reader
+        /// </summary>
+        /// <param name="reader">The given Sql Data Reader</param>
+        /// <returns>NoteItem containing the information for a particular Note</returns>
+        private NoteItem GetNoteItemFromReader(SqlDataReader reader)
+        {
+            NoteItem item = new NoteItem();
+
+            item.Id = Convert.ToInt32(reader["id"]);
+            item.HouseID = Convert.ToInt32(reader["houseID"]);
+            item.UserID = Convert.ToInt32(reader["userID"]);
+            item.SubmittedDate = Convert.ToDateTime(reader["date"]);
+            item.Note = Convert.ToString(reader["note"]);
+            item.UserName = Convert.ToString(reader["userName"]);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Creates a Note for a House
+        /// </summary>
+        /// <param name="note">The Note to be created</param>
+        /// <returns>Database ID of the Note</returns>
+        public int AddHouseNote(NoteItem note)
+        {
+            if (IsMyHouse(note.UserID, note.HouseID))
+            {
+                int ID = 0;
+
+                const string sql = "INSERT INTO [Houses_Notes] (houseID, userID, date, note) " +
+                                   "VALUES (@HouseID, @UserID, @Date, @Note);";
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql + " " + _getLastIdSql, conn);
+                    cmd.Parameters.AddWithValue("@HouseID", note.HouseID);
+                    cmd.Parameters.AddWithValue("@UserID", note.UserID);
+                    cmd.Parameters.AddWithValue("@Date", note.SubmittedDate);
+                    cmd.Parameters.AddWithValue("@Note", note.Note);
+
+                    try
+                    {
+                        ID = (int)cmd.ExecuteScalar();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+
+                return ID;
+            }
+            else
+            {
+                throw new NotMyHouseException();
+            }
+        }
+
+        private bool IsMyHouse(int userID, int houseID)
+        {
+            HouseItem house = GetHouse(houseID);
+
+            return ((userID == house.ManagerID) || (userID == house.AssignedSalespersonID));
+        }
+
         #endregion
 
         #region SalesTransaction Methods
@@ -496,7 +594,6 @@ namespace DoorToDoorLibrary.DAL
 
             return item;
         }
-
 
         /// <summary>
         /// Generates the top salesman based on amount of sales for current manager.

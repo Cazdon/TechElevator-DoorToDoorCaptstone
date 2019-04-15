@@ -1,24 +1,55 @@
 ﻿@section Title {House Detail - Salesperson}
-@section NavBar{
+@section NavBar {
     <partial name="~/Views/Salesperson/Partials/SalespersonNavBar.cshtml" />
 }
-@model HouseItem
+@section Scripts {
+    <script src="~/js/addHouseNote.js"></script>
+    <script src="~/js/site.js"></script>
+}
+@model HouseDetailsViewModel
 @using DoorToDoorLibrary.DatabaseObjects
 
+<div class="container">
+    <h2>House Details:</h2>
     <div class="container">
-        <h2>House Details:</h2>
-        <div class="container">
-            <div id="house-details">
-                <div id="house-detail-address">
-                    <h5>Address:</h5>
-                    <div>@(Model.Street)</div>
-                    <div>@(Model.City), @(Model.District) @(Model.ZipCode)</div>
-                    <div>@(Model.Country)</div>
-                </div>
-                <div id="house-detail-status">
-                    <h5>Current Status:</h5>
-                    <div>@(Model.Status)</div>
-                </div>
+        <div id="house-details">
+            <div id="house-detail-address">
+                <h5>Address:</h5>
+                <div>@(Model.House.Street)</div>
+                <div>@(Model.House.City), @(Model.House.District) @(Model.House.ZipCode)</div>
+                <div>@(Model.House.Country)</div>
+            </div>
+            <div id="house-detail-status">
+                <h5>Current Status:</h5>
+                <div>@(Model.House.Status)</div>
+            </div>
+            <div id="house-detail-notes">
+                <h5>Notes:</h5>
+                <div id="show-hide-form" class="show-hide-button">Show Add Note Form</div>
+                <form asp-controller="Salesperson" asp-action="AddHouseNote" method="post" id="salesperson-add-note">
+                    <input type="hidden" asp-for="AddNote.HouseID" value="@(Model.House.Id)" />
+                    <div class="form-group">
+                        <label asp-for="AddNote.Note"></label>
+                        <textarea asp-for="AddNote.Note"></textarea>
+                        <span asp-validation-for="AddNote.Note"></span>
+                    </div>
+                    <div class="form-group">
+                        <button>Add Note</button>
+                        <span>
+                            @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
+                        </span>
+                    </div>
+                </form>
+                <ul id="house-notes-list">
+                    @foreach (NoteItem note in Model.Notes)
+                    {
+                        <li class="house-note">
+                            <div class="house-note-user-date">@(note.UserName) : @(note.SubmittedDate)</div>
+                            <div class="house-note-info">@(note.Note)</div>
+                        </li>
+                    }
+                </ul>
             </div>
         </div>
     </div>
+</div>

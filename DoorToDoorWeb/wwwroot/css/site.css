@@ -150,6 +150,34 @@
     grid-area: details;
 }
 
+#house-notes-list {
+    list-style: none;
+    padding: 5px;
+}
+
+.house-note {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 10% 40% auto;
+    grid-template-areas:
+        ". user ."
+        "info info info";
+    grid-gap: 5px;
+    border: 1px solid black;
+    margin: 5px;
+}
+
+.house-note-user-date {
+    grid-area: user;
+    margin: 5px;
+}
+
+.house-note-info {
+    grid-area: info;
+    border-top: 1px solid black;
+    margin: 5px;
+}
+
 footer > p {
     text-align: center;
 }
@@ -357,6 +385,11 @@ form button {
         }
 
         form button {
+            float: right;
+            width: calc(100% - 200px);
+        }
+
+        form textarea {
             float: right;
             width: calc(100% - 200px);
         }

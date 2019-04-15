@@ -59,13 +59,13 @@ namespace DoorToDoorWeb.Controllers
 
                     TempData["resetSuccess"] = true;
 
-                    result = RedirectToAction("Home", CreateAdminManagerListViewModel());
+                    result = RedirectToAction("Home");
                 }
                 catch(Exception ex)
                 {
                     ModelState.AddModelError($"resetFailed{userID}", ex.Message);
 
-                    result = RedirectToAction("Home", CreateAdminManagerListViewModel());
+                    result = RedirectToAction("Home");
                 }
             }
             else
@@ -103,7 +103,7 @@ namespace DoorToDoorWeb.Controllers
 
                         RegisterUser(newUser);
 
-                        result = RedirectToAction("Home", CreateAdminManagerListViewModel());
+                        result = RedirectToAction("Home");
                     }
                 }
                 catch (Exception ex)
