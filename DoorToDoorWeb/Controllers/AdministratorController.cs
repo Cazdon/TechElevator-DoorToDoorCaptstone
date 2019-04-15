@@ -87,6 +87,7 @@ namespace DoorToDoorWeb.Controllers
                 {
                     if (!ModelState.IsValid)
                     {
+                        TempData["holdForm"] = true;
                         result = View("Home", CreateAdminManagerListViewModel());
                     }
                     else
@@ -109,7 +110,7 @@ namespace DoorToDoorWeb.Controllers
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("invalid", ex.Message);
-
+                    TempData["holdForm"] = true;
                     result = View("Home", CreateAdminManagerListViewModel());
                 }
             }
