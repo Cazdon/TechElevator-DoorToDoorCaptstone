@@ -1,10 +1,16 @@
 ﻿/*Sets the page background to the chosen URL*/
-body {
+/*body {
     background-image: url("https://i0.wp.com/www.itsdevelopers.in/wp-content/uploads/2017/11/web-designer-kottayam-background.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
     margin: 0;
     padding: 0;
+}*/
+
+body {
+    background: repeating-linear-gradient(white,#6695C1, white, #6695C1);
+    background-repeat:no-repeat;
+    color: blue
 }
 
 
@@ -369,7 +375,22 @@ form button {
             background-color:white;
         }
 
-        /*.container{
-            background-color: white !important;
-        }*/
+
+
+
+    #page-container {
+        position: relative;
+        min-height: 100vh;
+    }
+
+    #content-wrap {
+        padding-bottom: 2.5rem; /* Footer height */
+    }
+
+    #footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 2.5rem; /* Footer height */
+    }
 }
