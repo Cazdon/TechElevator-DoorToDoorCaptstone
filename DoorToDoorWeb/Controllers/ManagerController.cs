@@ -35,8 +35,8 @@ namespace DoorToDoorWeb.Controllers
             dashboard.SalesmanRankByRevenue = _db.GetTopSalesmenByRevenue(CurrentUser.Id);
             dashboard.HouseRankByQuantity = _db.GetTopHouseByQuantity(CurrentUser.Id);
             dashboard.HouseRankByRevenue = _db.GetTopHouseByRevenue(CurrentUser.Id);
-            dashboard.TotalSales = _db.GetTotalSales(CurrentUser.Id);
-            dashboard.TotalRevenue = _db.GetTotalRevenue(CurrentUser.Id);
+            dashboard.TotalSales = _db.GetManagerTotalSales(CurrentUser.Id);
+            dashboard.TotalRevenue = _db.GetManagerTotalRevenue(CurrentUser.Id);
 
             return dashboard;
         }

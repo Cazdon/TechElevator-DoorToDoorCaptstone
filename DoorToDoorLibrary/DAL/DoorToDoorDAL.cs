@@ -782,7 +782,7 @@ namespace DoorToDoorLibrary.DAL
         /// </summary>
         /// <param name="managerID"></param>
         /// <returns>The total number of transactions from a manager's salesmen as an Int</returns>
-        public int GetTotalSales(int managerID)
+        public int GetManagerTotalSales(int managerID)
         {
             int output = 0;
 
@@ -805,7 +805,7 @@ namespace DoorToDoorLibrary.DAL
                 }
             }
 
-                return output;
+            return output;
         }
 
         /// <summary>
@@ -813,7 +813,7 @@ namespace DoorToDoorLibrary.DAL
         /// </summary>
         /// <param name="managerID"></param>
         /// <returns>The total revenue from manager as an Int</returns>
-        public double GetTotalRevenue(int managerID)
+        public double GetManagerTotalRevenue(int managerID)
         {
             double output = 0;
 
@@ -844,7 +844,7 @@ namespace DoorToDoorLibrary.DAL
             }
 
 
-                return output;
+            return output;
         }
 
         #endregion
@@ -957,6 +957,33 @@ namespace DoorToDoorLibrary.DAL
             }
         }
 
+        #endregion
+
+        #region Unorganized Methods
+        public IList<HouseDashboardItem> GetSalesmanDashboardHouses(int salesmanID)
+        {
+            List<HouseDashboardItem> output = new List<HouseDashboardItem>();
+
+            return output;
+        }
+        public IList<ProductDashboardItem> GetSalesmanDashboardProducts(int salesmanID)
+        {
+            List<ProductDashboardItem> output = new List<ProductDashboardItem>();
+
+            return output;
+        }
+        public int GetSalesmanDashboardSales(int salesmanID)
+        {
+            int output = 0;
+
+            return output;
+        }
+        public double GetSalesmanDashboardTotalRevenue(int salemanID)
+        {
+            double output = 0;
+
+            return output;
+        }
         #endregion
     }
 }

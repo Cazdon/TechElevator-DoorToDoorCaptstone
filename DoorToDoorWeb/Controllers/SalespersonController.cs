@@ -20,6 +20,10 @@ namespace DoorToDoorWeb.Controllers
         private SalespersonDashboardViewModel CreateSalespersonDashboardViewModel()
         {
             SalespersonDashboardViewModel dashboardViewModel = new SalespersonDashboardViewModel();
+            dashboardViewModel.Houses = _db.GetSalesmanDashboardHouses(CurrentUser.Id);
+            dashboardViewModel.Products = _db.GetSalesmanDashboardProducts(CurrentUser.Id);
+            dashboardViewModel.MySales = _db.GetSalesmanDashboardSales(CurrentUser.Id);
+            dashboardViewModel.MyRevenue = _db.GetSalesmanDashboardTotalRevenue(CurrentUser.Id);
 
             return dashboardViewModel;
         }
@@ -46,7 +50,7 @@ namespace DoorToDoorWeb.Controllers
         [HttpGet]
         public IActionResult Home()
         {
-            ActionResult result = GetAuthenticatedView("Home");
+            ActionResult result = GetAuthenticatedView("Home", CreateSalespersonDashboardViewModel());
 
             if (Role.IsSalesperson)
             {

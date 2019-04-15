@@ -143,14 +143,14 @@ namespace DoorToDoorLibrary.DAL
         /// </summary>
         /// <param name="managerID"></param>
         /// <returns>The total number of transactions from a manager's salesmen as an Int</returns>
-        int GetTotalSales(int managerID);
+        int GetManagerTotalSales(int managerID);
 
         /// <summary>
         /// Gets the total amount of revenue generated under this manager.
         /// </summary>
         /// <param name="managerID"></param>
         /// <returns>The total revenue from manager as an Int</returns>
-        double GetTotalRevenue(int managerID);
+        double GetManagerTotalRevenue(int managerID);
 
         #endregion
 
@@ -170,6 +170,19 @@ namespace DoorToDoorLibrary.DAL
         /// <param name="managerID">Database ID of the Manager</param>
         /// <returns>Newly created Product's ID</returns>
         int CreateProduct(string productName, int managerID);
+
+        #endregion
+
+        #region Unorganized Methods
+
+        
+        IList<HouseDashboardItem> GetSalesmanDashboardHouses(int salesmanID);
+
+        IList<ProductDashboardItem> GetSalesmanDashboardProducts(int salesmanID);
+
+        int GetSalesmanDashboardSales(int salesmanID);
+
+        double GetSalesmanDashboardTotalRevenue(int salemanID);
 
         #endregion
     }
