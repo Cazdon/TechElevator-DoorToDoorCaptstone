@@ -1,8 +1,12 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-    background-color: cadetblue !important;
+﻿/*Sets the page background to the chosen URL*/
+body {
+    background-image: url("https://i0.wp.com/www.itsdevelopers.in/wp-content/uploads/2017/11/web-designer-kottayam-background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
 }
+
 
 .body-content {
     padding-left: 15px;
@@ -345,12 +349,11 @@ form button {
             width: calc(100% - 200px);
         }
 
-    /*Sets the page background to the chosen URL*/
-    body {
-        background-image: url("https://i0.wp.com/www.itsdevelopers.in/wp-content/uploads/2017/11/web-designer-kottayam-background.jpg");
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        margin: 0;
-        padding: 0;
-    }
+        .admin-manager-list{
+            background-color:white;
+        }
+
+        /*.container{
+            background-color: white !important;
+        }*/
 }
