@@ -46,5 +46,15 @@ namespace DoorToDoorLibrary.Logic
         /// Error message for exceeding 100 characters
         /// </summary>
         public const string MaxHundredError = "Field must not exceed 100 characters";
+
+        /// <summary>
+        /// Integer for 255 character input field limit
+        /// </summary>
+        public const int MaxChar255 = 255;
+
+        /// <summary>
+        /// Error message for exceeding 255 characters
+        /// </summary>
+        public const string Max255Error = "Field must not exceed 255 characters";
     }
 }
