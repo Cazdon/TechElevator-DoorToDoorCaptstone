@@ -313,6 +313,10 @@ form {
         border: 1px solid #9c9c9c;
     }
 
+    form input:focus{
+        outline: 3px solid gold;
+    }
+
 form button {
     background: lightgrey;
     padding: 0.7em;
@@ -386,6 +390,9 @@ form button {
     font-weight:bolder;
 }
 
+.registerformspace{
+    padding-bottom: 10%;
+}
 /*#admin-create-manager{
     padding-bottom:5%;
 }*/
