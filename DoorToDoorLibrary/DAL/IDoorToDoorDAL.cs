@@ -97,6 +97,20 @@ namespace DoorToDoorLibrary.DAL
         /// <returns>ID of the created House</returns>
         int CreateHouse(HouseItem item);
 
+        /// <summary>
+        /// Returns a list of Notes associated with the given House
+        /// </summary>
+        /// <param name="houseID">Database ID of the House</param>
+        /// <returns>List of NoteItems associated with that House</returns>
+        IList<NoteItem> GetHouseNotes(int houseID);
+
+        /// <summary>
+        /// Creates a Note for a House
+        /// </summary>
+        /// <param name="note">The Note to be created</param>
+        /// <returns>Database ID of the Note</returns>
+        int AddHouseNote(NoteItem note);
+
         #endregion
 
         #region SalesTransaction Methods

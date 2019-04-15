@@ -32,6 +32,17 @@ namespace DoorToDoorWeb.Controllers
             return houseListModel;
         }
 
+        private HouseDetailsViewModel CreateHouseDetailsViewModel(int houseID)
+        {
+            HouseDetailsViewModel model = new HouseDetailsViewModel();
+
+            model.House = _db.GetHouse(houseID);
+            model.Notes = _db.GetHouseNotes(houseID);
+            model.AddNote = new AddHouseNoteViewModel();
+
+            return model;
+        }
+
         [HttpGet]
         public IActionResult Home()
         {
@@ -65,18 +76,55 @@ namespace DoorToDoorWeb.Controllers
         [HttpGet]
         public IActionResult HouseDetails(int houseID)
         {
-            HouseItem house = _db.GetHouse(houseID);
+            HouseDetailsViewModel model = CreateHouseDetailsViewModel(houseID);
 
-            ActionResult result = GetAuthenticatedView("HouseDetails", house);
-
+            ActionResult result = GetAuthenticatedView("HouseDetails", model);
+            
             if (!Role.IsSalesperson)
             {
                 result = RedirectToAction("Login", "Home");
             }
-            else if (house.AssignedSalespersonID != CurrentUser.Id)
+            else if (model.House.AssignedSalespersonID != CurrentUser.Id)
             {
                 ModelState.AddModelError("not-your-house", "You do not have permission to see this house");
                 result = View("Houses", CreateSalespersonHousesListViewModel());
+            }
+
+            return result;
+        }
+
+        [HttpPost]
+        public ActionResult AddHouseNote(HouseDetailsViewModel model)
+        {
+            ActionResult result = View("HouseDetails", CreateHouseDetailsViewModel(model.AddNote.HouseID));
+
+            if (Role.IsSalesperson)
+            {
+                try
+                {
+                    if (ModelState.IsValid)
+                    {
+                        NoteItem newNote = new NoteItem()
+                        {
+                            HouseID = model.AddNote.HouseID,
+                            UserID = CurrentUser.Id,
+                            Note = model.AddNote.Note,
+                            SubmittedDate = DateTime.Now
+                        };
+
+                        _db.AddHouseNote(newNote);
+
+                        result = RedirectToAction("HouseDetails", new { houseID = model.AddNote.HouseID });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("invalid", ex.Message);
+                }
+            }
+            else
+            {
+                result = RedirectToAction("Login", "Home");
             }
 
             return result;

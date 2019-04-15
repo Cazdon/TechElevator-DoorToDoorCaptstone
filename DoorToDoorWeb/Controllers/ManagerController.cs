@@ -28,7 +28,6 @@ namespace DoorToDoorWeb.Controllers
             return salespeoplelist;
         }
 
-
         private ManagerDashboardViewModel CreateManagerDashboardViewModel()
         {
             ManagerDashboardViewModel dashboard = new ManagerDashboardViewModel();
@@ -59,6 +58,17 @@ namespace DoorToDoorWeb.Controllers
             houseListModel.CreatedProduct = new CreateProductViewModel();
 
             return houseListModel;
+        }
+
+        private HouseDetailsViewModel CreateHouseDetailsViewModel(int houseID)
+        {
+            HouseDetailsViewModel model = new HouseDetailsViewModel();
+
+            model.House = _db.GetHouse(houseID);
+            model.Notes = _db.GetHouseNotes(houseID);
+            model.AddNote = new AddHouseNoteViewModel();
+
+            return model;
         }
 
         [HttpGet]
@@ -109,15 +119,15 @@ namespace DoorToDoorWeb.Controllers
         [HttpGet]
         public IActionResult HouseDetails(int houseID)
         {
-            HouseItem house = _db.GetHouse(houseID);
+            HouseDetailsViewModel model = CreateHouseDetailsViewModel(houseID);
 
-            ActionResult result = GetAuthenticatedView("HouseDetails", house);
+            ActionResult result = GetAuthenticatedView("HouseDetails", model);
 
             if (!Role.IsManager)
             {
                 result = RedirectToAction("Login", "Home");
             }
-            else if (house.ManagerID != CurrentUser.Id)
+            else if (model.House.ManagerID != CurrentUser.Id)
             {
                 ModelState.AddModelError("not-your-house", "You do not have permission to see this house");
                 result = View("Houses", CreateManagerHousesListViewModel());
@@ -166,7 +176,7 @@ namespace DoorToDoorWeb.Controllers
 
                         _db.PairManagerWithSalesperson(CurrentUser.Id, newSalespersonID);
 
-                        result = RedirectToAction("Salespeople", CreateManagerSalespersonListViewModel());
+                        result = RedirectToAction("Salespeople");
                     }
                 }
                 catch (Exception ex)
@@ -199,13 +209,13 @@ namespace DoorToDoorWeb.Controllers
 
                     TempData["resetSuccess"] = true;
 
-                    result = RedirectToAction("Salespeople", CreateManagerSalespersonListViewModel());
+                    result = RedirectToAction("Salespeople");
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError($"resetFailed{userID}", ex.Message);
 
-                    result = RedirectToAction("Salespeople", CreateManagerSalespersonListViewModel());
+                    result = RedirectToAction("Salespeople");
                 }
             }
             else
@@ -240,7 +250,7 @@ namespace DoorToDoorWeb.Controllers
 
                         _db.CreateHouse(newHouse);
 
-                        result = RedirectToAction("Houses", CreateManagerHousesListViewModel());
+                        result = RedirectToAction("Houses");
                     }
                 }
                 catch (Exception ex)
@@ -269,7 +279,44 @@ namespace DoorToDoorWeb.Controllers
                     {
                         _db.CreateProduct(model.CreatedProduct.Name, CurrentUser.Id);
 
-                        result = RedirectToAction("Products", CreateManagerProductsListViewModel());
+                        result = RedirectToAction("Products");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("invalid", ex.Message);
+                }
+            }
+            else
+            {
+                result = RedirectToAction("Login", "Home");
+            }
+
+            return result;
+        }
+
+        [HttpPost]
+        public ActionResult AddHouseNote(HouseDetailsViewModel model)
+        {
+            ActionResult result = View("HouseDetails", CreateHouseDetailsViewModel(model.AddNote.HouseID));
+
+            if (Role.IsManager)
+            {
+                try
+                {
+                    if (ModelState.IsValid)
+                    {
+                        NoteItem newNote = new NoteItem()
+                        {
+                            HouseID = model.AddNote.HouseID,
+                            UserID = CurrentUser.Id,
+                            Note = model.AddNote.Note,
+                            SubmittedDate = DateTime.Now
+                        };
+
+                        _db.AddHouseNote(newNote);
+
+                        result = RedirectToAction("HouseDetails", new { houseID = model.AddNote.HouseID });
                     }
                 }
                 catch (Exception ex)
