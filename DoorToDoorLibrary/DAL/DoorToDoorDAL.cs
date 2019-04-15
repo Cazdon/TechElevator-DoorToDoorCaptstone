@@ -580,15 +580,104 @@ namespace DoorToDoorLibrary.DAL
             return output;
         }
 
+        /// <summary>
+        /// Generates a HouseSalesCount from the provided Sql Data Reader
+        /// </summary>
+        /// <param name="reader">The given Sql Data Reader</param>
+        /// <returns>HouseSalesCount containing the information for a particular sale</returns>
+        private HouseSalesCountItem GetHouseSalesCountItemFromReader(SqlDataReader reader)
+        {
+            HouseSalesCountItem item = new HouseSalesCountItem();
+
+            item.Street = Convert.ToString(reader["street"]);
+            item.City = Convert.ToString(reader["city"]);
+            item.District = Convert.ToString(reader["district"]);
+            item.Country = Convert.ToString(reader["country"]);
+            item.SalesCount = Convert.ToInt32(reader["numSales"]);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Generates the top house based on amount of sales for current manager.
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>A list of HouseSalesCountItems</returns>
         public IList<HouseSalesCountItem> GetTopHouseByQuantity(int managerID)
         {
             var output = new List<HouseSalesCountItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT TOP 5 h.street, h.city, h.district, h.country, COUNT(st.ID) as numSales " +
+                    "FROM Houses AS h JOIN Sales_Transactions AS st ON h.id = st.houseID WHERE h.managerID = @ManagerID " +
+                    "GROUP BY h.street, h.city, h.district, h.country ORDER BY numSales DESC";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ManagerID", managerID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    HouseSalesCountItem sale = GetHouseSalesCountItemFromReader(reader);
+                    output.Add(sale);
+                }
+            }
+
             return output;
         }
 
+        /// <summary>
+        /// Generates a HouseRevenue from the provided Sql Data Reader
+        /// </summary>
+        /// <param name="reader">The given Sql Data Reader</param>
+        /// <returns>HouseRevenue containing the information for a particular sale</returns>
+        private HouseRevenueItem GetHouseRevenueItemFromReader(SqlDataReader reader)
+        {
+            HouseRevenueItem item = new HouseRevenueItem();
+
+            item.Street = Convert.ToString(reader["street"]);
+            item.City = Convert.ToString(reader["city"]);
+            item.District = Convert.ToString(reader["district"]);
+            item.Country = Convert.ToString(reader["country"]);
+            item.TotalRevenue = Convert.ToInt32(reader["numTotal"]);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Generates the top house based on total revenue of sales for current manager.
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>A list of HouseRevenueItems</returns>
         public IList<HouseRevenueItem> GetTopHouseByRevenue(int managerID)
         {
             var output = new List<HouseRevenueItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT TOP 5 h.street, h.city, h.district, h.country, SUM(st.amount) as numTotal " +
+                    "FROM Houses AS h JOIN Sales_Transactions AS st ON h.id = st.houseID WHERE h.managerID = @ManagerID " +
+                    "GROUP BY h.street, h.city, h.district, h.country ORDER BY numTotal DESC";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ManagerID", managerID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    HouseRevenueItem sale = GetHouseRevenueItemFromReader(reader);
+                    output.Add(sale);
+                }
+
+            }
+
             return output;
         }
         /// <summary>
@@ -623,11 +712,26 @@ namespace DoorToDoorLibrary.DAL
         /// </summary>
         /// <param name="managerID"></param>
         /// <returns>The total revenue from manager as an Int</returns>
-        public int GetTotalRevenue(int managerID)
+        public double GetTotalRevenue(int managerID)
         {
-            int output = 0;
+            double output = 0;
 
-            return output;
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT Sum(st.amount) AS revenue FROM Sales_Transactions AS st " +
+                    "JOIN Users AS u ON u.id = st.salespersonID WHERE u.id " +
+                    "IN(SELECT ms.salespersonID FROM Manager_Saleperson AS ms WHERE ms.managerID = @ManagerID)";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ManagerID", managerID);
+
+                output = (double)cmd.ExecuteScalar();
+            }
+
+
+                return output;
         }
 
         #endregion
