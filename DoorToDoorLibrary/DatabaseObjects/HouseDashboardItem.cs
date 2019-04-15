@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DoorToDoorLibrary.DatabaseObjects
 {
-    public class HouseItemDashboard : BaseItem
+    public class HouseDashboardItem : BaseItem
     {
         public string Street { get; set; }
     }
