@@ -163,13 +163,15 @@ namespace DoorToDoorWeb.Controllers
                 {
                     if (ModelState.IsValid)
                     {
+                        string newPassword = GenerateNewPassword();
+
                         User newUser = new User()
                         {
                             FirstName = model.Register.FirstName,
                             LastName = model.Register.LastName,
                             EmailAddress = model.Register.EmailAddress,
-                            Password = model.Register.Password,
-                            ConfirmPassword = model.Register.ConfirmPassword,
+                            Password = newPassword,
+                            ConfirmPassword = newPassword,
                             RoleId = (int)RoleManager.eRole.Salesperson
                         };
 
@@ -178,6 +180,8 @@ namespace DoorToDoorWeb.Controllers
                         _db.PairManagerWithSalesperson(CurrentUser.Id, newSalespersonID);
 
                         TempData["holdForm"] = false;
+                        TempData["registerSuccess"] = true;
+                        TempData["tempPassword"] = newPassword;
 
                         result = RedirectToAction("Salespeople");
                     }
