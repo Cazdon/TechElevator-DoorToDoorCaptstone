@@ -13,31 +13,32 @@
 }
 @model ManagerProductsListViewModel
 @using DoorToDoorLibrary.DatabaseObjects
-
-<div class="container">
-    <div id="show-hide-form" class="show-hide-button">Show Create Product Form</div>
-    <form asp-controller="Manager" asp-action="CreateProduct" method="post" id="manager-create-product">
-        <div class="form-group">
-            <label asp-for="CreatedProduct.Name"></label>
-            <input asp-for="CreatedProduct.Name" type="text" />
-            <span asp-validation-for="CreatedProduct.Name"></span>
-        </div>
-        <div class="form-group">
-            <button>Create Product</button>
-            <span>
-                @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
-            </span>
-        </div>
-    </form>
-    <h2>My Products:</h2>
-    <div class="container">
-        <ul id="manager-product-list">
-            @{
-                foreach (ProductItem product in Model.Products)
-                {
-                    <li class="product-list-item">&#8226; @(product.Name)</li>
-                }
-            }
-        </ul>
-    </div>
-</div>
+        <div class="main-content">
+            <div class="container">
+                <div id="show-hide-form" class="show-hide-button">Show Create Product Form</div>
+                <form asp-controller="Manager" asp-action="CreateProduct" method="post" id="manager-create-product">
+                    <div class="form-group">
+                        <label asp-for="CreatedProduct.Name"></label>
+                        <input asp-for="CreatedProduct.Name" type="text" />
+                        <span asp-validation-for="CreatedProduct.Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <button>Create Product</button>
+                        <span>
+                            @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
+                        </span>
+                    </div>
+                </form>
+                <h2>My Products:</h2>
+                <div class="container">
+                    <ul id="manager-product-list">
+                        @{
+                            foreach (ProductItem product in Model.Products)
+                            {
+                                <li class="product-list-item">&#8226; @(product.Name)</li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+            </div>
