@@ -171,11 +171,18 @@ namespace DoorToDoorLibrary.DAL
         /// <returns>Newly created Product's ID</returns>
         int CreateProduct(string productName, int managerID);
 
+        /// <summary>
+        /// Returns a Select List of all Products from the system created by the Salesperson's Manager
+        /// </summary>
+        /// <param name="salespersonID">Database ID of the Salesperson</param>
+        /// <returns>Select List of Products under the given Salesperson's Manager</returns>
+        IList<SelectListItem> GetMyProductOptions(int salespersonID);
+
         #endregion
 
         #region Unorganized Methods
 
-        
+
         IList<HouseDashboardItem> GetSalesmanDashboardHouses(int salesmanID);
 
         IList<ProductDashboardItem> GetSalesmanDashboardProducts(int salesmanID);
