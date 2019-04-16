@@ -578,7 +578,7 @@ namespace DoorToDoorLibrary.DAL
 
         #endregion
 
-        #region SalesTransaction Methods
+        #region Manager Dashboard Methods
 
         /// <summary>
         /// Generates a SalesmanSalesCountItem from the provided Sql Data Reader
@@ -779,6 +779,7 @@ namespace DoorToDoorLibrary.DAL
 
             return output;
         }
+
         /// <summary>
         /// Gets the total number of transactions that have taken place under this manager.
         /// </summary>
@@ -849,6 +850,166 @@ namespace DoorToDoorLibrary.DAL
             return output;
         }
 
+        #endregion
+
+        #region Salesman Dashboard Methods
+
+        /// <summary>
+        /// Generates a HouseDashboardItem from the provided Sql Data Reader
+        /// </summary>
+        /// <param name="reader">The given Sql Data Reader</param>
+        /// <returns>HouseDashboardItem to be placed into a list</returns>
+        private HouseDashboardItem GetHouseDashboardItemFromReader(SqlDataReader reader)
+        {
+            HouseDashboardItem item = new HouseDashboardItem();
+
+            item.Street = Convert.ToString(reader["street"]);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Generates a list of houses that salesman has assigned.
+        /// </summary>
+        /// <param name="managerID"></param>
+        public IList<HouseDashboardItem> GetSalesmanDashboardHouses(int salesmanID)
+        {
+            List<HouseDashboardItem> output = new List<HouseDashboardItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT h.street FROM Houses AS h " +
+                    "JOIN Users as u ON u.id = h.salespersonID WHERE u.id = @SalesmanID; ";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@SalesmanID", salesmanID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    HouseDashboardItem sale = GetHouseDashboardItemFromReader(reader);
+                    output.Add(sale);
+                }
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Generates a ProductDashboardItem from the provided Sql Data Reader
+        /// </summary>
+        /// <param name="reader">The given Sql Data Reader</param>
+        /// <returns>ProductDashboardItem to be placed into a list</returns>
+        private ProductDashboardItem GetProductDashboardItemFromReader(SqlDataReader reader)
+        {
+            ProductDashboardItem item = new ProductDashboardItem();
+
+            item.Name = Convert.ToString(reader["name"]);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Generates a list of products the salesman has avaliable.
+        /// </summary>
+        /// <param name="managerID"></param>
+        public IList<ProductDashboardItem> GetSalesmanDashboardProducts(int salesmanID)
+        {
+            List<ProductDashboardItem> output = new List<ProductDashboardItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT p.name FROM Products AS p WHERE p.id IN " +
+                    "(SELECT mp.productID FROM Manager_Products AS mp WHERE mp.managerID = " +
+                    "(SELECT ms.managerID FROM Manager_Saleperson AS ms WHERE ms.salespersonID = @SalesmanID))" +
+                    "ORDER BY p.name";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@SalesmanID", salesmanID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ProductDashboardItem sale = GetProductDashboardItemFromReader(reader);
+                    output.Add(sale);
+                }
+
+                return output;
+            }
+        }
+
+        /// <summary>
+        /// Gets the total number of transactions that have taken place from this Salesman.
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>The total number of transactions from a salesmen as an Int</returns>
+        public int GetSalesmanDashboardSales(int salesmanID)
+        {
+            int output = 0;
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT COUNT(st.id) AS salesCount FROM Sales_Transactions AS st " +
+                    "JOIN Users AS u ON u.id = st.salespersonID WHERE u.id = @SalesmanID";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@SalesmanID", salesmanID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    output = Convert.ToInt32(reader["salesCount"]);
+                }
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Gets the total amount of revenue generated from Salesman.
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>The total revenue from Salesman as an Int</returns>
+        public double GetSalesmanDashboardTotalRevenue(int salesmanID)
+        {
+            double output = 0;
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT Sum(st.amount) AS revenue FROM Sales_Transactions AS st " +
+                    "JOIN Users AS u ON u.id = st.salespersonID WHERE u.id = @SalesmanID";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@SalesmanID", salesmanID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                try
+                {
+                    while (reader.Read())
+                    {
+                        output = Convert.ToDouble(reader["revenue"]);
+                    }
+                }
+                catch
+                {
+                    output = 0;
+                }
+            }
+
+            return output;
+        }
         #endregion
 
         #region Product Methods
@@ -961,31 +1122,6 @@ namespace DoorToDoorLibrary.DAL
 
         #endregion
 
-        #region Unorganized Methods
-        public IList<HouseDashboardItem> GetSalesmanDashboardHouses(int salesmanID)
-        {
-            List<HouseDashboardItem> output = new List<HouseDashboardItem>();
-
-            return output;
-        }
-        public IList<ProductDashboardItem> GetSalesmanDashboardProducts(int salesmanID)
-        {
-            List<ProductDashboardItem> output = new List<ProductDashboardItem>();
-
-            return output;
-        }
-        public int GetSalesmanDashboardSales(int salesmanID)
-        {
-            int output = 0;
-
-            return output;
-        }
-        public double GetSalesmanDashboardTotalRevenue(int salemanID)
-        {
-            double output = 0;
-
-            return output;
-        }
-        #endregion
+      
     }
 }
