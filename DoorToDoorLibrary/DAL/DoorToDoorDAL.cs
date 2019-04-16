@@ -1156,6 +1156,9 @@ namespace DoorToDoorLibrary.DAL
 
         #endregion
 
-      
+        #region Unsorted
+        //"INSERT INTO Sales_Transactions (date, amount, houseID, productID, salespersonID) " +
+        //"VALUES(CURRENT_TIMESTAMP, @Amount, @HouseID, @ProductID, @SalespersonID);";
+        #endregion
     }
 }
