@@ -10,7 +10,24 @@
 body {
     background: repeating-linear-gradient(white,#6695C1, white, #6695C1);
     background-repeat:no-repeat;
-    color: blue
+    color: blue;
+    position: relative;
+    min-height: 100vh;
+}
+
+main {
+    padding-bottom: 2.5rem;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+}
+
+footer > p {
+    text-align: center;
 }
 
 .body-content {
@@ -186,10 +203,6 @@ body {
 .house-note-info {
     grid-area: info;
     border-top: 1px solid black;
-}
-
-footer > p {
-    text-align: center;
 }
 
 /*Affects the header section, fits logo to header, applies a translucent background*/
