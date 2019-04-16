@@ -1120,6 +1120,40 @@ namespace DoorToDoorLibrary.DAL
             }
         }
 
+        /// <summary>
+        /// Returns a Select List of all Products from the system created by the Salesperson's Manager
+        /// </summary>
+        /// <param name="salespersonID">Database ID of the Salesperson</param>
+        /// <returns>Select List of Products under the given Salesperson's Manager</returns>
+        public IList<SelectListItem> GetMyProductOptions(int salespersonID)
+        {
+            List<SelectListItem> output = new List<SelectListItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT p.* FROM Products AS p WHERE p.id IN (SELECT mp.productID FROM Manager_Products AS mp WHERE mp.managerID = " +
+                    "(SELECT ms.managerID FROM Manager_Saleperson AS ms WHERE ms.salespersonID = @SalespersonID)) ORDER BY p.name;";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@SalespersonID", salespersonID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string itemName = Convert.ToString(reader["name"]);
+                    int productID = Convert.ToInt32(reader["id"]);
+                    SelectListItem item = new SelectListItem(itemName, productID.ToString());
+
+                    output.Add(item);
+                }
+            }
+
+            return output;
+        }
+
         #endregion
 
       

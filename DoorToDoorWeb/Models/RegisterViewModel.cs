@@ -23,14 +23,5 @@ namespace DoorToDoorWeb.Models
         [Required(ErrorMessage = ErrorConsts.BlankError)]
         [MaxLength(ErrorConsts.MaxCharHundred, ErrorMessage = ErrorConsts.MaxHundredError)]
         public string EmailAddress { get; set; }
-
-        [Display(Name = "Password")]
-        [Required(ErrorMessage = ErrorConsts.BlankError)]
-        public string Password { get; set; }
-
-        [Display(Name = "Confirm Password")]
-        [Required(ErrorMessage = ErrorConsts.BlankError)]
-        [Compare("Password", ErrorMessage = ErrorConsts.NoPasswordMatch)]
-        public string ConfirmPassword { get; set; }
     }
 }
