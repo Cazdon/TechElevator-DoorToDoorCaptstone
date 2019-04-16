@@ -320,7 +320,7 @@ footer > p {
         grid-area: head;
     }
 
-    #house-detail-status div {
+    #house-detail-status > div {
         grid-area: status;
     }
 

@@ -1,4 +1,7 @@
-﻿const formToggleElement = document.getElementById("show-hide-form");
+﻿const d2dServerUrl = "https://localhost:44343/";
+
+
+const formToggleElement = document.getElementById("show-hide-form");
 const formElement = document.querySelector("form");
 formElement.hidden = !holdForm;
 

@@ -6,9 +6,13 @@
     @{
         bool isFormOpen = TempData["holdForm"] != null ? (bool)TempData["holdForm"] : false;
 
-        <script>const holdForm = @(Json.Serialize(isFormOpen));</script>
+        <script>
+            const holdForm = @(Json.Serialize(isFormOpen));
+            const houseID = @(Model.House.Id);
+        </script>
         <script src="~/js/addHouseNote.js"></script>
         <script src="~/js/site.js"></script>
+        <script src="~/js/houseStatusChange.js"></script>
     }
 }
 @model HouseDetailsViewModel
@@ -26,13 +30,16 @@
             </div>
             <div id="house-detail-status">
                 <h5>Current Status:</h5>
-                <div>@(Model.House.Status)</div>
+                <div>
+                    <select asp-items="Model.StatusOptions" id="house-status-select"></select>
+                    <div id="house-status-update-response"></div>
+                </div>
             </div>
             <div id="house-detail-notes">
                 <h5>Notes:</h5>
                 <div id="show-hide-form" class="show-hide-button">Show Add Note Form</div>
                 <form asp-controller="Salesperson" asp-action="AddHouseNote" method="post" id="salesperson-add-note">
-                    <input type="hidden" asp-for="AddNote.HouseID" value="@(Model.House.Id)" />
+                    <input type="hidden" asp-for="AddNote.HouseID" value="@(Model.House.Id)"/>
                     <div class="form-group">
                         <label asp-for="AddNote.Note"></label>
                         <textarea asp-for="AddNote.Note"></textarea>
