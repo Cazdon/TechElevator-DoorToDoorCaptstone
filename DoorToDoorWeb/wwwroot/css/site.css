@@ -218,15 +218,12 @@ footer > p {
     margin: 0 1px 0 1px;
     /*background-color: cadetblue;*/
     opacity: .8;
- 
+    list-style: none;
+    width: 100%;
 }
 
-    /*Changes the list style on navigation bar (currently set to an unordered list)*/
-    .navbar-nav ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        /*background-color: cadetblue;*/
+    .navbar-nav > :last-child {
+        margin-left: auto;
     }
 
     /*Affects the individual labels on the navbar */
