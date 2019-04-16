@@ -29,16 +29,18 @@
                         </span>
                     </div>
                 </form>
-                <h2>My Products:</h2>
-                <div class="container">
-                    <ul id="manager-product-list">
-                        @{
-                            foreach (ProductItem product in Model.Products)
-                            {
-                                <li class="product-list-item">&#8226; @(product.Name)</li>
+                <div class="userlist">
+                    <h2>My Products</h2>
+                    <div class="container">
+                        <ul id="manager-product-list">
+                            @{
+                                foreach (ProductItem product in Model.Products)
+                                {
+                                    <li class="product-list-item">&#8226; @(product.Name)</li>
+                                }
                             }
-                        }
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
             </div>
             </div>
