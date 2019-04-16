@@ -1,4 +1,5 @@
 ﻿using DoorToDoorLibrary.DatabaseObjects;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace DoorToDoorWeb.Models
         public HouseItem House { get; set; }
         public IList<NoteItem> Notes { get; set; }
         public AddHouseNoteViewModel AddNote { get; set; }
+        public IList<SelectListItem> StatusOptions { get; set; }
     }
 }

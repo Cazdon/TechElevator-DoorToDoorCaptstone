@@ -43,6 +43,7 @@ namespace DoorToDoorWeb.Controllers
             model.House = _db.GetHouse(houseID);
             model.Notes = _db.GetHouseNotes(houseID);
             model.AddNote = new AddHouseNoteViewModel();
+            model.StatusOptions = _db.GetHouseStatusOptions(model.House.StatusID);
 
             return model;
         }
@@ -119,7 +120,7 @@ namespace DoorToDoorWeb.Controllers
 
                         _db.AddHouseNote(newNote);
 
-                        TempData["holdForm"] = true;
+                        TempData["holdForm"] = false;
 
                         result = RedirectToAction("HouseDetails", new { houseID = model.AddNote.HouseID });
                     }
@@ -132,6 +133,32 @@ namespace DoorToDoorWeb.Controllers
             else
             {
                 result = RedirectToAction("Login", "Home");
+            }
+
+            return result;
+        }
+
+        [HttpPost]
+        public ActionResult SetHouseStatus([FromBody]SetHouseStatusViewModel model)
+        {
+            bool statusUpdateSuccess = false;
+            ActionResult result = null;
+            if (Role.IsSalesperson)
+            {
+                try
+                {
+                    statusUpdateSuccess = _db.SetHouseStatus(model.HouseID, model.StatusID, CurrentUser.Id);
+
+                    result = GetAuthenticatedJson(Json(new HouseStatusUpdateJsonResponseModel(statusUpdateSuccess)), true);
+                }
+                catch (Exception ex)
+                {
+                    result = GetAuthenticatedJson(Json(new HouseStatusUpdateJsonResponseModel(ex.Message)), true);
+                }
+            }
+            else
+            {
+                result = GetAuthenticatedJson(null, false);
             }
 
             return result;

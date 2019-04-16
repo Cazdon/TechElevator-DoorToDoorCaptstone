@@ -576,6 +576,72 @@ namespace DoorToDoorLibrary.DAL
             return ((userID == house.ManagerID) || (userID == house.AssignedSalespersonID));
         }
 
+        /// <summary>
+        /// Returns a Select List of all House Statuses from the system
+        /// </summary>
+        /// <param name="currentStatus">Status of a House to default as Selected</param>
+        /// <returns>Select List of Products under the given Salesperson's Manager</returns>
+        public IList<SelectListItem> GetHouseStatusOptions(int currentStatus)
+        {
+            List<SelectListItem> output = new List<SelectListItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT * FROM House_Status;";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string status = Convert.ToString(reader["status"]);
+                    int statusID = Convert.ToInt32(reader["id"]);
+                    SelectListItem item = new SelectListItem(status, statusID.ToString(), (statusID == currentStatus));
+
+                    output.Add(item);
+                }
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Changes the given House's Status to the supplied Status
+        /// </summary>
+        /// <param name="houseID">Database ID of the House to change</param>
+        /// <param name="statusID">Database ID of the desired Status</param>
+        /// <param name="userID">ID of the requesting User to determine if they are connected to the House</param>
+        /// <returns>True if successful, false if failed</returns>
+        public bool SetHouseStatus(int houseID, int statusID, int userID)
+        {
+            if (IsMyHouse(userID, houseID))
+            {
+                int numRows = 0;
+
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    string sql = "UPDATE Houses SET statusID = @StatusID WHERE [id] = @HouseID;";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@StatusID", statusID);
+                    cmd.Parameters.AddWithValue("@HouseID", houseID);
+
+                    numRows = cmd.ExecuteNonQuery();
+                }
+
+                return numRows == 1 ? true : false;
+            }
+            else
+            {
+                throw new NotMyHouseException();
+            }
+        }
+
         #endregion
 
         #region Manager Dashboard Methods
