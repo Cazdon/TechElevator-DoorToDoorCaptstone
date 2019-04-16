@@ -1,4 +1,7 @@
-﻿const formToggleElement = document.getElementById("show-hide-form");
+﻿const d2dServerUrl = "https://localhost:44343/";
+
+
+const formToggleElement = document.getElementById("show-hide-form");
 const formElement = document.querySelector("form");
 formElement.hidden = !holdForm;
 
@@ -17,3 +20,7 @@ formToggleElement.addEventListener('click', (event) => {
     toggleForm(showMessage, hideMessage);
 });
 
+
+$('.btn-expand-collapse').click(function (e) {
+    $('.navbar-primary').toggleClass('collapsed');
+});

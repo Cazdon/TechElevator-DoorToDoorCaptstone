@@ -111,6 +111,22 @@ namespace DoorToDoorLibrary.DAL
         /// <returns>Database ID of the Note</returns>
         int AddHouseNote(NoteItem note);
 
+        /// <summary>
+        /// Returns a Select List of all House Statuses from the system
+        /// </summary>
+        /// <param name="currentStatus">Status of a House to default as Selected</param>
+        /// <returns>Select List of Products under the given Salesperson's Manager</returns>
+        IList<SelectListItem> GetHouseStatusOptions(int statusID);
+
+        /// <summary>
+        /// Changes the given House's Status to the supplied Status
+        /// </summary>
+        /// <param name="houseID">Database ID of the House to change</param>
+        /// <param name="statusID">Database ID of the desired Status</param>
+        /// <param name="userID">ID of the requesting User to determine if they are connected to the House</param>
+        /// <returns>True if successful, false if failed</returns>
+        bool SetHouseStatus(int houseID, int statusID, int userID);
+
         #endregion
 
         #region Manager Dashboard Methods

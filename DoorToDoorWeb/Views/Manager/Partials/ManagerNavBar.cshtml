@@ -1,20 +1,34 @@
 ﻿<nav class="navbar navbar-light navbar-expand-lg" style="background-color:lightgrey;">
-    @*<nav class="navbar navbar-expand-lg navbar-light bg-light">*@
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" asp-controller="Manager" asp-action="Home"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="Manager" asp-action="Salespeople"><i class="fas fa-users"></i> My Salespeople</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="Manager" asp-action="Houses"><i class="fas fa-list-ul"></i> My Houses</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="Manager" asp-action="Products"><i class="fas fa-box-open"></i> My Products</a>
-            </li>
-            <partial name="~/Views/Shared/Partials/LogoutNavButton.cshtml" />
-        </ul>
-    </div>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+             
+                <partial name="~/Views/Shared/Partials/LogoutNavButton.cshtml" />
+            </ul>
+        </div>
+    </nav>
+
+
+<nav class="navbar-primary">
+    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <ul class="navbar-primary-menu">
+        <li>
+        <li class="nav-item active">
+            <a class="nav-link" asp-controller="Manager" asp-action="Home"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Manager" asp-action="Salespeople"><i class="fas fa-users"></i> My Salespeople</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Manager" asp-action="Houses"><i class="fas fa-list-ul"></i> My Houses</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Manager" asp-action="Products"><i class="fas fa-box-open"></i> My Products</a>
+        </li>
+        </li>
+    </ul>
 </nav>
+<div class="main-content">
+    <h1> I am the main content </h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem sint assumenda quae aliquid voluptatibus quia, ea, ad natus magni repellat earum, culpa iure tempore. Enim dolor eaque minima voluptas ducimus?</p>
+</div>
