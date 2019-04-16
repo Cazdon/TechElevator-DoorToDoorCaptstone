@@ -129,7 +129,7 @@ namespace DoorToDoorLibrary.DAL
 
         #endregion
 
-        #region SalesTransaction Methods
+        #region Manager Dashboard Methods
 
         /// <summary>
         /// Generates the top salesman based on amount of sales for current manager.
@@ -170,6 +170,36 @@ namespace DoorToDoorLibrary.DAL
 
         #endregion
 
+        #region Salesman Dashboard Methods
+
+        /// <summary>
+        /// Generates a list of houses that salesman has assigned.
+        /// </summary>
+        /// <param name="managerID"></param>
+        IList<HouseDashboardItem> GetSalesmanDashboardHouses(int salesmanID);
+
+        /// <summary>
+        /// Generates a list of products the salesman has avaliable.
+        /// </summary>
+        /// <param name="managerID"></param>
+        IList<ProductDashboardItem> GetSalesmanDashboardProducts(int salesmanID);
+
+        /// <summary>
+        /// Gets the total number of transactions that have taken place from this Salesman.
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>The total number of transactions from a salesmen as an Int</returns>
+        int GetSalesmanDashboardSales(int salesmanID);
+
+        /// <summary>
+        /// Gets the total amount of revenue generated from Salesman.
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>The total revenue from Salesman as an Int</returns>
+        double GetSalesmanDashboardTotalRevenue(int salemanID);
+
+        #endregion
+
         #region Product Methods
 
         /// <summary>
@@ -193,19 +223,6 @@ namespace DoorToDoorLibrary.DAL
         /// <param name="salespersonID">Database ID of the Salesperson</param>
         /// <returns>Select List of Products under the given Salesperson's Manager</returns>
         IList<SelectListItem> GetMyProductOptions(int salespersonID);
-
-        #endregion
-
-        #region Unorganized Methods
-
-
-        IList<HouseDashboardItem> GetSalesmanDashboardHouses(int salesmanID);
-
-        IList<ProductDashboardItem> GetSalesmanDashboardProducts(int salesmanID);
-
-        int GetSalesmanDashboardSales(int salesmanID);
-
-        double GetSalesmanDashboardTotalRevenue(int salemanID);
 
         #endregion
     }

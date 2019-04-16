@@ -6,21 +6,23 @@
 
     <div class="container">
         <form asp-controller="Home" asp-action="Login" method="post" id="user-login-form">
-            <div class="form-group">
-                <label asp-for="EmailAddress"></label>
-                <input asp-for="EmailAddress" type="email" />
+            <div class="container">
+                @*<label asp-for="EmailAddress"></label>*@
+                <input asp-for="EmailAddress" type="email" placeholder="Username" />
                 <span asp-validation-for="EmailAddress"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" type="password" />
+
+
+                @*<label asp-for="Password"></label>*@
+                <input asp-for="Password" type="password" placeholder="Password" />
                 <span asp-validation-for="Password"></span>
-            </div>
-            <div class="form-group">
+
+
                 <span>
                     @Html.ValidationMessage("invalid")
                 </span>
+           
+                    <button>Login</button>
+           
             </div>
-            <button>Login</button>
         </form>
     </div>

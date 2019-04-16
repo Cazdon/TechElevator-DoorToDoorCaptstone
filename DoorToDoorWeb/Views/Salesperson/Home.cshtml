@@ -3,6 +3,25 @@
     <partial name="~/Views/Salesperson/Partials/SalespersonNavBar.cshtml" />
 }
 
+@model SalespersonDashboardViewModel
+@using DoorToDoorLibrary.DatabaseObjects
+
     <div class="container">
         <h2>Home</h2>
+
+
+        <h3>My Number of Sales: @Model.MySales</h3>
+        <h3>My Total Revenue: @Model.MyRevenue</h3>
+        <ul>
+            @foreach (HouseDashboardItem house in Model.Houses)
+            {
+                <li>My Houses: @house.Street</li>
+            }
+        </ul>
+        <ul>
+            @foreach (ProductDashboardItem product in Model.Products)
+            {
+                <li>My Products: @product.Name</li>
+            }
+        </ul>
     </div>
