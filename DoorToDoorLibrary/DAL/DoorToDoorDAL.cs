@@ -659,6 +659,7 @@ namespace DoorToDoorLibrary.DAL
                     "(SELECT [id] FROM House_Status WHERE [status] = 'Interested') ORDER BY country, district, city, street;";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@SalespersonID", salespersonID);
 
                 SqlDataReader reader = cmd.ExecuteReader();
 
@@ -1415,6 +1416,7 @@ namespace DoorToDoorLibrary.DAL
                 SqlCommand cmd = new SqlCommand(sql + " " + _getLastIdSql, conn);
                 cmd.Parameters.AddWithValue("@HouseID", transaction.HouseID);
                 cmd.Parameters.AddWithValue("@SalespersonID", transaction.SalesmanID);
+                cmd.Parameters.AddWithValue("@ProductID", transaction.ProductID);
                 cmd.Parameters.AddWithValue("@Date", transaction.Date);
                 cmd.Parameters.AddWithValue("@Amount", transaction.Amount);
 

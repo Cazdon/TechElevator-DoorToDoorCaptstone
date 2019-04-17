@@ -1,4 +1,5 @@
 ﻿using DoorToDoorLibrary.DatabaseObjects;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace DoorToDoorWeb.Models
     {
         public IList<TransactionItem> Transactions { get; set; }
         public AddTransactionViewModel AddTransaction { get; set; }
+        public IList<SelectListItem> HouseList { get; set; }
+        public IList<SelectListItem> ProductList { get; set; }
     }
 }

@@ -1,15 +1,45 @@
 ﻿@section Title {Transactions - Salesperson}
 
+
+@section Scripts {
+    @{
+        bool isFormOpen = TempData["holdForm"] != null ? (bool)TempData["holdForm"] : false;
+
+        <script>const holdForm = @(Json.Serialize(isFormOpen));</script>
+        <script src="~/js/managerCreateProduct.js"></script>
+        <script src="~/js/site.js"></script>
+    }
+}
+
 @model TransactionsViewModel
 @using DoorToDoorLibrary.DatabaseObjects
 <div class="main-content">
     <div class="container">
-        <h2>My Transactions:</h2>
-        <ul>
-            @foreach (TransactionItem item in Model.Transactions)
-            {
-                <li>Date: @item.Date Amount: @item.Amount House: @item.House Product: @item.Product</li>
-            }
-        </ul>
+        <div id="show-hide-form" class="show-hide-button">Show Add Transaction</div>
+        <form asp-controller="Salesperson" asp-action="AddTransaction" method="post" id="salesman-add-transaction">
+            <div class="form-group">
+                <input asp-for="AddTransaction.Amount" type="text" />
+                <span asp-validation-for="AddTransaction.Amount"></span>
+                <select asp-for="AddTransaction.HouseID" asp-items="Model.HouseList" id="house-select"></select>
+                <select asp-for="AddTransaction.ProductID" asp-items="Model.ProductList" id="product-select"></select>
+            </div>
+            <div class="form-group">
+                <button>Create Product</button>
+                <span>
+                    @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
+                </span>
+            </div>
+        </form>
+        <div class="userlist">
+            <h2>My Products</h2>
+            <div class="container">
+                <ul id="manager-product-list">
+                    @foreach (TransactionItem item in Model.Transactions)
+                    {
+                        <li>Date: @item.Date Amount: @item.Amount House: @item.House Product: @item.Product</li>
+                    }
+                </ul>
+            </div>
+        </div>
     </div>
 </div>

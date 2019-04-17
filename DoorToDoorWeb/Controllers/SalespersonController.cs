@@ -56,6 +56,8 @@ namespace DoorToDoorWeb.Controllers
 
             model.Transactions = _db.GetTransactions(CurrentUser.Id);
             model.AddTransaction = new AddTransactionViewModel();
+            model.HouseList = _db.GetSalesTransactionHouseOptions(CurrentUser.Id);
+            model.ProductList = _db.GetMyProductOptions(CurrentUser.Id);
 
             return model;
         }
