@@ -16,18 +16,18 @@
         <div id="show-hide-form" class="show-hide-button">Show Create Manager Form</div>
         <form asp-controller="Administrator" asp-action="RegisterManager" method="post" id="admin-create-manager">
             <div class="form-group">
-                <label asp-for="Register.FirstName"></label>
-                <input asp-for="Register.FirstName" type="text" />
+            
+                <input asp-for="Register.FirstName" type="text"  placeholder="First Name"/>
                 <span asp-validation-for="Register.FirstName"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Register.LastName"></label>
-                <input asp-for="Register.LastName" type="text" />
+
+                <input asp-for="Register.LastName" type="text"  placeholder="Last Name" />
                 <span asp-validation-for="Register.LastName"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Register.EmailAddress"></label>
-                <input asp-for="Register.EmailAddress" type="email" />
+    
+                <input asp-for="Register.EmailAddress" type="email"  placeholder="Email Address"/>
                 <span asp-validation-for="Register.EmailAddress"></span>
             </div>
             <div class="form-group">

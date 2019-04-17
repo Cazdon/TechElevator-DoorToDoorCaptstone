@@ -298,6 +298,38 @@ footer > p {
         grid-area: status;
     }
 
+#house-detail-residents {
+    display: grid;
+    padding: 5px;
+    grid-template-columns: 20% 20% 10% 40% 10%;
+    grid-template-areas:
+        ". head . residents ."
+        ". form . residents .";
+    grid-gap: 5px;
+    align-items: center;
+}
+
+    #house-detail-residents h5 {
+        grid-area: head;
+    }
+
+    #house-detail-residents ul {
+        padding: 0;
+        grid-area: residents;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-gap: 5px;
+        list-style: none;
+    }
+
+        #house-detail-residents ul li {
+            padding: 5px;
+        }
+
+    #house-detail-residents > div {
+        grid-area: form;
+    }
+
  * {
     box-sizing: border-box;
 }
@@ -311,6 +343,7 @@ form {
     border-radius: 25px;
     margin-left:auto;
     margin-right:auto;
+    margin-bottom: 5%;
 }
 
 
@@ -325,15 +358,26 @@ form {
        
     }
 
-    #user-login-form .container{
-        text-align:center;
-        margin-left:auto;
-        margin-right:auto;
-       
+#user-login-form .container{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#manager-add-note .form-group, #manager-create-house .form-group, #manager-create-product .form-group, #manager-create-salesperson .form-group{
+    text-align:center;
+}
+
+.form-group{
+    text-align:center;
+}
+
+    #manager-add-note, #manager-create-house, #manager-create-product, #manager-create-salesperson{
+        width:60%;
     }
-    #user-login-form{
-        width:40%;
-        /*margin-top:20%;*/
+
+    #user-login-form {
+        width: 40%;
     }
 
 
@@ -345,6 +389,7 @@ form {
         background: lightgrey;
         padding: 0.7em;
         border: 0;
+    
 
     }
 
@@ -369,10 +414,10 @@ form {
     clear: both;
 }
 
-    .container input {
-        width: 100%;
-        clear: both;
-    }
+ .container input {
+    width: 100%;
+    clear: both;
+}
 
 
 .userlist {
@@ -402,10 +447,14 @@ form {
         overflow: hidden;
     }
 
-        form label {
-            float: left;
-            width: 200px;
-        }
+    #user-login-form label {
+        float: left;
+        width: 200px;
+    }
+
+    form label{
+        float:left;
+    }
 
         form input, form textarea {
             float: left;

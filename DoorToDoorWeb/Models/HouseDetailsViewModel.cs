@@ -13,5 +13,7 @@ namespace DoorToDoorWeb.Models
         public IList<NoteItem> Notes { get; set; }
         public AddHouseNoteViewModel AddNote { get; set; }
         public IList<SelectListItem> StatusOptions { get; set; }
+        public IList<ResidentItem> Residents { get; set; }
+        public AddResidentViewModel AddResident { get; set; }
     }
 }
