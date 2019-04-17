@@ -1380,7 +1380,7 @@ namespace DoorToDoorLibrary.DAL
                 string sql = "	SELECT st.date, st.amount, p.name, h.street FROM Sales_Transactions AS st " +
                     "JOIN Houses AS h ON h.id = st.houseID " +
                     "JOIN Products AS p ON p.id = st.productID " +
-                    "WHERE st.salespersonID = 3";
+                    "WHERE st.salespersonID = @SalespersonID";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@SalespersonID", salesmanID);
