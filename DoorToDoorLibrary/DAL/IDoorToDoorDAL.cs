@@ -252,13 +252,13 @@ namespace DoorToDoorLibrary.DAL
         #endregion
 
         #region Transaction Methods
+
         /// <summary>
         /// Generates a list of a salesman's transactions
         /// </summary>
         /// <param name="managerID"></param>
         /// <returns>A list of SalesTransactionItems</returns>
         IList<TransactionItem> GetTransactions(int salesmanID);
-        #endregion
 
         /// <summary>
         /// Creates a transaction for a salesman
@@ -266,5 +266,14 @@ namespace DoorToDoorLibrary.DAL
         /// <param name="note">The transaction to be created</param>
         /// <returns>Database ID of the transaction</returns>
         int AddTransaction(SalesTransactionItem transaction);
+
+        /// <summary>
+        /// Generates a Report (List of ReportItems) for a Manager
+        /// </summary>
+        /// <param name="managerID">Database ID of the Manager</param>
+        /// <returns>List of ReportItems</returns>
+        IList<ReportItem> GetReport(int managerID);
+
+        #endregion
     }
 }

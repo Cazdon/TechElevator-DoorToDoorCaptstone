@@ -48,7 +48,8 @@ footer > p {
 }
 
 #admin-manager-list, #manger-salespeople-list,
-#manager-house-list, #salesperson-house-list {
+#manager-house-list, #salesperson-house-list,
+#report-list {
     padding: 0;
     list-style: none;
 }
@@ -56,7 +57,8 @@ footer > p {
 #admin-manager-list > :first-child,
 #manager-salespeople-list > :first-child,
 #manager-house-list > :first-child,
-#salesperson-house-list > :first-child {
+#salesperson-house-list > :first-child,
+#report-list > :first-child {
     font-weight: bold;
     border-bottom: 3px solid black;
 }
@@ -64,7 +66,8 @@ footer > p {
     #admin-manager-list > :nth-child(even),
     #manager-salespeople-list > :nth-child(even),
     #manager-house-list > :nth-child(even),
-    #salesperson-house-list > :nth-child(even) {
+    #salesperson-house-list > :nth-child(even),
+    #report-list > :nth-child(even) {
         background-color: cadetblue;
     }
 
@@ -203,6 +206,42 @@ footer > p {
 .house-note-info {
     grid-area: info;
     border-top: 1px solid black;
+}
+
+.report-item {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 1fr 5fr 2fr 1fr 1fr 2fr;
+    grid-template-areas: "id address date amount product salesperson";
+}
+
+    .report-item div {
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+
+.report-item-id {
+    grid-area: id;
+}
+
+.report-item-address {
+    grid-area: address;
+}
+
+.report-item.date {
+    grid-area: date;
+}
+
+.report-item.amount {
+    grid-area: amount;
+}
+
+.report-item-product {
+    grid-area: product;
+}
+
+.report-item-salesperson {
+    grid-area: salesperson;
 }
 
 /*Affects the header section, fits logo to header, applies a translucent background*/

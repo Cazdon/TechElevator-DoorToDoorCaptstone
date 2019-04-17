@@ -1347,7 +1347,6 @@ namespace DoorToDoorLibrary.DAL
 
         #region Transaction Methods
 
-
         /// <summary>
         /// Generates a SalesTransactionItem from the provided Sql Data Reader
         /// </summary>
@@ -1397,7 +1396,6 @@ namespace DoorToDoorLibrary.DAL
             return output;
         }
 
-
         /// <summary>
         /// Creates a transaction for a salesman
         /// </summary>
@@ -1431,6 +1429,59 @@ namespace DoorToDoorLibrary.DAL
             }
             return ID;
         }
+
+        /// <summary>
+        /// Generates a Report (List of ReportItems) for a Manager
+        /// </summary>
+        /// <param name="managerID">Database ID of the Manager</param>
+        /// <returns>List of ReportItems</returns>
+        public IList<ReportItem> GetReport(int managerID)
+        {
+            List<ReportItem> report = new List<ReportItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT st.[id], (h.street + ', ' + h.city + ', ' + h.district + ', ' + h.zipCode + ', ' + country) AS [address], " +
+                    "st.[date], st.amount, p.[name] AS productName, (u.firstName + ' ' + u.lastName) AS[salespersonName] FROM Sales_Transactions AS st " +
+                    "JOIN Houses AS h ON st.houseID = h.id JOIN Products AS p ON st.productID = p.id JOIN Users AS u ON st.salespersonID = u.id " +
+                    "WHERE st.salespersonID IN(SELECT ms.salespersonID FROM Manager_Saleperson AS ms WHERE ms.managerID = @ManagerID) ORDER BY st.[date] DESC;";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ManagerID", managerID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ReportItem item = GetReportItemFromReader(reader);
+                    report.Add(item);
+                }
+            }
+
+            return report;
+        }
+
+        /// <summary>
+        /// Generates a Report from the provided Sql Data Reader
+        /// </summary>
+        /// <param name="reader">The given Sql Data Reader</param>
+        /// <returns>Report containing the information for a particular line in a Report</returns>
+        private ReportItem GetReportItemFromReader(SqlDataReader reader)
+        {
+            ReportItem item = new ReportItem();
+
+            item.Id = Convert.ToInt32(reader["id"]);
+            item.Address = Convert.ToString(reader["address"]);
+            item.Date = Convert.ToDateTime(reader["date"]);
+            item.Amount = Convert.ToDouble(reader["amount"]);
+            item.ProductName = Convert.ToString(reader["productName"]);
+            item.SalespersonName = Convert.ToString(reader["salespersonName"]);
+
+            return item;
+        }
+
         #endregion
     }
 }

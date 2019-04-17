@@ -153,6 +153,26 @@ namespace DoorToDoorWeb.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Reports()
+        {
+            ReportViewModel report = new ReportViewModel()
+            {
+                Report = _db.GetReport(CurrentUser.Id)
+            };
+
+            ActionResult result = GetAuthenticatedView("Reports", report);
+
+            if (Role.IsManager)
+            {
+                return result;
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+        }
+
         [HttpPost]
         public ActionResult RegisterSalesperson(ManagerSalespersonListViewModel model)
         {
