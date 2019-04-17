@@ -28,6 +28,9 @@
     <Content Update="Views\Salesperson\HouseDetails.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Salesperson\Transactions.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Salesperson\Houses.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

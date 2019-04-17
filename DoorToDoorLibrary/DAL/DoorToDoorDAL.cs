@@ -1222,7 +1222,58 @@ namespace DoorToDoorLibrary.DAL
 
         #endregion
 
-        #region Unsorted
+        #region Transaction Methods
+
+
+        /// <summary>
+        /// Generates a SalesTransactionItem from the provided Sql Data Reader
+        /// </summary>
+        /// <param name="reader">The given Sql Data Reader</param>
+        /// <returns>SalesTransactionItem containing the information for a particular sale</returns>
+        private SalesTransactionItem GetTransactiontItemFromReader(SqlDataReader reader)
+        {
+            SalesTransactionItem item = new SalesTransactionItem();
+
+            item.Date = Convert.ToDateTime(reader["date"]);
+            item.Amount = Convert.ToDouble(reader["amount"]);
+            item.House = Convert.ToString(reader["street"]);
+            item.Product = Convert.ToString(reader["name"]);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Generates a list of a salesman's transactions
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>A list of SalesTransactionItems</returns>
+        public IList<SalesTransactionItem> GetTransactions(int salesmanID)
+        {
+            List<SalesTransactionItem> output = new List<SalesTransactionItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "	SELECT st.date, st.amount, p.name, h.street FROM Sales_Transactions AS st " +
+                    "JOIN Houses AS h ON h.id = st.houseID " +
+                    "JOIN Products AS p ON p.id = st.productID " +
+                    "WHERE st.salespersonID = 3";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@SalespersonID", salesmanID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    SalesTransactionItem sale = GetTransactiontItemFromReader(reader);
+                    output.Add(sale);
+                }
+            }
+            return output;
+        }
+
         //"INSERT INTO Sales_Transactions (date, amount, houseID, productID, salespersonID) " +
         //"VALUES(CURRENT_TIMESTAMP, @Amount, @HouseID, @ProductID, @SalespersonID);";
         #endregion
