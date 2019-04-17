@@ -1,0 +1,76 @@
+﻿@using DoorToDoorLibrary.Logic
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    RoleManager rm = JsonConvert.DeserializeObject<RoleManager>(HttpContextAccessor.HttpContext.Session.GetString("RoleManager"));
+
+    string userController = null;
+
+    if (rm.IsAdministrator)
+    {
+        userController = "Administrator";
+    }
+    else if (rm.IsManager)
+    {
+        userController = "Manager";
+    }
+    else if (rm.IsSalesperson)
+    {
+        userController = "Salesperson";
+    }
+
+
+    <nav class="navbar navbar-light navbar-expand-lg" style="background-color:lightgrey;">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="navbar-header">
+                    <div class="navbar-brand">Door-to-Door Sales Tracker</div>
+                </li>
+                @if (rm.User != null)
+                {
+                    <li class="nav-item" id="currentusernav">
+                        <div>Welcome @(rm.User.FirstName) @(rm.User.LastName)</div>
+                    </li>
+                }
+                <li class="nav-item" id="logoutnav">
+                    <a class="nav-link" asp-controller="Home" asp-action="Logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <nav class="navbar-primary">
+        <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+        <ul class="navbar-primary-menu">
+            @if ((rm.User != null) && !rm.User.UpdatePassword)
+            {
+                @if (!rm.IsUnknown)
+                {
+                    <li class="nav-item active">
+                        <a class="nav-link" asp-controller="@userController" asp-action="Home"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                    </li>
+                }
+                @if (rm.IsManager)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Manager" asp-action="Salespeople"><i class="fas fa-users"></i> My Salespeople</a>
+                    </li>
+                }
+                @if (rm.IsManager || rm.IsSalesperson)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="@userController" asp-action="Houses"><i class="fas fa-list-ul"></i> My Houses</a>
+                    </li>
+                }
+                @if (rm.IsManager)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Manager" asp-action="Products"><i class="fas fa-box-open"></i> My Products</a>
+                    </li>
+                }
+            }
+        </ul>
+    </nav>
+}

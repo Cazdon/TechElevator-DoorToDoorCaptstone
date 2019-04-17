@@ -13,8 +13,7 @@
 </head>
 <body>
     <header>
-        @*<h1>Door To Door Sales Tracker</h1>*@
-        @RenderSection("NavBar", required: true)
+        <partial name="~/Views/Shared/Partials/NavBar.cshtml" />
     </header>
     <main class="container body-content">
         @RenderBody()

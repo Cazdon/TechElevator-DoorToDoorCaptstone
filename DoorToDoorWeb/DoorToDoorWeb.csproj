@@ -31,9 +31,6 @@
     <Content Update="Views\Salesperson\Houses.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Salesperson\Partials\SalespersonNavBar.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
