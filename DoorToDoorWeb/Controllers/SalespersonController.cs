@@ -53,6 +53,7 @@ namespace DoorToDoorWeb.Controllers
             TransactionsViewModel model = new TransactionsViewModel();
 
             model.Transactions = _db.GetTransactions(CurrentUser.Id);
+            model.AddTransaction = new AddTransactionViewModel();
 
             return model;
         }
@@ -186,6 +187,46 @@ namespace DoorToDoorWeb.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
+        }
+
+        [HttpPost]
+        public ActionResult AddTransaction(TransactionsViewModel model)
+        {
+            ActionResult result = View("Transactions", CreateTransactionsViewModel());
+            //TempData["holdForm"] = true;
+
+            //if (Role.IsSalesperson)
+            //{
+            //    try
+            //    {
+            //        if (ModelState.IsValid)
+            //        {
+            //            TransactionItem newTransaction = new TransactionItem()
+            //            {
+            //                HouseID = model.AddNote.HouseID,
+            //                UserID = CurrentUser.Id,
+            //                Note = model.AddNote.Note,
+            //                SubmittedDate = DateTime.Now
+            //            };
+
+            //            _db.AddHouseNote(newNote);
+
+            //            TempData["holdForm"] = false;
+
+            //            result = RedirectToAction("HouseDetails", new { houseID = model.AddNote.HouseID });
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        ModelState.AddModelError("invalid", ex.Message);
+            //    }
+            //}
+            //else
+            //{
+            //    result = RedirectToAction("Login", "Home");
+            //}
+
+            return result;
         }
     }
 }

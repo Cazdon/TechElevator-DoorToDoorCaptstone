@@ -232,7 +232,7 @@ namespace DoorToDoorLibrary.DAL
         /// </summary>
         /// <param name="managerID"></param>
         /// <returns>A list of SalesTransactionItems</returns>
-        IList<TransactionDashboardItem> GetTransactions(int salesmanID);
+        IList<TransactionItem> GetTransactions(int salesmanID);
         #endregion
     }
 }
