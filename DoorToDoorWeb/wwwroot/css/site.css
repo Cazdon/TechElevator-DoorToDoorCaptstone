@@ -211,7 +211,7 @@ footer > p {
 .report-item {
     padding: 5px;
     display: grid;
-    grid-template-columns: 1fr 5fr 2fr 1fr 1fr 2fr;
+    grid-template-columns: 1fr 5fr 2fr 2fr 3fr 2fr;
     grid-template-areas: "id address date amount product salesperson";
 }
 
@@ -226,6 +226,7 @@ footer > p {
 
 .report-item-address {
     grid-area: address;
+    text-transform: capitalize;
 }
 
 .report-item.date {
@@ -238,6 +239,7 @@ footer > p {
 
 .report-item-product {
     grid-area: product;
+    text-transform: capitalize;
 }
 
 .report-item-salesperson {
@@ -251,6 +253,21 @@ footer > p {
     padding: 0;
 }
 
+#report-filters {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+#report-filters > div {
+    max-width: 200px;
+    margin: 10px;
+}
+
+#report-filter-button-align {
+    text-align: center;
+}
 
 
 /*current navbar paste here*/
