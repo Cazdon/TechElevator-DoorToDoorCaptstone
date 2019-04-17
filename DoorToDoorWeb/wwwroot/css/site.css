@@ -346,7 +346,7 @@ form {
     margin-bottom: 5%;
 }
 
-}
+
     form input, form textarea {
         margin-bottom: 1rem;
         background: #fff;
@@ -358,13 +358,13 @@ form {
        
     }
 
-#user-login-form .container {
+#user-login-form .container{
     text-align: center;
     margin-left: auto;
     margin-right: auto;
 }
 
-#manager-add-note .form-group, #manager-create-house .form-group, #manager-create-product .form-group, #manager-create-salesperson .form-group #password-reset-form .form-group{
+#manager-add-note .form-group, #manager-create-house .form-group, #manager-create-product .form-group, #manager-create-salesperson .form-group{
     text-align:center;
 }
 
@@ -372,9 +372,9 @@ form {
         width:60%;
     }
 
-#user-login-form #password-reset-form {
-    width: 40%;
-}
+    #user-login-form {
+        width: 40%;
+    }
 
 
         form input:focus{
@@ -434,6 +434,9 @@ form {
     padding-bottom: 10%;
 }
 
+.currentusernav, .logoutnav{
+    float:right;
+}
 
 @media (min-width: 400px) {
     form {
