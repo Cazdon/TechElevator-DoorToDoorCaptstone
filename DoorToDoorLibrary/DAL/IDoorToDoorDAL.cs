@@ -252,5 +252,12 @@ namespace DoorToDoorLibrary.DAL
         /// <returns>A list of SalesTransactionItems</returns>
         IList<TransactionItem> GetTransactions(int salesmanID);
         #endregion
+
+        /// <summary>
+        /// Creates a transaction for a salesman
+        /// </summary>
+        /// <param name="note">The transaction to be created</param>
+        /// <returns>Database ID of the transaction</returns>
+        int AddTransaction(SalesTransactionItem transaction);
     }
 }

@@ -17,12 +17,10 @@ namespace DoorToDoorWeb.Models
 
         [Display(Name = "House")]
         [Required(ErrorMessage = ErrorConsts.BlankError)]
-        [MaxLength(ErrorConsts.MaxCharFifty, ErrorMessage = ErrorConsts.MaxFiftyError)]
-        public HouseItem House { get; set; }
+        public int HouseID { get; set; }
 
         [Display(Name = "Product")]
         [Required(ErrorMessage = ErrorConsts.BlankError)]
-        [MaxLength(ErrorConsts.MaxCharHundred, ErrorMessage = ErrorConsts.MaxHundredError)]
-        public ProductItem Product { get; set; }
+        public int ProductID { get; set; }
     }
 }

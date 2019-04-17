@@ -1358,8 +1358,39 @@ namespace DoorToDoorLibrary.DAL
             return output;
         }
 
-        //"INSERT INTO Sales_Transactions (date, amount, houseID, productID, salespersonID) " +
-        //"VALUES(CURRENT_TIMESTAMP, @Amount, @HouseID, @ProductID, @SalespersonID);";
+
+        /// <summary>
+        /// Creates a transaction for a salesman
+        /// </summary>
+        /// <param name="note">The transaction to be created</param>
+        /// <returns>Database ID of the transaction</returns>
+        public int AddTransaction(SalesTransactionItem transaction)
+        {
+            int ID = 0;
+
+            const string sql = "INSERT INTO Sales_Transactions (date, amount, houseID, productID, salespersonID) " +
+                                "VALUES(CURRENT_TIMESTAMP, @Amount, @HouseID, @ProductID, @SalespersonID);";
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(sql + " " + _getLastIdSql, conn);
+                cmd.Parameters.AddWithValue("@HouseID", transaction.HouseID);
+                cmd.Parameters.AddWithValue("@SalespersonID", transaction.SalesmanID);
+                cmd.Parameters.AddWithValue("@Date", transaction.Date);
+                cmd.Parameters.AddWithValue("@Amount", transaction.Amount);
+
+                try
+                {
+                    ID = (int)cmd.ExecuteScalar();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            return ID;
+        }
         #endregion
     }
 }
