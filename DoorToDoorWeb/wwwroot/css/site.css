@@ -402,9 +402,6 @@ form {
     padding-bottom: 10%;
 }
 
-.currentusernav, .logoutnav{
-    float:right;
-}
 
 @media (min-width: 400px) {
     form {
