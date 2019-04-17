@@ -336,6 +336,10 @@ form {
     text-align:center;
 }
 
+.form-group{
+    text-align:center;
+}
+
     #manager-add-note, #manager-create-house, #manager-create-product, #manager-create-salesperson{
         width:60%;
     }
