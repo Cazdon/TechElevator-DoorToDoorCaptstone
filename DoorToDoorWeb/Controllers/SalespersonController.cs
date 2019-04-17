@@ -56,6 +56,8 @@ namespace DoorToDoorWeb.Controllers
 
             model.Transactions = _db.GetTransactions(CurrentUser.Id);
             model.AddTransaction = new AddTransactionViewModel();
+            model.HouseList = _db.GetSalesTransactionHouseOptions(CurrentUser.Id);
+            model.ProductList = _db.GetMyProductOptions(CurrentUser.Id);
 
             return model;
         }
@@ -234,38 +236,40 @@ namespace DoorToDoorWeb.Controllers
         public ActionResult AddTransaction(TransactionsViewModel model)
         {
             ActionResult result = View("Transactions", CreateTransactionsViewModel());
-            //TempData["holdForm"] = true;
+            TempData["holdForm"] = true;
 
-            //if (Role.IsSalesperson)
-            //{
-            //    try
-            //    {
-            //        if (ModelState.IsValid)
-            //        {
-            //            TransactionItem newTransaction = new TransactionItem()
-            //            {
-            //                HouseID = model.AddNote.HouseID,
-            //                UserID = CurrentUser.Id,
-            //                Note = model.AddNote.Note,
-            //                SubmittedDate = DateTime.Now
-            //            };
+            if (Role.IsSalesperson)
+            {
+                try
+                {
+                    if (ModelState.IsValid)
+                    {
+                        SalesTransactionItem newTransaction = new SalesTransactionItem()
+                        {
+                            Date = DateTime.Now,
+                            Amount = model.AddTransaction.Amount,
+                            SalesmanID = CurrentUser.Id,
+                            HouseID = model.AddTransaction.HouseID,
+                            ProductID = model.AddTransaction.ProductID
 
-            //            _db.AddHouseNote(newNote);
+                        };
 
-            //            TempData["holdForm"] = false;
+                        _db.AddTransaction(newTransaction);
 
-            //            result = RedirectToAction("HouseDetails", new { houseID = model.AddNote.HouseID });
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        ModelState.AddModelError("invalid", ex.Message);
-            //    }
-            //}
-            //else
-            //{
-            //    result = RedirectToAction("Login", "Home");
-            //}
+                        TempData["holdForm"] = false;
+
+                        result = RedirectToAction("Transactions");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("invalid", ex.Message);
+                }
+            }
+            else
+            {
+                result = RedirectToAction("Login", "Home");
+            }
 
             return result;
         }

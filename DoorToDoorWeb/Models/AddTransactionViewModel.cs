@@ -10,19 +10,19 @@ namespace DoorToDoorWeb.Models
 {
     public class AddTransactionViewModel
     {
+        private const double zeroAmount = 0;
+
         [Display(Name = "Amount")]
         [Required(ErrorMessage = ErrorConsts.BlankError)]
-        [MaxLength(ErrorConsts.MaxCharFifty, ErrorMessage = ErrorConsts.MaxFiftyError)]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Please enter a number greater than 0")]
         public double Amount { get; set; }
 
         [Display(Name = "House")]
         [Required(ErrorMessage = ErrorConsts.BlankError)]
-        [MaxLength(ErrorConsts.MaxCharFifty, ErrorMessage = ErrorConsts.MaxFiftyError)]
-        public HouseItem House { get; set; }
+        public int HouseID { get; set; }
 
         [Display(Name = "Product")]
         [Required(ErrorMessage = ErrorConsts.BlankError)]
-        [MaxLength(ErrorConsts.MaxCharHundred, ErrorMessage = ErrorConsts.MaxHundredError)]
-        public ProductItem Product { get; set; }
+        public int ProductID { get; set; }
     }
 }
