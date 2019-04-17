@@ -330,6 +330,10 @@ footer > p {
         grid-area: form;
     }
 
+    h4{
+     margin-left:30%;
+    }
+
  * {
     box-sizing: border-box;
 }
@@ -376,10 +380,12 @@ form {
         width:60%;
     }
 
-    #user-login-form {
-        width: 40%;
-    }
-
+#user-login-form, #password-reset-redirect {
+    width: 40%;
+}
+#password-reset-redirect button{
+    width:100%;
+}
 
         form input:focus{
             outline: 3px solid gold;
@@ -443,36 +449,15 @@ form {
 }
 
 @media (min-width: 400px) {
-    form {
-        overflow: hidden;
+
+
+
+
+    /*Testing a new navigation bar, this is the start*/
+    .currentusernav, .logoutnav {
+        margin-left: auto;
     }
 
-    #user-login-form label {
-        float: left;
-        width: 200px;
-    }
-
-    form label{
-        float:left;
-    }
-
-        form input, form textarea {
-            float: left;
-            width: calc(100% - 200px);
-        }
-
-        form select {
-            float: left;
-            width: calc(100% - 200px);
-        }
-
-        form button {
-            width: calc(100% - 200px);
-        }
-
-
-
-        /*Testing a new navigation bar, this is the start*/
     .navbar-global {
         background-color: indigo;
     }
@@ -496,7 +481,10 @@ form {
         overflow: hidden;
     }
 
- 
+    #navbar-header{
+        color:black;
+       font-size:large;
+    }
     .navbar-primary-menu,
     .navbar-primary-menu li {
         margin: 0;
@@ -526,6 +514,10 @@ form {
                 color: orchid;
             }
 
+            .logoutnav{
+                padding-left:5%;
+            }
+
     .main-content {
         margin-top: 60px;
         margin-left: 200px;
@@ -535,6 +527,8 @@ form {
     .collapsed + .main-content {
         margin-left: 60px;
     }
-        /*Testing a new navigation bar, this is the end*/
+    /*Testing a new navigation bar, this is the end*/
 
+
+  
 }

@@ -20,25 +20,45 @@
         userController = "Salesperson";
     }
 
-
-    <nav class="navbar navbar-light navbar-expand-lg" style="background-color:lightgrey;">
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="navbar-header">
-                    <div class="navbar-brand">Door-to-Door Sales Tracker</div>
+<nav class="navbar navbar-light navbar-expand-lg" style="background-color:lightgrey;">
+    <div class="container-fluid">
+        <ul class="nav navbar">
+            <li class="navbar-header">
+                <div class="navbar-brand">Door-to-Door Sales Tracker</div>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            @if (rm.User != null)
+            {
+                <li>
+                    <span class="glyphicon glyphicon-user" id="currentusernav"></span>
+                    <div>Welcome @(rm.User.FirstName) @(rm.User.LastName)</div>
                 </li>
-                @if (rm.User != null)
-                {
-                    <li class="nav-item" id="currentusernav">
-                        <div>Welcome @(rm.User.FirstName) @(rm.User.LastName)</div>
+            }
+            <li class="nav-item" id="logoutnav">
+                <a class="nav-link" asp-controller="Home" asp-action="Logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+    @*<nav class="navbar navbar-light navbar-expand-lg" style="background-color:lightgrey;">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="navbar-header">
+                        <div class="navbar-brand">Door-to-Door Sales Tracker</div>
                     </li>
-                }
-                <li class="nav-item" id="logoutnav">
-                    <a class="nav-link" asp-controller="Home" asp-action="Logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+                    @if (rm.User != null)
+                    {
+                        <li class="nav-item" id="currentusernav">
+                            <div>Welcome @(rm.User.FirstName) @(rm.User.LastName)</div>
+                        </li>
+                    }
+                    <li class="nav-item" id="logoutnav">
+                        <a class="nav-link" asp-controller="Home" asp-action="Logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>*@
 
 
     <nav class="navbar-primary">
@@ -80,3 +100,4 @@
         </ul>
     </nav>
 }
+
