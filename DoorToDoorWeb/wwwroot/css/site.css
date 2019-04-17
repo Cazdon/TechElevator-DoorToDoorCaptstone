@@ -435,6 +435,10 @@ form {
         text-decoration: underline;
     }
 
+    #housedetails{
+        background-color:white;
+    }
+
 .show-hide-button {
     color: gold;
     font-weight: bolder;
