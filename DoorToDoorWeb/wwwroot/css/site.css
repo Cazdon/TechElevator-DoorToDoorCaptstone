@@ -298,6 +298,38 @@ footer > p {
         grid-area: status;
     }
 
+#house-detail-residents {
+    display: grid;
+    padding: 5px;
+    grid-template-columns: 20% 20% 10% 40% 10%;
+    grid-template-areas:
+        ". head . residents ."
+        ". form . residents .";
+    grid-gap: 5px;
+    align-items: center;
+}
+
+    #house-detail-residents h5 {
+        grid-area: head;
+    }
+
+    #house-detail-residents ul {
+        padding: 0;
+        grid-area: residents;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-gap: 5px;
+        list-style: none;
+    }
+
+        #house-detail-residents ul li {
+            padding: 5px;
+        }
+
+    #house-detail-residents > div {
+        grid-area: form;
+    }
+
  * {
     box-sizing: border-box;
 }

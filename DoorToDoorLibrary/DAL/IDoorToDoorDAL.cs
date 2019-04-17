@@ -129,6 +129,24 @@ namespace DoorToDoorLibrary.DAL
 
         #endregion
 
+        #region Resident Methods
+
+        /// <summary>
+        /// Returns a list of Residents associated with the given House
+        /// </summary>
+        /// <param name="houseID">Database ID of the House</param>
+        /// <returns>List of ResidentItems associated with that House</returns>
+        IList<ResidentItem> GetHouseResidents(int houseID);
+
+        /// <summary>
+        /// Creates a Resident for a House
+        /// </summary>
+        /// <param name="note">The Resident to be created</param>
+        /// <returns>Database ID of the Resident</returns>
+        int AddHouseResident(ResidentItem resident);
+
+        #endregion
+
         #region Manager Dashboard Methods
 
         /// <summary>
