@@ -89,6 +89,12 @@
                         <a class="nav-link" asp-controller="Salesperson" asp-action="Transactions"><i class="fas fa-box-open"></i> My Transactions</a>
                     </li>
                 }
+                @if (rm.IsManager)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Manager" asp-action="Reports"><i class="fas fa-clipboard-list"></i> My Transactions</a>
+                    </li>
+                }
             }
         </ul>
     </nav>
