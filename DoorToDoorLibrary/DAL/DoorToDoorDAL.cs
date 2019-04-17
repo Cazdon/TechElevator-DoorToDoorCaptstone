@@ -642,6 +642,44 @@ namespace DoorToDoorLibrary.DAL
             }
         }
 
+        /// <summary>
+        /// Returns a Select List of all Houses from the system that are interested in buying
+        /// </summary>
+        /// <param name="salespersonID">Database ID of the Salesperson making the Transaction</param>
+        /// <returns>Select List of Products under the given Salesperson's Manager</returns>
+        public IList<SelectListItem> GetSalesTransactionHouseOptions(int salespersonID)
+        {
+            List<SelectListItem> output = new List<SelectListItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT * FROM Houses WHERE salespersonID = @SalespersonID AND statusID = " +
+                    "(SELECT [id] FROM House_Status WHERE [status] = 'Interested') ORDER BY country, district, city, street;";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string street = Convert.ToString(reader["street"]);
+                    string city = Convert.ToString(reader["city"]);
+                    string district = Convert.ToString(reader["district"]);
+                    string zipCode = Convert.ToString(reader["zipCode"]);
+                    string country = Convert.ToString(reader["country"]);
+                    string fullAddress = $"{street}, {city}, {district} {zipCode}, {country}";
+                    int houseID = Convert.ToInt32(reader["id"]);
+                    SelectListItem item = new SelectListItem(fullAddress, houseID.ToString());
+
+                    output.Add(item);
+                }
+            }
+
+            return output;
+        }
+
         #endregion
 
         #region Resident Methods

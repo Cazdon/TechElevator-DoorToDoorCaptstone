@@ -127,6 +127,13 @@ namespace DoorToDoorLibrary.DAL
         /// <returns>True if successful, false if failed</returns>
         bool SetHouseStatus(int houseID, int statusID, int userID);
 
+        /// <summary>
+        /// Returns a Select List of all Houses from the system that are interested in buying
+        /// </summary>
+        /// <param name="salespersonID">Database ID of the Salesperson making the Transaction</param>
+        /// <returns>Select List of Products under the given Salesperson's Manager</returns>
+        IList<SelectListItem> GetSalesTransactionHouseOptions(int salespersonID);
+
         #endregion
 
         #region Resident Methods
