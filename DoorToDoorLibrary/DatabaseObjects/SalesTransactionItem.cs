@@ -9,9 +9,8 @@ namespace DoorToDoorLibrary.DatabaseObjects
     public class SalesTransactionItem : BaseItem
     {
         public DateTime Date { get; set; }
-        public int HouseID { get; set; }
-        public int ProductID { get; set; }
-        public int SalesmenID { get; set; }
+        public string House { get; set; }
+        public string Product { get; set; }
         public double Amount { get; set; }
     }
 }

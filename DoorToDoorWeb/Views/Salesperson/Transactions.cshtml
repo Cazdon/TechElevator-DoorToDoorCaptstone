@@ -1,0 +1,16 @@
+﻿@section Title {Transactions - Salesperson}
+@section NavBar{
+    <partial name="~/Views/Salesperson/Partials/SalespersonNavBar.cshtml" />
+}
+@model TransactionsViewModel
+@using DoorToDoorLibrary.DatabaseObjects
+
+    <div class="container">
+        <h2>My Transactions:</h2>
+        <ul>
+            @foreach (SalesTransactionItem item in Model.Transactions)
+            {
+                <li>Date: @item.Date Amount: @item.Amount House: @item.House Product: @item.Product</li>
+            }
+        </ul>
+    </div>

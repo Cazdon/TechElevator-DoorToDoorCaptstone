@@ -48,6 +48,15 @@ namespace DoorToDoorWeb.Controllers
             return model;
         }
 
+        private TransactionsViewModel CreateTransactionsViewModel()
+        {
+            TransactionsViewModel model = new TransactionsViewModel();
+
+            model.Transactions = _db.GetTransactions(CurrentUser.Id);
+
+            return model;
+        }
+
         [HttpGet]
         public IActionResult Home()
         {
@@ -162,6 +171,21 @@ namespace DoorToDoorWeb.Controllers
             }
 
             return result;
+        }
+
+        [HttpGet]
+        public ActionResult Transactions()
+        {
+            ActionResult result = GetAuthenticatedView("Transactions", CreateTransactionsViewModel());
+
+            if (Role.IsSalesperson)
+            {
+                return result;
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
         }
     }
 }

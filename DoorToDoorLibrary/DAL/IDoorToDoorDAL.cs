@@ -225,5 +225,14 @@ namespace DoorToDoorLibrary.DAL
         IList<SelectListItem> GetMyProductOptions(int salespersonID);
 
         #endregion
+
+        #region Transaction Methods
+        /// <summary>
+        /// Generates a list of a salesman's transactions
+        /// </summary>
+        /// <param name="managerID"></param>
+        /// <returns>A list of SalesTransactionItems</returns>
+        IList<SalesTransactionItem> GetTransactions(int salesmanID);
+        #endregion
     }
 }
