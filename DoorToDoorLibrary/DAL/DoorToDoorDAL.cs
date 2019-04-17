@@ -1314,9 +1314,9 @@ namespace DoorToDoorLibrary.DAL
         /// </summary>
         /// <param name="reader">The given Sql Data Reader</param>
         /// <returns>SalesTransactionItem containing the information for a particular sale</returns>
-        private TransactionDashboardItem GetTransactiontItemFromReader(SqlDataReader reader)
+        private TransactionItem GetTransactiontItemFromReader(SqlDataReader reader)
         {
-            TransactionDashboardItem item = new TransactionDashboardItem();
+            TransactionItem item = new TransactionItem();
 
             item.Date = Convert.ToDateTime(reader["date"]);
             item.Amount = Convert.ToDouble(reader["amount"]);
@@ -1331,9 +1331,9 @@ namespace DoorToDoorLibrary.DAL
         /// </summary>
         /// <param name="managerID"></param>
         /// <returns>A list of SalesTransactionItems</returns>
-        public IList<TransactionDashboardItem> GetTransactions(int salesmanID)
+        public IList<TransactionItem> GetTransactions(int salesmanID)
         {
-            List<TransactionDashboardItem> output = new List<TransactionDashboardItem>();
+            List<TransactionItem> output = new List<TransactionItem>();
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
@@ -1351,7 +1351,7 @@ namespace DoorToDoorLibrary.DAL
 
                 while (reader.Read())
                 {
-                    TransactionDashboardItem sale = GetTransactiontItemFromReader(reader);
+                    TransactionItem sale = GetTransactiontItemFromReader(reader);
                     output.Add(sale);
                 }
             }
