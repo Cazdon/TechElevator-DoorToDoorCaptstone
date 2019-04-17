@@ -132,7 +132,7 @@ namespace DoorToDoorLibrary.DAL
         /// </summary>
         /// <param name="salespersonID">Database ID of the Salesperson making the Transaction</param>
         /// <returns>Select List of Products under the given Salesperson's Manager</returns>
-        IList<SelectListItem> GetSalesTransactionHouseOptions(int salespersonID)
+        IList<SelectListItem> GetSalesTransactionHouseOptions(int salespersonID);
 
         #endregion
 
