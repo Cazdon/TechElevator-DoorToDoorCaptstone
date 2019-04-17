@@ -644,6 +644,90 @@ namespace DoorToDoorLibrary.DAL
 
         #endregion
 
+        #region Resident Methods
+
+        /// <summary>
+        /// Returns a list of Residents associated with the given House
+        /// </summary>
+        /// <param name="houseID">Database ID of the House</param>
+        /// <returns>List of ResidentItems associated with that House</returns>
+        public IList<ResidentItem> GetHouseResidents(int houseID)
+        {
+            List<ResidentItem> residents = new List<ResidentItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT * FROM [Residents] WHERE houseID = @HouseID ORDER BY lastName, firstName;";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@HouseID", houseID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ResidentItem newResident = GetResidentItemFromReader(reader);
+                    residents.Add(newResident);
+                }
+            }
+
+            return residents;
+        }
+
+        /// <summary>
+        /// Generates a ResidentItem from the provided Sql Data Reader
+        /// </summary>
+        /// <param name="reader">The given Sql Data Reader</param>
+        /// <returns>ResidentItem containing the information for a particular Resident</returns>
+        private ResidentItem GetResidentItemFromReader(SqlDataReader reader)
+        {
+            ResidentItem item = new ResidentItem();
+
+            item.Id = Convert.ToInt32(reader["id"]);
+            item.HouseID = Convert.ToInt32(reader["houseID"]);
+            item.FirstName = Convert.ToString(reader["firstName"]);
+            item.LastName = Convert.ToString(reader["lastName"]);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Creates a Resident for a House
+        /// </summary>
+        /// <param name="note">The Resident to be created</param>
+        /// <returns>Database ID of the Resident</returns>
+        public int AddHouseResident(ResidentItem resident)
+        {
+            int ID = 0;
+
+            const string sql = "INSERT INTO [Residents] (houseID, firstName, lastName) " +
+                                   "VALUES (@HouseID, @FirstName, @LastName);";
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(sql + " " + _getLastIdSql, conn);
+                cmd.Parameters.AddWithValue("@HouseID", resident.HouseID);
+                cmd.Parameters.AddWithValue("@FirstName", resident.FirstName);
+                cmd.Parameters.AddWithValue("@LastName", resident.LastName);
+
+                try
+                {
+                    ID = (int)cmd.ExecuteScalar();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return ID;
+        }
+
+        #endregion
+
         #region Manager Dashboard Methods
 
         /// <summary>

@@ -67,6 +67,8 @@ namespace DoorToDoorWeb.Controllers
             model.House = _db.GetHouse(houseID);
             model.Notes = _db.GetHouseNotes(houseID);
             model.AddNote = new AddHouseNoteViewModel();
+            model.Residents = _db.GetHouseResidents(houseID);
+            model.AddResident = new AddResidentViewModel();
 
             return model;
         }
@@ -312,7 +314,7 @@ namespace DoorToDoorWeb.Controllers
         public ActionResult AddHouseNote(HouseDetailsViewModel model)
         {
             ActionResult result = View("HouseDetails", CreateHouseDetailsViewModel(model.AddNote.HouseID));
-            TempData["holdForm"] = true;
+            TempData["holdNoteForm"] = true;
 
             if (Role.IsManager)
             {
@@ -330,14 +332,53 @@ namespace DoorToDoorWeb.Controllers
 
                         _db.AddHouseNote(newNote);
 
-                        TempData["holdForm"] = false;
+                        TempData["holdNoteForm"] = false;
 
                         result = RedirectToAction("HouseDetails", new { houseID = model.AddNote.HouseID });
                     }
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("invalid", ex.Message);
+                    ModelState.AddModelError("invalid-note", ex.Message);
+                }
+            }
+            else
+            {
+                result = RedirectToAction("Login", "Home");
+            }
+
+            return result;
+        }
+
+        [HttpPost]
+        public ActionResult AddHouseResident(HouseDetailsViewModel model)
+        {
+            ActionResult result = View("HouseDetails", CreateHouseDetailsViewModel(model.AddResident.HouseID));
+            TempData["holdResidentForm"] = true;
+
+            if (Role.IsManager)
+            {
+                try
+                {
+                    if (ModelState.IsValid)
+                    {
+                        ResidentItem newResident = new ResidentItem()
+                        {
+                            HouseID = model.AddResident.HouseID,
+                            FirstName = model.AddResident.FirstName,
+                            LastName = model.AddResident.LastName
+                        };
+
+                        _db.AddHouseResident(newResident);
+
+                        TempData["holdResidentForm"] = false;
+
+                        result = RedirectToAction("HouseDetails", new { houseID = model.AddResident.HouseID });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("invalid-resident", ex.Message);
                 }
             }
             else
