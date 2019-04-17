@@ -70,6 +70,12 @@
                         <a class="nav-link" asp-controller="Manager" asp-action="Products"><i class="fas fa-box-open"></i> My Products</a>
                     </li>
                 }
+                @if (rm.IsSalesperson)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Salesperson" asp-action="Transactions"><i class="fas fa-box-open"></i> My Transactions</a>
+                    </li>
+                }
             }
         </ul>
     </nav>
