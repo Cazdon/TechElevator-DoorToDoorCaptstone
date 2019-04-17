@@ -250,7 +250,7 @@ namespace DoorToDoorLibrary.DAL
         /// </summary>
         /// <param name="managerID"></param>
         /// <returns>A list of SalesTransactionItems</returns>
-        IList<SalesTransactionItem> GetTransactions(int salesmanID);
+        IList<TransactionDashboardItem> GetTransactions(int salesmanID);
         #endregion
     }
 }

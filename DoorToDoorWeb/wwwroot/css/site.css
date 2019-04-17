@@ -343,9 +343,10 @@ form {
     border-radius: 25px;
     margin-left:auto;
     margin-right:auto;
+    margin-bottom: 5%;
 }
 
-
+}
     form input, form textarea {
         margin-bottom: 1rem;
         background: #fff;
@@ -357,16 +358,23 @@ form {
        
     }
 
-    #user-login-form .container{
-        text-align:center;
-        margin-left:auto;
-        margin-right:auto;
-       
+#user-login-form .container {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#manager-add-note .form-group, #manager-create-house .form-group, #manager-create-product .form-group, #manager-create-salesperson .form-group #password-reset-form .form-group{
+    text-align:center;
+}
+
+    #manager-add-note, #manager-create-house, #manager-create-product, #manager-create-salesperson{
+        width:60%;
     }
-    #user-login-form{
-        width:40%;
-        /*margin-top:20%;*/
-    }
+
+#user-login-form #password-reset-form {
+    width: 40%;
+}
 
 
         form input:focus{
@@ -377,6 +385,7 @@ form {
         background: lightgrey;
         padding: 0.7em;
         border: 0;
+    
 
     }
 
@@ -401,10 +410,10 @@ form {
     clear: both;
 }
 
-    .container input {
-        width: 100%;
-        clear: both;
-    }
+ .container input {
+    width: 100%;
+    clear: both;
+}
 
 
 .userlist {
@@ -425,19 +434,20 @@ form {
     padding-bottom: 10%;
 }
 
-.currentusernav, .logoutnav{
-    float:right;
-}
 
 @media (min-width: 400px) {
     form {
         overflow: hidden;
     }
 
-        form label {
-            float: left;
-            width: 200px;
-        }
+    #user-login-form label {
+        float: left;
+        width: 200px;
+    }
+
+    form label{
+        float:left;
+    }
 
         form input, form textarea {
             float: left;

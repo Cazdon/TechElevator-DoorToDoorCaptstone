@@ -4,13 +4,14 @@
 }
 @model TransactionsViewModel
 @using DoorToDoorLibrary.DatabaseObjects
-
+<div class="main-content"
     <div class="container">
         <h2>My Transactions:</h2>
         <ul>
-            @foreach (SalesTransactionItem item in Model.Transactions)
+            @foreach (TransactionDashboardItem item in Model.Transactions)
             {
                 <li>Date: @item.Date Amount: @item.Amount House: @item.House Product: @item.Product</li>
             }
         </ul>
     </div>
+</div>

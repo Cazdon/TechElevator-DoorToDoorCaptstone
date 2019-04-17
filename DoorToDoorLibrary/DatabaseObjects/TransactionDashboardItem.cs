@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DoorToDoorLibrary.DatabaseObjects
 {
-    public class SalesTransactionItem : BaseItem
+    public class TransactionDashboardItem : BaseItem
     {
         public DateTime Date { get; set; }
         public string House { get; set; }
