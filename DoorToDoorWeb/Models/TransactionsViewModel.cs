@@ -8,6 +8,6 @@ namespace DoorToDoorWeb.Models
 {
     public class TransactionsViewModel
     {
-        public IList<SalesTransactionItem> Transactions { get; set; }
+        public IList<TransactionDashboardItem> Transactions { get; set; }
     }
 }
