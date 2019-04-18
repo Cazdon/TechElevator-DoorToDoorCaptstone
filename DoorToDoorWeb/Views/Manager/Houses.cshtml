@@ -15,12 +15,10 @@
     <div id="show-hide-form" class="show-hide-button">Show Create House Form</div>
     <form asp-controller="Manager" asp-action="CreateHouse" method="post" id="manager-create-house">
         <div class="form-group">
-    
             <input asp-for="CreatedHouse.Street" type="text"  placeholder="Street"/>
             <span asp-validation-for="CreatedHouse.Street"></span>
         </div>
         <div class="form-group">
-      
             <input asp-for="CreatedHouse.City" type="text"  placeholder="City"/>
             <span asp-validation-for="CreatedHouse.City"></span>
         </div>
