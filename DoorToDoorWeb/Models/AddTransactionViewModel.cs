@@ -10,8 +10,6 @@ namespace DoorToDoorWeb.Models
 {
     public class AddTransactionViewModel
     {
-        private const double zeroAmount = 0;
-
         [Display(Name = "Amount")]
         [Required(ErrorMessage = ErrorConsts.BlankError)]
         [Range(0.01, double.MaxValue, ErrorMessage = "Please enter a number greater than 0")]
