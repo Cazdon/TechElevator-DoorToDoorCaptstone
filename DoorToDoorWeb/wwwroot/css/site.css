@@ -528,9 +528,9 @@ form {
     padding-bottom: 10%;
 }
 
-.currentusernav, .logoutnav{
+/*.currentusernav, .logoutnav{
     float:right;
-}
+}*/
 
 @media (min-width: 400px) {
 
@@ -538,7 +538,7 @@ form {
 
 
     /*Testing a new navigation bar, this is the start*/
-    .currentusernav, .logoutnav {
+    /*.currentusernav, .logoutnav {
         margin-left: auto;
     }
 
@@ -610,7 +610,7 @@ form {
 
     .collapsed + .main-content {
         margin-left: 60px;
-    }
+    }*/
     /*Testing a new navigation bar, this is the end*/
 
 
@@ -647,3 +647,93 @@ form {
     grid-area: product;
     text-transform: capitalize;
 }
+
+
+
+
+
+
+
+
+
+
+
+.nav-link{
+    color:white !important;
+}
+
+
+.navbar-global {
+    background-color: gray;
+}
+
+    .navbar-global .navbar-brand {
+        color: white;
+    }
+
+    .navbar-global .navbar-user > li > a {
+        color: white;
+    }
+
+.navbar-primary {
+    background-color: #333;
+    bottom: 0px;
+    left: 0px;
+    position: absolute;
+    top: 51px;
+    width: 200px;
+    z-index: 8;
+    overflow: hidden;
+
+}
+
+#navbartop{
+    z-index:9;
+}
+
+.navbar-header{
+    font-weight:bold;
+    color:white;
+    font-size:larger;
+}
+
+#currentusernav{
+    color:white;
+}
+
+
+.navbar-primary-menu,
+.navbar-primary-menu li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+    .navbar-primary-menu li a {
+        display: block;
+        padding: 10px 18px;
+        text-align: left;
+        border-bottom: solid 1px #444;
+        color: #ccc;
+    }
+
+        .navbar-primary-menu li a:hover {
+            background-color: #000;
+            text-decoration: none;
+            color: white;
+        }
+
+        .navbar-primary-menu li a .glyphicon {
+            margin-right: 6px;
+        }
+
+        .navbar-primary-menu li a:hover .glyphicon {
+            color: orchid;
+        }
+
+.main-content {
+    margin-top: 60px;
+    margin-left: 200px;
+    padding: 20px;
+}
+
