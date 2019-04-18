@@ -18,13 +18,15 @@
             <h2>My Profile:</h2>
             <div class="container">
                 <div id="my-profile">
-                    <div id="my-profile-name">
-                        <h6>My Name:</h6>
-                        <div>@(Model.FirstName) @(Model.LastName)</div>
-                    </div>
-                    <div id="my-profile-email">
-                        <h6>My Email Address:</h6>
-                        <div>@(Model.EmailAddress)</div>
+                    <div id="profile-info" class="container">
+                        <div id="my-profile-name">
+                            <h6>My Name:</h6>
+                            <div>@(Model.FirstName) @(Model.LastName)</div>
+                        </div>
+                        <div id="my-profile-email">
+                            <h6>My Email Address:</h6>
+                            <div>@(Model.EmailAddress)</div>
+                        </div>
                     </div>
                     <div id="my-profile-update">
                         <div class="container">
