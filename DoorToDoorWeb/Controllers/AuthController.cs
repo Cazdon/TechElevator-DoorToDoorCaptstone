@@ -86,7 +86,7 @@ namespace DoorToDoorWeb.Controllers
 
             if (userItem != null)
             {
-                throw new UserExistsException("The username is already taken.");
+                throw new UserExistsException("The email is already taken.");
             }
 
             if (userModel.Password != userModel.ConfirmPassword)

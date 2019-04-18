@@ -9,6 +9,7 @@ namespace DoorToDoorLibrary.DAL
     public interface IDoorToDoorDAL
     {
         #region User Methods
+
         /// <summary>
         /// Finds a single user in the database using the user's Email Address
         /// </summary>
@@ -65,6 +66,15 @@ namespace DoorToDoorLibrary.DAL
         /// <param name="managerID">User ID of the Manager</param>
         /// <param name="SalespersonID">User ID of the Salesperson</param>
         void PairManagerWithSalesperson(int managerID, int SalespersonID);
+
+        /// <summary>
+        /// Updates the User's Profile
+        /// </summary>
+        /// <param name="userID">Database ID of the User</param>
+        /// <param name="emailAddress">User's new Email Address</param>
+        /// <param name="firstName">User's new First Name</param>
+        /// <param name="lastName">User's new Last Name</param>
+        void UpdateProfile(int userID, string emailAddress, string firstName, string lastName);
 
         #endregion
 
@@ -260,7 +270,7 @@ namespace DoorToDoorLibrary.DAL
         IList<SelectListItem> GetMyProductOptions(int salespersonID);
 
         /// <summary>
-        /// Set's the user's Reset Password flag. Throws error if unsuccessful
+        /// Removes the Product from the Manager's list
         /// </summary>
         /// <param name="productID">Product's Database ID</param>
         /// <param name="managerID">Manager the Product belongs to</param>

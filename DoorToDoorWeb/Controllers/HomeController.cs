@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using DoorToDoorLibrary.Exceptions;
 using DoorToDoorLibrary.Logic;
 using DoorToDoorLibrary.Models;
+using DoorToDoorLibrary.DatabaseObjects;
 
 namespace DoorToDoorWeb.Controllers
 {
@@ -208,6 +209,130 @@ namespace DoorToDoorWeb.Controllers
         public IActionResult Profile()
         {
             return GetAuthenticatedView("Profile", CreateProfileViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult UpdateProfile(ProfileViewModel model)
+        {
+            ActionResult result = null;
+
+            if (IsAuthenticated)
+            {
+                try
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        TempData["holdProfileForm"] = true;
+                        result = View("Profile", CreateProfileViewModel());
+                    }
+                    else
+                    {
+                        UserItem currentUser = _db.GetUserItem(CurrentUser.EmailAddress);
+
+                        PasswordManager pm = new PasswordManager(model.UpdateProfile.Password, currentUser.Salt);
+
+                        if (!pm.Verify(currentUser.Hash))
+                        {
+                            throw new Exception("Password is invalid.");
+                        }
+
+                        UserItem existingUser = null;
+                        try
+                        {
+                            existingUser = _db.GetUserItem(model.UpdateProfile.EmailAddress);
+                        }
+                        catch (Exception)
+                        {
+                        }
+
+                        if ((existingUser != null) && (!existingUser.EmailAddress.Equals(CurrentUser.EmailAddress)))
+                        {
+                            throw new UserExistsException("The email is already taken.");
+                        }
+
+                        _db.UpdateProfile(currentUser.Id, model.UpdateProfile.EmailAddress, model.UpdateProfile.FirstName, model.UpdateProfile.LastName);
+
+                        LoginUser(model.UpdateProfile.EmailAddress, model.UpdateProfile.Password);
+
+                        TempData["updateProfileSuccess"] = true;
+
+                        result = RedirectToAction("Profile");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("invalid-profile", ex.Message);
+                    TempData["holdProfileForm"] = true;
+                    result = View("Profile", CreateProfileViewModel());
+                }
+            }
+            else
+            {
+                result = RedirectToAction("Login", "Home");
+            }
+
+            return result;
+        }
+
+        [HttpPost]
+        public IActionResult SelfResetPassword(ProfileViewModel model)
+        {
+            ActionResult result = null;
+
+            if (IsAuthenticated)
+            {
+                try
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        TempData["holdPasswordForm"] = true;
+                        result = View("Profile", CreateProfileViewModel());
+                    }
+                    else
+                    {
+                        PasswordManager pm = new PasswordManager(model.ResetPassword.CurrentPassword, CurrentUser.Salt);
+                        
+                        if (!pm.Verify(CurrentUser.Hash))
+                        {
+                            throw new Exception("Password is invalid.");
+                        }
+
+                        if (!model.ResetPassword.ConfirmNewPassword.Equals(model.ResetPassword.NewPassword))
+                        {
+                            throw new PasswordMatchException("The password and confirm password do not match.");
+                        }
+
+                        pm = new PasswordManager(model.ResetPassword.NewPassword);
+
+                        bool passwordResetSuccess = _db.ResetPassword(CurrentUser.EmailAddress, pm.Salt, pm.Hash);
+
+                        if (passwordResetSuccess)
+                        {
+                            LoginUser(CurrentUser.EmailAddress, model.ResetPassword.NewPassword);
+
+                            TempData["resetPasswordSuccess"] = true;
+
+                            result = RedirectToAction("Profile");
+                        }
+                        else
+                        {
+                            throw new Exception("Failed to Reset Password");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("invalid-password", ex.Message);
+                    TempData["holdPasswordForm"] = true;
+                    result = View("Profile", CreateProfileViewModel());
+                }
+            }
+            else
+            {
+                result = RedirectToAction("Login", "Home");
+            }
+
+            return result;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
