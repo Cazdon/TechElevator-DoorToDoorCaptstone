@@ -1,9 +1,10 @@
 ﻿@section Title{Login}
 @model LoginViewModel
 
-    <div class="main-content">
+    <div class="main-content" style="background: none; box-shadow: none;">
         <div class="container">
-            <form asp-controller="Home" asp-action="Login" method="post" id="user-login-form">
+            <form asp-controller="Home" asp-action="Login" method="post" id="user-login-form"
+                style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                 <div class="container">
                     @*<label asp-for="EmailAddress"></label>*@
                     <input asp-for="EmailAddress" type="email" placeholder="Username" />

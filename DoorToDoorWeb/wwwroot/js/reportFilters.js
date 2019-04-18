@@ -145,6 +145,8 @@ function clearFilters(event) {
     toAmountFilter.value = "";
     productFilter.value = "";
     salespersonFilter.value = "";
+
+    applyReportFilter(event);
 }
 
 filterButton.addEventListener('click', applyReportFilter);

@@ -69,6 +69,7 @@ namespace DoorToDoorWeb.Controllers
             model.AddNote = new AddHouseNoteViewModel();
             model.Residents = _db.GetHouseResidents(houseID);
             model.AddResident = new AddResidentViewModel();
+            model.SalespersonOptions = _db.GetMySalespeopleOptions(CurrentUser.Id, model.House.AssignedSalespersonID);
 
             return model;
         }
@@ -404,6 +405,32 @@ namespace DoorToDoorWeb.Controllers
             else
             {
                 result = RedirectToAction("Login", "Home");
+            }
+
+            return result;
+        }
+
+        [HttpPost]
+        public ActionResult ReassignHouseSalesperson([FromBody]ReassignHouseStatusViewModel model)
+        {
+            bool statusUpdateSuccess = false;
+            ActionResult result = null;
+            if (Role.IsManager)
+            {
+                try
+                {
+                    statusUpdateSuccess = _db.ReassignHouseSalesperson(model.HouseID, model.SalespersonID, CurrentUser.Id);
+
+                    result = GetAuthenticatedJson(Json(new ReassignHouseSalespersonJsonResponseModel(statusUpdateSuccess)), true);
+                }
+                catch (Exception ex)
+                {
+                    result = GetAuthenticatedJson(Json(new ReassignHouseSalespersonJsonResponseModel(ex.Message)), true);
+                }
+            }
+            else
+            {
+                result = GetAuthenticatedJson(null, false);
             }
 
             return result;

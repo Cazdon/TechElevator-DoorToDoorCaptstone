@@ -540,7 +540,7 @@ form {
         }
 
     .navbar-primary {
-        background-color: lightgrey;
+        background-color: peachpuff;
         bottom: 0px;
         left: 0px;
         position: absolute;
@@ -548,7 +548,9 @@ form {
         width: 200px;
         z-index: 8;
         overflow: hidden;
+     
     }
+
 
     #navbar-header{
         color:black;
