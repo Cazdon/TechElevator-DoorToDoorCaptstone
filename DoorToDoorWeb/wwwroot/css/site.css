@@ -35,6 +35,14 @@ footer > p {
     padding-right: 15px;
 }
 
+.main-content {
+    margin-top: 60px;
+    margin-left: 200px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .field-validation-error {
     color: red;
     font-weight: bold;
@@ -68,7 +76,7 @@ footer > p {
     #manager-house-list > :nth-child(even),
     #salesperson-house-list > :nth-child(even),
     #report-list > :nth-child(even) {
-        background-color: cadetblue;
+        background-color: #aacad8;
     }
 
 #manager-product-list {
@@ -472,7 +480,6 @@ form {
     }
 
 .container {
-   
     clear: both;
 }
 
@@ -496,7 +503,7 @@ form {
     }
 
 .show-hide-button {
-    color: gold;
+    color: darkgoldenrod;
     font-weight: bolder;
 }
 
@@ -577,12 +584,6 @@ form {
             .logoutnav{
                 padding-left:5%;
             }
-
-    .main-content {
-        margin-top: 60px;
-        margin-left: 200px;
-        padding: 20px;
-    }
 
     .collapsed + .main-content {
         margin-left: 60px;

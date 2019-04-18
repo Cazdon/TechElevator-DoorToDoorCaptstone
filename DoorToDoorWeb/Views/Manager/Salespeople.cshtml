@@ -36,11 +36,6 @@
             </span>
         </div>
     </form>
-    @if ((TempData["registerSuccess"] != null) && ((bool)TempData["registerSuccess"]))
-    {
-        <div class="reset-success">Salesperson Successfully Created!</div>
-        <div class="reset-success">Password Is @(TempData["tempPassword"])</div>
-    }
     <div class="userlist">
         <h2>Registered Salespeople</h2>
         <div class="container">
@@ -51,6 +46,11 @@
             {
                 <div class="reset-success">Reset Password flag successfully set!</div>
                 <div class="reset-success">New Password is @(TempData["tempPassword"])</div>
+            }
+            @if ((TempData["registerSuccess"] != null) && ((bool)TempData["registerSuccess"]))
+            {
+                <div class="reset-success">Salesperson Successfully Created!</div>
+                <div class="reset-success">Password Is @(TempData["tempPassword"])</div>
             }
         </div>
         <div class="container">

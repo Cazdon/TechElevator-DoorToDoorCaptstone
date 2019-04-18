@@ -11,7 +11,6 @@
 @model AdminManagerListViewModel
 @using DoorToDoorLibrary.DatabaseObjects
   <div class="main-content">
-@*<div class="main-content">*@
     <div class="container">
         <div id="show-hide-form" class="show-hide-button">Show Create Manager Form</div>
         <form asp-controller="Administrator" asp-action="RegisterManager" method="post" id="admin-create-manager">
@@ -37,11 +36,6 @@
                 </span>
             </div>
         </form>
-        @if ((TempData["registerSuccess"] != null) && ((bool)TempData["registerSuccess"]))
-        {
-            <div class="reset-success">Manager Successfully Created!</div>
-            <div class="reset-success">Password Is @(TempData["tempPassword"])</div>
-        }
         <div class="registerformspace"></div>
         <div class="userlist">
             <h2>Registered Managers</h2>
@@ -53,6 +47,11 @@
                 {
                     <div class="reset-success">Reset Password flag successfully set!</div>
                     <div class="reset-success">New Password is @(TempData["tempPassword"])</div>
+                }
+                @if ((TempData["registerSuccess"] != null) && ((bool)TempData["registerSuccess"]))
+                {
+                    <div class="reset-success">Manager Successfully Created!</div>
+                    <div class="reset-success">Password Is @(TempData["tempPassword"])</div>
                 }
             </div>
 

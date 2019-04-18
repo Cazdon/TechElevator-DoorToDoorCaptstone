@@ -643,10 +643,10 @@ namespace DoorToDoorLibrary.DAL
         }
 
         /// <summary>
-        /// Returns a Select List of all Houses from the system that are interested in buying
+        /// Returns a Select List of all Houses from the system assigned to the Salesperson
         /// </summary>
         /// <param name="salespersonID">Database ID of the Salesperson making the Transaction</param>
-        /// <returns>Select List of Products under the given Salesperson's Manager</returns>
+        /// <returns>Select List of Houses assigned the given Salesperson</returns>
         public IList<SelectListItem> GetSalesTransactionHouseOptions(int salespersonID)
         {
             List<SelectListItem> output = new List<SelectListItem>();
@@ -655,8 +655,7 @@ namespace DoorToDoorLibrary.DAL
             {
                 conn.Open();
 
-                string sql = "SELECT * FROM Houses WHERE salespersonID = @SalespersonID AND statusID = " +
-                    "(SELECT [id] FROM House_Status WHERE [status] = 'Interested') ORDER BY country, district, city, street;";
+                string sql = "SELECT * FROM Houses WHERE salespersonID = @SalespersonID ORDER BY country, district, city, street;";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@SalespersonID", salespersonID);

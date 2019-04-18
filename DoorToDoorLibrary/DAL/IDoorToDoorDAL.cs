@@ -128,10 +128,10 @@ namespace DoorToDoorLibrary.DAL
         bool SetHouseStatus(int houseID, int statusID, int userID);
 
         /// <summary>
-        /// Returns a Select List of all Houses from the system that are interested in buying
+        /// Returns a Select List of all Houses from the system assigned to the Salesperson
         /// </summary>
         /// <param name="salespersonID">Database ID of the Salesperson making the Transaction</param>
-        /// <returns>Select List of Products under the given Salesperson's Manager</returns>
+        /// <returns>Select List of Houses assigned the given Salesperson</returns>
         IList<SelectListItem> GetSalesTransactionHouseOptions(int salespersonID);
 
         #endregion
