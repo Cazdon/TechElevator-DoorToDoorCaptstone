@@ -73,6 +73,7 @@ h2 {
     #manager-salespeople-list > :first-child,
     #manager-house-list > :first-child,
     #transactions-list > :first-child,
+    #manager-dashboard-list > :first-child,
     #salesperson-house-list > :first-child,
     #report-list > :first-child {
         font-weight: bold;
@@ -85,6 +86,7 @@ h2 {
     #manager-house-list > :nth-child(even),
     #salesperson-house-list > :nth-child(even),
     #transactions-list > :nth-child(even),
+    #manager-dashboard-list > :nth-child(even),
     #report-list > :nth-child(even) {
         background-color: #AACAD8;
     }
@@ -639,6 +641,50 @@ form {
     text-transform: capitalize;
 }
 
+.dashboard-salesman-list {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 2fr 2fr 3fr;
+    grid-template-areas: "first-name last-name rank-item";
+    grid-gap: 5px;
+}
+
+.dashboard-first-name {
+    grid-area: first-name;
+}
+
+.dashboard-last-name {
+    grid-area: last-name;
+}
+
+.dashboard-rank-item {
+    grid-area: rank-item;
+}
+
+.dashboard-house-list {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr 2fr 3fr;
+    grid-template-areas: "street city district country rank-item";
+    grid-gap: 5px;
+}
+
+.dashboard-street {
+    grid-area: street;
+}
+
+.dashboard-city {
+    grid-area: city;
+}
+
+.dashboard-district {
+    grid-area: district;
+}
+
+.dashboard-country {
+    grid-area: country;
+}
+
 
 #profile-info {
     display: grid;
@@ -739,3 +785,4 @@ form {
     padding: 20px;
 }
 
+>>>>>>> e227b83dcaf593e02ef8ca0cb67ffcd6f90064e5
