@@ -97,7 +97,7 @@
             </nav>
         }*@
 
-    <nav class="navbar navbar-inverse navbar-global navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-global navbar-fixed-top" id="navbartop">
         <div class="container-fluid">
             <div class="navbar-header">
 
@@ -128,8 +128,8 @@
             </div>
         </div>
     </nav>
-    <nav class="navbar-primary navbar-fixed-bottom">
-        <ul class="navbar-primary-menu">
+    <nav class="navbar-primary">
+        <ul class="navbar-primary-menu nav">
             @if ((rm.User != null) && !rm.User.UpdatePassword)
             {
                 @if (!rm.IsUnknown)

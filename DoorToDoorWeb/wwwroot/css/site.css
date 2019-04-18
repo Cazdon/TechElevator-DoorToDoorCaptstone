@@ -687,6 +687,10 @@ form {
 
 }
 
+#navbartop{
+    z-index:9;
+}
+
 #currentusernav{
     color:white;
 }
