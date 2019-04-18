@@ -29,11 +29,33 @@
     <div class="userlist">
         <h2>My Products</h2>
         <div class="container">
+            <span>
+                @Html.ValidationMessage("removeFailed", new { @class = "field-validation-error" })
+            </span>
+            @if ((TempData["removeSuccess"] != null) && ((bool)TempData["removeSuccess"]))
+            {
+                <div class="reset-success">Product successfully removed.</div>
+            }
+        </div>
+        <div class="container">
             <ul id="manager-product-list">
                 @{
                     foreach (ProductItem product in Model.Products)
                     {
-                        <li class="product-list-item">&#8226; @(product.Name)</li>
+                        <li class="product-list-item">
+                            <div>@(product.Name)</div>
+                            <div>
+                                <form asp-controller="Manager" asp-action="RemoveProduct" method="post" id="manager-remove-product-form@(product.Id)" class="action-icon-form">
+                                    <input type="hidden" value="@(product.Id)" name="productID" />
+                                    <button title="Remove Product">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                    <span>
+                                        @Html.ValidationMessage($"removeFailed{product.Id}", new { @class = "field-validation-error" })
+                                    </span>
+                                </form>
+                            </div>
+                        </li>
                     }
                 }
             </ul>

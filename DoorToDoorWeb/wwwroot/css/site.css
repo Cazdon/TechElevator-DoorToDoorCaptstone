@@ -35,6 +35,17 @@ footer > p {
     padding-right: 15px;
 }
 
+
+.main-content {
+    margin-top: 60px;
+    margin-left: 200px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 15px;
+}
+
+
 .field-validation-error {
     color: red;
     font-weight: bold;
@@ -54,19 +65,22 @@ footer > p {
     list-style: none;
 }
 
-#admin-manager-list > :first-child,
-#manager-salespeople-list > :first-child,
-#manager-house-list > :first-child,
-#salesperson-house-list > :first-child,
-#report-list > :first-child {
-    font-weight: bold;
-    border-bottom: 3px solid black;
-}
+    #admin-manager-list > :first-child,
+    #manager-salespeople-list > :first-child,
+    #manager-house-list > :first-child,
+    #transactions-list > :first-child,
+    #salesperson-house-list > :first-child,
+    #report-list > :first-child {
+        font-weight: bold;
+        border-bottom: 3px solid black;
+        align-items: flex-end;
+    }
 
     #admin-manager-list > :nth-child(even),
     #manager-salespeople-list > :nth-child(even),
     #manager-house-list > :nth-child(even),
     #salesperson-house-list > :nth-child(even),
+    #transactions-list > :nth-child(even),
     #report-list > :nth-child(even) {
         background-color: cadetblue;
     }
@@ -75,13 +89,23 @@ footer > p {
     padding: 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    grid-gap: 5px;
+    grid-gap: 10px;
     list-style: none;
 }
 
 .product-list-item {
     padding: 5px;
     text-transform: capitalize;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    justify-content: space-between;
+    border-radius: 15px;
+}
+
+product-list-item > div {
+    padding: 5px;
 }
 
 .manager-list-item,
@@ -591,4 +615,35 @@ form {
 
 
   
+}
+
+#house-select, #product-select {
+    text-transform: capitalize;
+}
+
+.transaction-list-item {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr 2fr;
+    grid-template-areas: "date amount address product";
+    grid-gap: 5px;
+}
+
+.transaction-list-date {
+    grid-area: date;
+    text-transform: capitalize;
+}
+
+.transaction-list-amount {
+    grid-area: amount;
+}
+
+.transaction-list-address {
+    grid-area: address;
+    text-transform: capitalize;
+}
+
+.transaction-list-product {
+    grid-area: product;
+    text-transform: capitalize;
 }

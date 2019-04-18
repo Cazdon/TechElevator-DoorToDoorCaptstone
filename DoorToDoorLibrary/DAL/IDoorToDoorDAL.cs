@@ -259,6 +259,13 @@ namespace DoorToDoorLibrary.DAL
         /// <returns>Select List of Products under the given Salesperson's Manager</returns>
         IList<SelectListItem> GetMyProductOptions(int salespersonID);
 
+        /// <summary>
+        /// Set's the user's Reset Password flag. Throws error if unsuccessful
+        /// </summary>
+        /// <param name="productID">Product's Database ID</param>
+        /// <param name="managerID">Manager the Product belongs to</param>
+        void RemoveProduct(int productID, int managerID);
+
         #endregion
 
         #region Transaction Methods
