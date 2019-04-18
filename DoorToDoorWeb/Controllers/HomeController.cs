@@ -274,6 +274,67 @@ namespace DoorToDoorWeb.Controllers
             return result;
         }
 
+        [HttpPost]
+        public IActionResult SelfResetPassword(ProfileViewModel model)
+        {
+            ActionResult result = null;
+
+            if (IsAuthenticated)
+            {
+                try
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        TempData["holdPasswordForm"] = true;
+                        result = View("Profile", CreateProfileViewModel());
+                    }
+                    else
+                    {
+                        PasswordManager pm = new PasswordManager(model.ResetPassword.CurrentPassword, CurrentUser.Salt);
+                        
+                        if (!pm.Verify(CurrentUser.Hash))
+                        {
+                            throw new Exception("Password is invalid.");
+                        }
+
+                        if (!model.ResetPassword.ConfirmNewPassword.Equals(model.ResetPassword.NewPassword))
+                        {
+                            throw new PasswordMatchException("The password and confirm password do not match.");
+                        }
+
+                        pm = new PasswordManager(model.ResetPassword.NewPassword);
+
+                        bool passwordResetSuccess = _db.ResetPassword(CurrentUser.EmailAddress, pm.Salt, pm.Hash);
+
+                        if (passwordResetSuccess)
+                        {
+                            LoginUser(CurrentUser.EmailAddress, model.ResetPassword.NewPassword);
+
+                            TempData["resetPasswordSuccess"] = true;
+
+                            result = RedirectToAction("Profile");
+                        }
+                        else
+                        {
+                            throw new Exception("Failed to Reset Password");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("invalid-password", ex.Message);
+                    TempData["holdPasswordForm"] = true;
+                    result = View("Profile", CreateProfileViewModel());
+                }
+            }
+            else
+            {
+                result = RedirectToAction("Login", "Home");
+            }
+
+            return result;
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
