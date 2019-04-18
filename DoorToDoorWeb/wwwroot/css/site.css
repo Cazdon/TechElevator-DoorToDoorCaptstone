@@ -35,6 +35,10 @@ footer > p {
     padding-right: 15px;
 }
 
+h2 {
+    text-align: center;
+    text-decoration: underline;
+}
 
 .main-content {
     margin-top: 60px;
@@ -507,23 +511,10 @@ form {
     clear: both;
 }
 
-
-.userlist {
-    background-color: white;
-}
-
-    .userlist h2 {
-        text-align: center;
-        text-decoration: underline;
-    }
-
-    #housedetails{
-        background-color:white;
-    }
-
 .show-hide-button {
     color: darkgoldenrod;
     font-weight: bolder;
+    margin-bottom: 10px;
 }
 
 .registerformspace {
@@ -695,11 +686,21 @@ form {
 }
 
 
+#profile-info {
+    display: grid;
+    grid-template-columns: auto 35% 35% auto;
+    grid-template-areas: ". name email .";
+    grid-gap: 10px;
+    margin-bottom: 20px;
+}
 
+#my-profile-name {
+    grid-area: name;
+}
 
-
-
-
+#my-profile-email {
+    grid-area: email;
+}
 
 
 

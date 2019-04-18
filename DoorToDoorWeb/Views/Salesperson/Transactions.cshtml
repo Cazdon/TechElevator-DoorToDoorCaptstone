@@ -13,34 +13,34 @@
 
 @model TransactionsViewModel
 @using DoorToDoorLibrary.DatabaseObjects
-<div class="main-content">
-    <div class="container">
-        <div id="show-hide-form" class="show-hide-button">Add A Transaction</div>
-        <form asp-controller="Salesperson" asp-action="AddTransaction" method="post" id="salesman-add-transaction">
-            <div class="form-group">
-                <div class="form-group">
-                    <label asp-for="AddTransaction.Amount"></label>
-                    <input asp-for="AddTransaction.Amount" type="text"/>
-                    <span asp-validation-for="AddTransaction.Amount"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AddTransaction.HouseID"></label>
-                    <select asp-for="AddTransaction.HouseID" asp-items="Model.HouseList" id="house-select"></select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AddTransaction.ProductID"></label>
-                    <select asp-for="AddTransaction.ProductID" asp-items="Model.ProductList" id="product-select"></select>
-                </div>
-            </div>
-            <div class="form-group">
-                <button>Finalize Transaction</button>
-                <span>
-                    @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
-                </span>
-            </div>
-</form>
-        <div class="userlist">
+
+    <div class="main-content">
+        <div class="container">
             <h2>My Transactions</h2>
+            <div id="show-hide-form" class="show-hide-button">Add A Transaction</div>
+            <form asp-controller="Salesperson" asp-action="AddTransaction" method="post" id="salesman-add-transaction">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label asp-for="AddTransaction.Amount"></label>
+                        <input asp-for="AddTransaction.Amount" type="text" />
+                        <span asp-validation-for="AddTransaction.Amount"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AddTransaction.HouseID"></label>
+                        <select asp-for="AddTransaction.HouseID" asp-items="Model.HouseList" id="house-select"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AddTransaction.ProductID"></label>
+                        <select asp-for="AddTransaction.ProductID" asp-items="Model.ProductList" id="product-select"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button>Finalize Transaction</button>
+                    <span>
+                        @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
+                    </span>
+                </div>
+            </form>
             <div class="container">
                 <ul id="transactions-list">
                     <li class="transaction-list-item">
@@ -62,4 +62,3 @@
             </div>
         </div>
     </div>
-</div>
