@@ -435,6 +435,36 @@ namespace DoorToDoorWeb.Controllers
 
             return result;
         }
+
+        [HttpPost]
+        public ActionResult RemoveProduct(int productID)
+        {
+            ActionResult result = null;
+
+            if (Role.IsManager)
+            {
+                try
+                {
+                    _db.RemoveProduct(productID, CurrentUser.Id);
+
+                    TempData["removeSuccess"] = true;
+
+                    result = RedirectToAction("Products");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError($"removeFailed{productID}", ex.Message);
+
+                    result = RedirectToAction("Products");
+                }
+            }
+            else
+            {
+                result = RedirectToAction("Login", "Home");
+            }
+
+            return result;
+        }
     }
 }
 

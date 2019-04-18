@@ -1384,6 +1384,34 @@ namespace DoorToDoorLibrary.DAL
             return output;
         }
 
+        /// <summary>
+        /// Set's the user's Reset Password flag. Throws error if unsuccessful
+        /// </summary>
+        /// <param name="productID">Product's Database ID</param>
+        /// <param name="managerID">Manager the Product belongs to</param>
+        public void RemoveProduct(int productID, int managerID)
+        {
+            int numRows = 0;
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "DELETE FROM Manager_Products WHERE managerID = @ManagerID AND productID = @ProductID;";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@ManagerID", managerID);
+                cmd.Parameters.AddWithValue("@ProductID", productID);
+
+                numRows = cmd.ExecuteNonQuery();
+            }
+
+            if (numRows != 1)
+            {
+                throw new RemoveProductFailedException();
+            }
+        }
+
         #endregion
 
         #region Transaction Methods
