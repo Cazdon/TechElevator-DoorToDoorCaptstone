@@ -8,8 +8,8 @@ namespace DoorToDoorWeb.Models
 {
     public class SalespersonDashboardViewModel
     {
-        public IList<HouseDashboardItem> Houses { get; set; }
-        public IList<ProductDashboardItem> Products { get; set; }
+        public IList<SalespersonBestCustomerCountItem> BestCustomersByCount { get; set; }
+        public IList<SalespersonBestCustomerRevenueItem> BestCustomersByRevenue { get; set; }
         public int MySales { get; set; }
         public double MyRevenue { get; set; }
     }

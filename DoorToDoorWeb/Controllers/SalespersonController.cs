@@ -20,8 +20,8 @@ namespace DoorToDoorWeb.Controllers
         private SalespersonDashboardViewModel CreateSalespersonDashboardViewModel()
         {
             SalespersonDashboardViewModel dashboardViewModel = new SalespersonDashboardViewModel();
-            dashboardViewModel.Houses = _db.GetSalesmanDashboardHouses(CurrentUser.Id);
-            dashboardViewModel.Products = _db.GetSalesmanDashboardProducts(CurrentUser.Id);
+            dashboardViewModel.BestCustomersByCount = _db.GetSalesmanDashboardCount(CurrentUser.Id);
+            dashboardViewModel.BestCustomersByRevenue = _db.GetSalesmanDashboardRevenue(CurrentUser.Id);
             dashboardViewModel.MySales = _db.GetSalesmanDashboardSales(CurrentUser.Id);
             dashboardViewModel.MyRevenue = _db.GetSalesmanDashboardTotalRevenue(CurrentUser.Id);
 

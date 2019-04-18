@@ -243,6 +243,20 @@ namespace DoorToDoorLibrary.DAL
         /// <returns>The total revenue from Salesman as an Int</returns>
         double GetSalesmanDashboardTotalRevenue(int salemanID);
 
+        /// <summary>
+        /// Retrieves the top five Houses by number of Sales Transactions for a particular Salesperson
+        /// </summary>
+        /// <param name="salespersonID">Database ID of the Salesperson</param>
+        /// <returns>List containing top five SalespersonBestCustomerCountItem for the Salesperson</returns>
+        IList<SalespersonBestCustomerCountItem> GetSalesmanDashboardCount(int salespersonID);
+
+        /// <summary>
+        /// Retrieves the top five Houses by Revenue for a particular Salesperson
+        /// </summary>
+        /// <param name="salespersonID">Database ID of the Salesperson</param>
+        /// <returns>List containing top five SalespersonBestCustomerRevenueItem for the Salesperson</returns>
+        IList<SalespersonBestCustomerRevenueItem> GetSalesmanDashboardRevenue(int salespersonID);
+
         #endregion
 
         #region Product Methods

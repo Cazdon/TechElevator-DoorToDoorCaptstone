@@ -1272,6 +1272,101 @@ namespace DoorToDoorLibrary.DAL
 
             return output;
         }
+
+        /// <summary>
+        /// Retrieves the top five Houses by number of Sales Transactions for a particular Salesperson
+        /// </summary>
+        /// <param name="salespersonID">Database ID of the Salesperson</param>
+        /// <returns>List containing top five SalespersonBestCustomerCountItem for the Salesperson</returns>
+        public IList<SalespersonBestCustomerCountItem> GetSalesmanDashboardCount(int salespersonID)
+        {
+            List<SalespersonBestCustomerCountItem> output = new List<SalespersonBestCustomerCountItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT TOP 5 (h.street + ', ' + h.city + ', ' + h.district + ', ' + h.country) AS [address], " +
+                    "COUNT(st.[id]) AS transactionCount FROM Houses AS H JOIN Sales_Transactions AS st ON h.[id] = st.houseID " +
+                    "WHERE st.salespersonID = 4 GROUP BY h.id, h.street, h.city, h.district, h.country ORDER BY transactionCount DESC;";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@SalesmanID", salespersonID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    SalespersonBestCustomerCountItem item = GetSalespersonBestCustomerCountItemFromReader(reader);
+                    output.Add(item);
+                }
+
+                return output;
+            }
+        }
+
+        /// <summary>
+        /// Generates a SalespersonBestCustomerCountItem from the provided Sql Data Reader
+        /// </summary>
+        /// <param name="reader">The given Sql Data Reader</param>
+        /// <returns>SalespersonBestCustomerCountItem to be placed into a list</returns>
+        private SalespersonBestCustomerCountItem GetSalespersonBestCustomerCountItemFromReader(SqlDataReader reader)
+        {
+            SalespersonBestCustomerCountItem item = new SalespersonBestCustomerCountItem();
+
+            item.Address = Convert.ToString(reader["address"]);
+            item.TransactionsCount = Convert.ToInt32(reader["transactionCount"]);
+
+            return item;
+        }
+
+        /// <summary>
+        /// Retrieves the top five Houses by Revenue for a particular Salesperson
+        /// </summary>
+        /// <param name="salespersonID">Database ID of the Salesperson</param>
+        /// <returns>List containing top five SalespersonBestCustomerRevenueItem for the Salesperson</returns>
+        public IList<SalespersonBestCustomerRevenueItem> GetSalesmanDashboardRevenue(int salespersonID)
+        {
+            List<SalespersonBestCustomerRevenueItem> output = new List<SalespersonBestCustomerRevenueItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "SELECT TOP 5 (h.street + ', ' + h.city + ', ' + h.district + ', ' + h.country) AS [address], " +
+                    "SUM(st.amount) AS totalRevenue FROM Houses AS h JOIN Sales_Transactions AS st ON h.[id] = st.houseID " +
+                    "WHERE st.salespersonID = 4 GROUP BY h.id, h.street, h.city, h.district, h.country ORDER BY totalRevenue DESC;";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@SalesmanID", salespersonID);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    SalespersonBestCustomerRevenueItem item = GetSalespersonBestCustomerRevenueItemFromReader(reader);
+                    output.Add(item);
+                }
+
+                return output;
+            }
+        }
+
+        /// <summary>
+        /// Generates a SalespersonBestCustomerRevenueItem from the provided Sql Data Reader
+        /// </summary>
+        /// <param name="reader">The given Sql Data Reader</param>
+        /// <returns>SalespersonBestCustomerRevenueItem to be placed into a list</returns>
+        private SalespersonBestCustomerRevenueItem GetSalespersonBestCustomerRevenueItemFromReader(SqlDataReader reader)
+        {
+            SalespersonBestCustomerRevenueItem item = new SalespersonBestCustomerRevenueItem();
+
+            item.Address = Convert.ToString(reader["address"]);
+            item.TotalRevenue = Convert.ToDouble(reader["totalRevenue"]);
+
+            return item;
+        }
+
         #endregion
 
         #region Product Methods

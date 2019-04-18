@@ -801,3 +801,18 @@ form {
 .houses-lists {
     grid-area: house;
 }
+
+#salesperson-dashboard-lists {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "count revenue";
+    grid-column-gap: 10px;
+}
+
+#salesperson-top-count {
+    grid-area: count;
+}
+
+#salesperson-top-revenue {
+    grid-area: revenue;
+}
