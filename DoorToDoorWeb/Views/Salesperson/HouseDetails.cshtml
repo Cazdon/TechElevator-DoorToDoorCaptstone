@@ -24,9 +24,7 @@
                 <div id="house-details">
                     <div id="house-detail-address">
                         <h5>Address:</h5>
-                        <div>@(Model.House.Street)</div>
-                        <div>@(Model.House.City), @(Model.House.District) @(Model.House.ZipCode)</div>
-                        <div>@(Model.House.Country)</div>
+                        <div>@(Model.House.Street), @(Model.House.City), @(Model.House.District), @(Model.House.ZipCode), @(Model.House.Country)</div>
                     </div>
                     <div id="house-detail-status">
                         <h5>Current Status:</h5>
@@ -65,8 +63,10 @@
                         </ul>
                     </div>
                     <div id="house-detail-notes">
-                        <h5>Notes:</h5>
-                        <div id="show-hide-note-form" class="show-hide-button">Show Add Note Form</div>
+                        <div>
+                            <h5>Notes:</h5>
+                            <div id="show-hide-note-form" class="show-hide-button">Show Add Note Form</div>
+                        </div>
                         <form asp-controller="Salesperson" asp-action="AddHouseNote" method="post" id="add-note-form">
                             <input type="hidden" asp-for="AddNote.HouseID" value="@(Model.House.Id)" />
                             <div class="form-group">

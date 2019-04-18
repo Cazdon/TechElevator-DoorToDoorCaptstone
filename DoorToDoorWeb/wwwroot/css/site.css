@@ -212,37 +212,38 @@ product-list-item > div {
 }
 
 #house-notes-list {
+    grid-area: notes;
     list-style: none;
-    margin: 5px;
-    padding: 5px;
-    border: 1px solid black;
+    margin: 0;
+    padding: 0;
 }
 
 .house-note {
     display: grid;
-    grid-template-columns: 10% 30% auto;
+    grid-template-columns: 10% auto 10%;
     grid-template-areas:
         ". date ."
         "info info info";
-    grid-gap: 5px;
-    border: 1px solid black;
-    margin: 5px;
-    padding: 5px;
+    margin-bottom: 15px;
+    padding: 0;
+    background-color: #AACAD8;
 }
 
 .house-note-user-date {
     grid-area: date;
+    padding: 10px 0;
 }
 
 .house-note-info {
     grid-area: info;
-    border-top: 1px solid black;
+    padding: 10px 20px;
+    background-color: white;
 }
 
 .report-item {
     padding: 5px;
     display: grid;
-    grid-template-columns: 1fr 5fr 2fr 2fr 3fr 2fr;
+    grid-template-columns: 2fr 4fr 2fr 2fr 3fr 2fr;
     grid-template-areas: "id address date amount product salesperson";
 }
 
@@ -319,19 +320,20 @@ product-list-item > div {
 }
 
 #house-details > div {
-    border: 1px solid black;
+    border-bottom: 1px solid black;
     width: 100%;
+}
+
+#house-details > :last-child {
+    border-bottom: none;
 }
 
 #house-detail-address {
     display: grid;
     padding: 5px;
-    grid-template-columns: 20% 20% 10% 40% 10%;
-    grid-template-areas:
-        ". head . street ."
-        ". head . city ."
-        ". head . country .";
-    grid-gap: 5px;
+    grid-template-columns: 10% 1fr 1fr 10%;
+    grid-template-areas: ". head address .";
+    grid-column-gap: 5px;
     align-items: center;
 }
 
@@ -339,24 +341,16 @@ product-list-item > div {
     grid-area: head;
 }
 
-#house-detail-address :nth-child(2) {
-    grid-area: street;
-}
-
-#house-detail-address :nth-child(3) {
-    grid-area: city;
-}
-
-#house-detail-address :nth-child(4) {
-    grid-area: country;
+#house-detail-address div {
+    grid-area: address;
 }
 
 #house-detail-salesperson {
     display: grid;
     padding: 5px;
-    grid-template-columns: 20% 20% 10% 40% 10%;
-    grid-template-areas: ". head . salesperson .";
-    grid-gap: 5px;
+    grid-template-columns: 10% 1fr 1fr 10%;
+    grid-template-areas: ". head salesperson .";
+    grid-column-gap: 5px;
     align-items: center;
 }
 
@@ -371,9 +365,9 @@ product-list-item > div {
 #house-detail-status {
     display: grid;
     padding: 5px;
-    grid-template-columns: 20% 20% 10% 40% 10%;
-    grid-template-areas: ". head . status .";
-    grid-gap: 5px;
+    grid-template-columns: 10% 1fr 1fr 10%;
+    grid-template-areas: ". head status .";
+    grid-column-gap: 5px;
     align-items: center;
 }
 
@@ -388,10 +382,10 @@ product-list-item > div {
 #house-detail-residents {
     display: grid;
     padding: 5px;
-    grid-template-columns: 20% 20% 10% 40% 10%;
+    grid-template-columns: 10% 1fr 1fr 10%;
     grid-template-areas:
-        ". head . residents ."
-        ". form . residents .";
+        ". head residents ."
+        ". form residents .";
     grid-gap: 5px;
     align-items: center;
 }
@@ -407,6 +401,7 @@ product-list-item > div {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         grid-gap: 5px;
         list-style: none;
+        align-self: flex-start;
     }
 
         #house-detail-residents ul li {
@@ -417,6 +412,26 @@ product-list-item > div {
         grid-area: form;
     }
 
+#house-detail-notes {
+    display: grid;
+    padding: 5px;
+    grid-template-columns: 5% 5% 1fr 1fr 5% 5%;
+    grid-template-areas:
+        ". . head form . ."
+        ". notes notes notes notes .";
+    grid-gap: 5px;
+    align-items: center;
+}
+
+#house-detail-notes > div {
+    grid-area: head;
+    align-self: flex-start;
+}
+
+#house-detail-notes form {
+    grid-area: form;
+    margin: 0;
+}
 
  * {
     box-sizing: border-box;

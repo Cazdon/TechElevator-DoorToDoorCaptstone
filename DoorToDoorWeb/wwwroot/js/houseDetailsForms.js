@@ -25,7 +25,7 @@ function toggleForm(event, showMessage, hideMessage, form, toggle) {
     }
 }
 
-noteFormToggleElement.addEventListener('click', (event) => {x
+noteFormToggleElement.addEventListener('click', (event) => {
     toggleForm(event, noteShowMessage, noteHideMessage, noteFormElement, noteFormToggleElement);
 });
 
