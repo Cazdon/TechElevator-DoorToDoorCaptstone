@@ -51,6 +51,22 @@ namespace DoorToDoorWeb.Controllers
             return result;
         }
 
+        private ProfileViewModel CreateProfileViewModel()
+        {
+            ProfileViewModel model = new ProfileViewModel();
+            if (IsAuthenticated)
+            {
+                model.FirstName = CurrentUser.FirstName;
+                model.LastName = CurrentUser.LastName;
+                model.EmailAddress = CurrentUser.EmailAddress;
+                model.UpdateProfile = new UpdateProfileViewModel();
+                model.ResetPassword = new SelfResetPasswordViewModel();
+                model.Role = Role.RoleName.ToString();
+            }
+
+            return model;
+        }
+
         [HttpGet]
         public ActionResult Login()
         {
@@ -186,6 +202,12 @@ namespace DoorToDoorWeb.Controllers
             LogoutUser();
 
             return RedirectToAction("Login");
+        }
+
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            return GetAuthenticatedView("Profile", CreateProfileViewModel());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
