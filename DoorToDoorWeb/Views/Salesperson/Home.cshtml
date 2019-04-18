@@ -4,18 +4,29 @@
 @using DoorToDoorLibrary.DatabaseObjects
 <div class="main-content">
     <div class="container">
+        <h2>Salesman Dashboard</h2>
         <h3>My Number of Sales: @Model.MySales</h3>
         <h3>My Total Revenue: @Model.MyRevenue</h3>
-        <ul>
+        <ul id="salesman-dashboard-list">
+            <li class="dashboard-street-list">
+                <div class="dashboard-street">Address</div>
+            </li>
             @foreach (HouseDashboardItem house in Model.Houses)
             {
-                <li>My Houses: @house.Street</li>
+            <li>
+                <div class="street">@house.Street</div>
+            </li>
             }
-        </ul>
+        </ul>        
         <ul>
+            <li class="dashboard-product-list">
+                <div class="dashboard-product">Product</div>
+            </li>
             @foreach (ProductDashboardItem product in Model.Products)
             {
-                <li>My Products: @product.Name</li>
+                <li>
+                    <div class="dashboard-product">@product.Name</div>
+                </li>
             }
         </ul>
     </div>
