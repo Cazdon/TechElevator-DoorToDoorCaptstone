@@ -15,5 +15,6 @@ namespace DoorToDoorWeb.Models
         public IList<SelectListItem> StatusOptions { get; set; }
         public IList<ResidentItem> Residents { get; set; }
         public AddResidentViewModel AddResident { get; set; }
+        public IList<SelectListItem> SalespersonOptions { get; set; }
     }
 }
