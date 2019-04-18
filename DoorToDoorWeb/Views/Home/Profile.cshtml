@@ -65,13 +65,13 @@
                                 <span asp-validation-for="ResetPassword.NewPassword"></span>
                             </div>
                             <div class="form-group">
-                                <input asp-for="UpdateProfile.EmailAddress" type="email" value="@(Model.EmailAddress)" placeholder="Enter New Email Address" />
-                                <span asp-validation-for="UpdateProfile.EmailAddress"></span>
+                                <input asp-for="ResetPassword.ConfirmNewPassword" type="email" placeholder="Confirm New Password" />
+                                <span asp-validation-for="ResetPassword.ConfirmNewPassword"></span>
                             </div>
                             <div class="form-group">
-                                <button>Update Profile</button>
+                                <button>Reset Password</button>
                                 <span>
-                                    @Html.ValidationMessage("invalid-profile", new { @class = "field-validation-error" })
+                                    @Html.ValidationMessage("invalid-password", new { @class = "field-validation-error" })
                                 </span>
                             </div>
                         </form>

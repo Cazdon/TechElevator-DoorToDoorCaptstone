@@ -10,7 +10,7 @@ const passwordHideMessage = "Hide Change Password Form";
 
 const passwordFormToggleElement = document.getElementById("show-hide-password-form");
 const passwordFormElement = document.getElementById("reset-password-form");
-passwordFormElement.hidden = !holdpasswordForm;
+passwordFormElement.hidden = !holdPasswordForm;
 
 function toggleForm(event, showMessage, hideMessage, form, toggle) {
     event.stopPropagation();
