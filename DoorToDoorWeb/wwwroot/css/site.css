@@ -691,6 +691,12 @@ form {
     z-index:9;
 }
 
+.navbar-header{
+    font-weight:bold;
+    color:white;
+    font-size:larger;
+}
+
 #currentusernav{
     color:white;
 }
