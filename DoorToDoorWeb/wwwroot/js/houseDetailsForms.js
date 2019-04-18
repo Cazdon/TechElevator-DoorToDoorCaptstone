@@ -12,7 +12,9 @@ const residentFormToggleElement = document.getElementById("show-hide-resident-fo
 const residentFormElement = document.getElementById("add-resident-form");
 residentFormElement.hidden = !holdResidentForm;
 
-function toggleForm(showMessage, hideMessage, form, toggle) {
+function toggleForm(event, showMessage, hideMessage, form, toggle) {
+    event.stopPropagation();
+
     form.toggleAttribute("hidden");
 
     if (form.hidden) {
@@ -23,12 +25,10 @@ function toggleForm(showMessage, hideMessage, form, toggle) {
     }
 }
 
-noteFormToggleElement.addEventListener('click', (event) => {
-    event.stopPropagation();
-    toggleForm(noteShowMessage, noteHideMessage, noteFormElement, noteFormToggleElement);
+noteFormToggleElement.addEventListener('click', (event) => {x
+    toggleForm(event, noteShowMessage, noteHideMessage, noteFormElement, noteFormToggleElement);
 });
 
 residentFormToggleElement.addEventListener('click', (event) => {
-    event.stopPropagation();
-    toggleForm(residentShowMessage, residentHideMessage, residentFormElement, residentFormToggleElement);
+    toggleForm(event, residentShowMessage, residentHideMessage, residentFormElement, residentFormToggleElement);
 });
