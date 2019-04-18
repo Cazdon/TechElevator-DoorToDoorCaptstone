@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using DoorToDoorLibrary.Exceptions;
 using DoorToDoorLibrary.Logic;
 using DoorToDoorLibrary.Models;
+using DoorToDoorLibrary.DatabaseObjects;
 
 namespace DoorToDoorWeb.Controllers
 {
@@ -208,6 +209,69 @@ namespace DoorToDoorWeb.Controllers
         public IActionResult Profile()
         {
             return GetAuthenticatedView("Profile", CreateProfileViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult UpdateProfile(ProfileViewModel model)
+        {
+            ActionResult result = null;
+
+            if (IsAuthenticated)
+            {
+                try
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        TempData["holdProfileForm"] = true;
+                        result = View("Profile", CreateProfileViewModel());
+                    }
+                    else
+                    {
+                        UserItem currentUser = _db.GetUserItem(CurrentUser.EmailAddress);
+
+                        PasswordManager pm = new PasswordManager(model.UpdateProfile.Password, currentUser.Salt);
+
+                        if (!pm.Verify(currentUser.Hash))
+                        {
+                            throw new Exception("Password is invalid.");
+                        }
+
+                        UserItem existingUser = null;
+                        try
+                        {
+                            existingUser = _db.GetUserItem(model.UpdateProfile.EmailAddress);
+                        }
+                        catch (Exception)
+                        {
+                        }
+
+                        if ((existingUser != null) && (!existingUser.EmailAddress.Equals(CurrentUser.EmailAddress)))
+                        {
+                            throw new UserExistsException("The email is already taken.");
+                        }
+
+                        _db.UpdateProfile(currentUser.Id, model.UpdateProfile.EmailAddress, model.UpdateProfile.FirstName, model.UpdateProfile.LastName);
+
+                        LoginUser(model.UpdateProfile.EmailAddress, model.UpdateProfile.Password);
+
+                        TempData["updateProfileSuccess"] = true;
+
+                        result = RedirectToAction("Profile");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("invalid-profile", ex.Message);
+                    TempData["holdProfileForm"] = true;
+                    result = View("Profile", CreateProfileViewModel());
+                }
+            }
+            else
+            {
+                result = RedirectToAction("Login", "Home");
+            }
+
+            return result;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

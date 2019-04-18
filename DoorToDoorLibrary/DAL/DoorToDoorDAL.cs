@@ -313,6 +313,38 @@ namespace DoorToDoorLibrary.DAL
             return false;
         }
 
+        /// <summary>
+        /// Updates the User's Profile
+        /// </summary>
+        /// <param name="userID">Database ID of the User</param>
+        /// <param name="emailAddress">User's new Email Address</param>
+        /// <param name="firstName">User's new First Name</param>
+        /// <param name="lastName">User's new Last Name</param>
+        public void UpdateProfile(int userID, string emailAddress, string firstName, string lastName)
+        {
+            int numRows = 0;
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "UPDATE Users SET emailAddress = @EmailAddress, firstName = @FirstName, lastName = @LastName WHERE id = @UserID;";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@UserID", userID);
+                cmd.Parameters.AddWithValue("@EmailAddress", emailAddress);
+                cmd.Parameters.AddWithValue("@FirstName", firstName);
+                cmd.Parameters.AddWithValue("@LastName", lastName);
+
+                numRows = cmd.ExecuteNonQuery();
+            }
+
+            if (numRows != 1)
+            {
+                throw new ProfileUpdateFailedException();
+            }
+        }
+
         #endregion
 
         #region House Methods
@@ -1385,7 +1417,7 @@ namespace DoorToDoorLibrary.DAL
         }
 
         /// <summary>
-        /// Set's the user's Reset Password flag. Throws error if unsuccessful
+        /// Removes the Product from the Manager's list
         /// </summary>
         /// <param name="productID">Product's Database ID</param>
         /// <param name="managerID">Manager the Product belongs to</param>
