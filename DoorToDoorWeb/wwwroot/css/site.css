@@ -82,7 +82,7 @@ footer > p {
     #salesperson-house-list > :nth-child(even),
     #transactions-list > :nth-child(even),
     #report-list > :nth-child(even) {
-        background-color: cadetblue;
+        background-color: #AACAD8;
     }
 
 #manager-product-list {
@@ -520,7 +520,7 @@ form {
     }
 
 .show-hide-button {
-    color: gold;
+    color: darkgoldenrod;
     font-weight: bolder;
 }
 
@@ -707,6 +707,7 @@ form {
     margin: 0;
     padding: 0;
     list-style: none;
+    width:100%;
 }
 
     .navbar-primary-menu li a {
