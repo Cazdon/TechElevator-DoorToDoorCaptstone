@@ -64,6 +64,7 @@ h2 {
 
 #admin-manager-list, #manger-salespeople-list,
 #manager-house-list, #salesperson-house-list,
+.manager-dashboard-list,
 #report-list {
     padding: 0;
     list-style: none;
@@ -73,7 +74,7 @@ h2 {
     #manager-salespeople-list > :first-child,
     #manager-house-list > :first-child,
     #transactions-list > :first-child,
-    #manager-dashboard-list > :first-child,
+    .manager-dashboard-list > :first-child,
     #salesperson-house-list > :first-child,
     #report-list > :first-child {
         font-weight: bold;
@@ -86,7 +87,7 @@ h2 {
     #manager-house-list > :nth-child(even),
     #salesperson-house-list > :nth-child(even),
     #transactions-list > :nth-child(even),
-    #manager-dashboard-list > :nth-child(even),
+    .manager-dashboard-list > :nth-child(even),
     #report-list > :nth-child(even) {
         background-color: #AACAD8;
     }
@@ -416,9 +417,6 @@ product-list-item > div {
         grid-area: form;
     }
 
-    h4{
-     margin-left:30%;
-    }
 
  * {
     box-sizing: border-box;
@@ -644,7 +642,7 @@ form {
 .dashboard-salesman-list {
     padding: 5px;
     display: grid;
-    grid-template-columns: 2fr 2fr 3fr;
+    grid-template-columns: 2fr 2fr 2fr;
     grid-template-areas: "first-name last-name rank-item";
     grid-gap: 5px;
 }
@@ -659,32 +657,21 @@ form {
 
 .dashboard-rank-item {
     grid-area: rank-item;
+    text-align: right;
 }
 
 .dashboard-house-list {
     padding: 5px;
     display: grid;
-    grid-template-columns: 3fr 2fr 2fr 2fr 3fr;
-    grid-template-areas: "street city district country rank-item";
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: "address rank-item";
     grid-gap: 5px;
 }
 
-.dashboard-street {
-    grid-area: street;
+.dashboard-address {
+    grid-area: address;
+    text-transform: capitalize;
 }
-
-.dashboard-city {
-    grid-area: city;
-}
-
-.dashboard-district {
-    grid-area: district;
-}
-
-.dashboard-country {
-    grid-area: country;
-}
-
 
 #profile-info {
     display: grid;
@@ -783,4 +770,34 @@ form {
     margin-top: 60px;
     margin-left: 200px;
     padding: 20px;
+}
+
+#dashboard-totals {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr 5fr 1fr;
+    grid-template-areas: ". sales . revenue .";
+    grid-gap: 5px;
+}
+
+#total-sales {
+    grid-area: sales;
+}
+#total-revenue {
+    grid-area: revenue;
+}
+
+.dashboard-lists {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "salesman house";
+    grid-column-gap: 10px;
+}
+
+.salesman-lists {
+    grid-area: salesman;
+}
+
+.houses-lists {
+    grid-area: house;
 }

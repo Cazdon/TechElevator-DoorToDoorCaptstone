@@ -5,15 +5,15 @@
 <div class="main-content">
     <div class="container">
         <h2>Manager Dashboard</h2>
-        <div class="dashboard-totals">
-                <h3 class="total-sales">Total Number of Sales: @Model.TotalSales</h3>
-                <h3 class="total-revenue">Total Revenue: @Model.TotalRevenue.ToString("C")</h3>
+        <div id="dashboard-totals">
+                <h4 id="total-sales">Total Number of Sales: @Model.TotalSales</h4>
+                <h4 id="total-revenue">Total Revenue: @Model.TotalRevenue.ToString("C")</h4>
         </div>
         <div class="dashboard-lists">
             <div class="salesman-lists">
                 <div class="container">
-                    <h3>Salesmen Rank by Quantity</h3>
-                    <ul id="manager-dashboard-list">
+                    <h5>Salesmen Rank by Quantity</h5>
+                    <ul class="manager-dashboard-list">
                         <li class="dashboard-salesman-list">
                             <div class="dashboard-first-name">First Name</div>
                             <div class="dashboard-last-name">Last Name</div>
@@ -30,8 +30,8 @@
                     </ul>
                 </div>
                 <div class="container">
-                    <h3>Salesman Rank by Revenue</h3>
-                    <ul id="manager-dashboard-list">
+                    <h5>Salesman Rank by Revenue</h5>
+                    <ul class="manager-dashboard-list">
                         <li class="dashboard-salesman-list">
                             <div class="dashboard-first-name">First Name</div>
                             <div class="dashboard-last-name">Last Name</div>
@@ -42,7 +42,7 @@
                             <li class="dashboard-salesman-list">
                                 <div class="dashboard-first-name">@sale.FirstName</div>
                                 <div class="dashboard-last-name">@sale.LastName</div>
-                                <div class="dashboard-rank-item">@sale.TotalRevenue</div>
+                                <div class="dashboard-rank-item">@sale.TotalRevenue.ToString("C")</div>
                             </li>
                         }
                     </ul>
@@ -50,45 +50,33 @@
             </div>
             <div class="houses-lists">
                 <div class="container">
-                    <h3>House Rank by Quantity</h3>
-                    <ul id="manager-dashboard-list">
+                    <h5>House Rank by Quantity</h5>
+                    <ul class="manager-dashboard-list">
                         <li class="dashboard-house-list">
-                            <div class="dashboard-street">Address</div>
-                            <div class="dashboard-city">City</div>
-                            <div class="dashboard-district">District</div>
-                            <div class="dashboard-country">Country</div>
+                            <div class="dashboard-address">Address</div>
                             <div class="dashboard-rank-item">Sales Count</div>
                         </li>
                         @foreach (HouseSalesCountItem sale in Model.HouseRankByQuantity)
                         {
                             <li class="dashboard-house-list">
-                                <div class="dashboard-street">@sale.Street</div>
-                                <div class="dashboard-city">@sale.City</div>
-                                <div class="dashboard-district">@sale.District</div>
-                                <div class="dashboard-country">@sale.Country</div>
+                                <div class="dashboard-address">@sale.Street, @sale.City, @sale.District, @sale.Country</div>
                                 <div class="dashboard-rank-item">@sale.SalesCount</div>
                             </li>
                         }
                     </ul>
                 </div>
                 <div class="container">
-                    <h3>House Rank by Revenue</h3>
-                    <ul id="manager-dashboard-list">
+                    <h5>House Rank by Revenue</h5>
+                    <ul class="manager-dashboard-list">
                         <li class="dashboard-house-list">
-                            <div class="dashboard-street">Address</div>
-                            <div class="dashboard-city">City</div>
-                            <div class="dashboard-district">District</div>
-                            <div class="dashboard-country">Country</div>
+                            <div class="dashboard-address">Address</div>
                             <div class="dashboard-rank-item">Total Revenue</div>
                         </li>
                         @foreach (HouseRevenueItem sale in Model.HouseRankByRevenue)
                         {
                             <li class="dashboard-house-list">
-                                <div class="dashboard-street">@sale.Street</div>
-                                <div class="dashboard-city">@sale.City</div>
-                                <div class="dashboard-district">@sale.District</div>
-                                <div class="dashboard-country">@sale.Country</div>
-                                <div class="dashboard-rank-item">@sale.TotalRevenue</div>
+                                <div class="dashboard-address">@sale.Street, @sale.City, @sale.District, @sale.Country</div>
+                                <div class="dashboard-rank-item">@sale.TotalRevenue.ToString("C")</div>
                             </li>
                         }
                     </ul>

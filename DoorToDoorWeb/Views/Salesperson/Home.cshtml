@@ -5,29 +5,37 @@
 <div class="main-content">
     <div class="container">
         <h2>Salesman Dashboard</h2>
-        <h3>My Number of Sales: @Model.MySales</h3>
-        <h3>My Total Revenue: @Model.MyRevenue</h3>
-        <ul id="salesman-dashboard-list">
-            <li class="dashboard-street-list">
-                <div class="dashboard-street">Address</div>
-            </li>
-            @foreach (HouseDashboardItem house in Model.Houses)
-            {
-            <li>
-                <div class="street">@house.Street</div>
-            </li>
-            }
-        </ul>        
-        <ul>
-            <li class="dashboard-product-list">
-                <div class="dashboard-product">Product</div>
-            </li>
-            @foreach (ProductDashboardItem product in Model.Products)
-            {
-                <li>
-                    <div class="dashboard-product">@product.Name</div>
-                </li>
-            }
-        </ul>
+        <div id="dashboard-totals">
+            <h4 id="total-sales">My Number of Sales: @Model.MySales</h4>
+            <h4 id="total-revenue">My Total Revenue: @Model.MyRevenue.ToString("C")</h4>
+        </div>
+        <div class="dashboard-lists">
+            <div class="container">
+                <ul>
+                    <li class="dashboard-street-list">
+                        <div class="dashboard-street">Address</div>
+                    </li>
+                    @foreach (HouseDashboardItem house in Model.Houses)
+                    {
+                        <li>
+                            <div class="street">@house.Street</div>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="container">
+                <ul>
+                    <li class="dashboard-product-list">
+                        <div class="dashboard-product">Product</div>
+                    </li>
+                    @foreach (ProductDashboardItem product in Model.Products)
+                    {
+                        <li>
+                            <div class="dashboard-product">@product.Name</div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
     </div>
-    </div>
+</div>
