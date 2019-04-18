@@ -66,6 +66,7 @@ footer > p {
     #admin-manager-list > :first-child,
     #manager-salespeople-list > :first-child,
     #manager-house-list > :first-child,
+    #transactions-list > :first-child,
     #salesperson-house-list > :first-child,
     #report-list > :first-child {
         font-weight: bold;
@@ -77,6 +78,7 @@ footer > p {
     #manager-salespeople-list > :nth-child(even),
     #manager-house-list > :nth-child(even),
     #salesperson-house-list > :nth-child(even),
+    #transactions-list > :nth-child(even),
     #report-list > :nth-child(even) {
         background-color: #aacad8;
     }
@@ -606,4 +608,35 @@ form {
 
 
   
+}
+
+#house-select, #product-select {
+    text-transform: capitalize;
+}
+
+.transaction-list-item {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr 2fr;
+    grid-template-areas: "date amount address product";
+    grid-gap: 5px;
+}
+
+.transaction-list-date {
+    grid-area: date;
+    text-transform: capitalize;
+}
+
+.transaction-list-amount {
+    grid-area: amount;
+}
+
+.transaction-list-address {
+    grid-area: address;
+    text-transform: capitalize;
+}
+
+.transaction-list-product {
+    grid-area: product;
+    text-transform: capitalize;
 }
