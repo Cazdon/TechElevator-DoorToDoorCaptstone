@@ -40,8 +40,9 @@ namespace DoorToDoorLibrary.DAL
         /// Returns a Select List of all Salesperson-type users from the system for a particular Manager
         /// </summary>
         /// <param name="managerID">Database ID of the Manager</param>
+        /// <param name="salespersonID">Database ID of the Salesperson currently assigned to the House</param>
         /// <returns>Select List of Salespeople under the given Manager</returns>
-        IList<SelectListItem> GetMySalespeopleOptions(int managerID);
+        IList<SelectListItem> GetMySalespeopleOptions(int managerID, int assignedSalespersonID = 0);
 
         /// <summary>
         /// Set's the user's Reset Password flag. Throws error if unsuccessful
@@ -126,6 +127,15 @@ namespace DoorToDoorLibrary.DAL
         /// <param name="userID">ID of the requesting User to determine if they are connected to the House</param>
         /// <returns>True if successful, false if failed</returns>
         bool SetHouseStatus(int houseID, int statusID, int userID);
+
+        /// <summary>
+        /// Changes the given House's Assigned Salesperson to the supplied Salesperson
+        /// </summary>
+        /// <param name="houseID">Database ID of the House to change</param>
+        /// <param name="salespersonID">Database ID of the Salesperson to reassign</param>
+        /// <param name="userID">ID of the requesting User to determine if they are the Manager of the Salesperson and the House</param>
+        /// <returns>True if successful, false if failed</returns>
+        bool ReassignHouseSalesperson(int houseID, int salespersonID, int userID);
 
         /// <summary>
         /// Returns a Select List of all Houses from the system assigned to the Salesperson

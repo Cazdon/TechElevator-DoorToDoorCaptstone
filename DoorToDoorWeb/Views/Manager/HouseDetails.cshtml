@@ -9,7 +9,9 @@
             const holdResidentForm = @(Json.Serialize(isResidentFormOpen));
             const houseID = @(Model.House.Id);
         </script>
+        <script src="~/js/serverUrl.js"></script>
         <script src="~/js/houseDetailsForms.js"></script>
+        <script src="~/js/houseSalespersonChange.js"></script>
     }
 }
 @model HouseDetailsViewModel
@@ -28,7 +30,10 @@
                     </div>
                     <div id="house-detail-salesperson">
                         <h5>Assigned To:</h5>
-                        <div>@(Model.House.AssignedSalesperson)</div>
+                        <div>
+                            <select asp-items="Model.SalespersonOptions" id="assigned-salesperson-select"></select>
+                            <div id="assigned-salesperson-update-response"></div>
+                        </div>
                     </div>
                     <div id="house-detail-status">
                         <h5>Current Status:</h5>

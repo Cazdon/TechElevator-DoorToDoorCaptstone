@@ -1,7 +1,9 @@
 ﻿const statusSelect = document.getElementById("house-status-select");
 const statusResponseElement = document.getElementById("house-status-update-response");
 
-function updateHouseStatus() {
+function updateHouseStatus(event) {
+    event.stopPropagation();
+
     let selectedHouseStatus = Number.parseInt(statusSelect.options[statusSelect.selectedIndex].value);
 
     let data = {
@@ -15,8 +17,7 @@ function updateHouseStatus() {
         credentials: 'same-origin',
         headers: {
             'Content-Type': 'application/json'
-        },
-        redirect: 'follow'
+        }
     })
         .then((response) => {
             return response.json();
@@ -39,7 +40,5 @@ function updateHouseStatus() {
         });
 }
 
-statusSelect.addEventListener('change', (event) => {
-    updateHouseStatus();
-});
+statusSelect.addEventListener('change', updateHouseStatus);
 
