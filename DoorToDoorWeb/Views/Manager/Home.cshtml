@@ -2,35 +2,93 @@
 
 @model ManagerDashboardViewModel
 @using DoorToDoorLibrary.DatabaseObjects
-    <div class="main-content">
-        <div class="container">
-            <h2>Home</h2>
+<div class="main-content">
+    <div class="content-header">
+        <h2 class="page-title">Manager Dashboard</h2>
+        <h3 class="total-sales">Total Number of Sales: @Model.TotalSales</h3>
+        <h3 class="total-revenue">Total Revenue: @Model.TotalRevenue</h3>
+    </div>
 
-            <h3>Total Number of Sales: @Model.TotalSales</h3>
-            <h3>Total Revenue: @Model.TotalRevenue</h3>
-            <ul>
+    <div class="userlist">
+        <div class="container">
+            <label class="list-label">Salesman Rank by Sales</label>
+            <ul id="manager-dashboard-list">
+                <li class="dashboard-salesman-list">
+                    <div class="dashboard-first-name">First Name</div>
+                    <div class="dashboard-last-name">Last Name</div>
+                    <div class="dashboard-rank-item">Sales Count</div>
+                </li>
                 @foreach (SalesmanSalesCountItem sale in Model.SalesmanRankByQuantity)
                 {
-                    <li>Name: @sale.FirstName @sale.LastName - Total Sales: @sale.SalesCount</li>
+                    <li class="dashboard-salesman-list">
+                        <div class="dashboard-first-name">@sale.FirstName</div>
+                        <div class="dashboard-last-name">@sale.LastName</div>
+                        <div class="dashboard-rank-item">@sale.SalesCount</div>
+                    </li>
                 }
             </ul>
-            <ul>
+        </div>
+        <div class="container">
+            <label class="list-label">Salesman Rank by Revenue</label>
+            <ul id="manager-dashboard-list">
+                <li class="dashboard-salesman-list">
+                    <div class="dashboard-first-name">First Name</div>
+                    <div class="dashboard-last-name">Last Name</div>
+                    <div class="dashboard-rank-item">Total Revenue</div>
+                </li>
                 @foreach (SalesmanRevenueItem sale in Model.SalesmanRankByRevenue)
                 {
-                    <li>Name: @sale.FirstName @sale.LastName - Total Revenue: @sale.TotalRevenue</li>
+                    <li class="dashboard-salesman-list">
+                        <div class="dashboard-first-name">@sale.FirstName</div>
+                        <div class="dashboard-last-name">@sale.LastName</div>
+                        <div class="dashboard-rank-item">@sale.TotalRevenue</div>
+                    </li>
                 }
             </ul>
-            <ul>
+        </div>
+        <div class="container">
+            <label class="list-label">House Rank by Sales</label>
+            <ul id="manager-dashboard-list">
+                <li class="dashboard-house-list">
+                    <div class="dashboard-street">Address</div>
+                    <div class="dashboard-city">City</div>
+                    <div class="dashboard-district">District</div>
+                    <div class="dashboard-country">Country</div>
+                    <div class="dashboard-rank-item">Sales Count</div>
+                </li>
                 @foreach (HouseSalesCountItem sale in Model.HouseRankByQuantity)
                 {
-                    <li>House Details: @sale.Street, @sale.City @sale.District, @sale.Country - Total Sales: @sale.SalesCount</li>
+                    <li class="dashboard-house-list">
+                        <div class="dashboard-street">@sale.Street</div>
+                        <div class="dashboard-city">@sale.City</div>
+                        <div class="dashboard-district">@sale.District</div>
+                        <div class="dashboard-country">@sale.Country</div>
+                        <div class="dashboard-rank-item">@sale.SalesCount</div>
+                    </li>
                 }
             </ul>
-            <ul>
+        </div>
+        <div class="container">
+            <label class="list-label">House Rank by Revenue</label>
+            <ul id="manager-dashboard-list">
+                <li class="dashboard-house-list">
+                    <div class="dashboard-street">Address</div>
+                    <div class="dashboard-city">City</div>
+                    <div class="dashboard-district">District</div>
+                    <div class="dashboard-country">Country</div>
+                    <div class="dashboard-rank-item">Total Revenue</div>
+                </li>
                 @foreach (HouseRevenueItem sale in Model.HouseRankByRevenue)
                 {
-                    <li>House Details: @sale.Street, @sale.City @sale.District, @sale.Country - Total Revenue: @sale.TotalRevenue</li>
+                    <li class="dashboard-house-list">
+                        <div class="dashboard-street">@sale.Street</div>
+                        <div class="dashboard-city">@sale.City</div>
+                        <div class="dashboard-district">@sale.District</div>
+                        <div class="dashboard-country">@sale.Country</div>
+                        <div class="dashboard-rank-item">@sale.TotalRevenue</div>
+                    </li>
                 }
             </ul>
         </div>
     </div>
+</div>
