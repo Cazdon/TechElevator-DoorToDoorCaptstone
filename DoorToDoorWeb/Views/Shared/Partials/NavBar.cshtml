@@ -112,6 +112,9 @@
                         <a class="nav-link" asp-controller="Home" asp-action="Profile"><i class="fas fa-user-edit"></i> Welcome @(rm.User.FirstName) @(rm.User.LastName)</a>
                     </li>
                     }
+                    <li>
+                        <a class="nav-link" asp-controller="Home" asp-action="About"><i class="fas fa-book"></i> About</a>
+                    </li>
                     @if (rm.IsUnknown)
                     {
                         <li class="nav-item">

@@ -291,7 +291,7 @@ namespace DoorToDoorWeb.Controllers
                     else
                     {
                         PasswordManager pm = new PasswordManager(model.ResetPassword.CurrentPassword, CurrentUser.Salt);
-                        
+
                         if (!pm.Verify(CurrentUser.Hash))
                         {
                             throw new Exception("Password is invalid.");
@@ -333,6 +333,12 @@ namespace DoorToDoorWeb.Controllers
             }
 
             return result;
+        }
+
+        [HttpGet]
+        public IActionResult About()
+        {
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

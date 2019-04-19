@@ -831,3 +831,32 @@ form {
 #salesperson-top-revenue {
     grid-area: revenue;
 }
+
+#team-window {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+#team-lead, #team-grunts {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+.team-member {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    max-width: 200px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+    .team-member img {
+        object-fit: contain;
+        max-width: 200px;
+        border-radius: 50%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
